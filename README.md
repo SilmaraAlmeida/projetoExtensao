@@ -25,7 +25,7 @@ A plataforma permitirá que os usuários se cadastrem, atualizem seus perfis, in
 
 ## Colaboradores
 - [Arthur Aguilar](https://github.com/ArturAguilar)
-- [Bernardo Oliveira]()
+- [Bernardo Oliveira](https://github.com/Bernardoa7)
 - [Bruno Couri](https://github.com/N1nho0)
 - [Diego Coelho](https://github.com/Coelhosdi)
 - [Silmara Almeida](https://github.com/SilmaraAlmeida)
