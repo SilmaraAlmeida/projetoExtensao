@@ -1,0 +1,11 @@
+# .htaccess
+
+# Bloqueia o acesso direto a arquivos nas pastas e substas
+# via nagedor
+
+<IfModule authz_core_module>
+    require all denied
+</IfModule>
+<IfModule !authz_core_module>
+    Deny from all
+</IfModule>
