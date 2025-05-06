@@ -27,7 +27,7 @@ class Validator
 
                     case 'email' :
 
-                        if (!filter_var($data[$ruleKey],FILTER_VALIDATE_EMAIL)){
+                        if (!filter_var($data[$ruleKey], FILTER_VALIDATE_EMAIL)){
                             $errors[$ruleKey] = "O campo <b>{$ruleValue['label']}</b> não é válido.";
                         }
 
@@ -35,7 +35,7 @@ class Validator
 
                     case 'float' :
 
-                        if (!filter_var($data[$ruleKey],FILTER_VALIDATE_FLOAT)){
+                        if (!filter_var($data[$ruleKey], FILTER_VALIDATE_FLOAT)){
                             $errors[$ruleKey] = "O campo <b>{$ruleValue['label']}</b> deve conter número decimal.";
                         }
 
@@ -43,7 +43,7 @@ class Validator
 
                     case 'int' :
 
-                        if (!filter_var($data[$ruleKey],FILTER_VALIDATE_INT)){
+                        if (!filter_var($data[$ruleKey], FILTER_VALIDATE_INT)){
                             $errors[$ruleKey] = "O campo <b>{$ruleValue['label']}</b> deve conter número inteiro.";
                         }
 

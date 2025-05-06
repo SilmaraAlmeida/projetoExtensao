@@ -354,6 +354,229 @@ class Database
     }
 
     /**
+     * whereHaving
+     *
+     * @param string|array $condition 
+     * @param string $params 
+     * @param string $operadorLogico 
+     * @return object
+     */
+    public function whereHaving($condition, $params = "", $operadorLogico = 'AND')
+    {
+        $operadores = ["=", ">=", "<=", ">", "<", "<>"];
+
+        if ($this->where == "") {
+            $this->where = " WHERE ";
+        } else {
+            $this->where .= " {$operadorLogico} ";
+        }
+
+        if (gettype($condition) == "string") {
+
+            $aKey = explode(" ", $condition);
+
+            if (count($aKey) > 1) {
+                if (in_array(explode(" ", $condition)[1], $operadores)) {
+                    $this->where .= $condition . " ? ";
+                } else {
+                    $this->where .= $condition . " = ? ";
+                }
+            } else {
+                $this->where .= $condition . " = ? ";
+            }
+
+            $this->params = array_merge($this->params, [$params]);
+
+        } else {
+
+            $lAnd = false;
+
+            foreach ($condition as $key => $value) {
+
+                if ($lAnd) {
+                    $this->where .= " {$operadorLogico} ";
+                } else {
+                    $lAnd = true;
+                }
+
+                $aKey = explode(" ", $key);
+
+                if (count($aKey) > 1) {
+                    if (in_array(explode(" ", $key)[1], $operadores)) {
+                        $this->where .= $key . " ? ";
+                    } else {
+                        $this->where .= $key . " = ? ";
+                    }
+                } else {
+                    $this->where .= $key . " = ? ";
+                }
+            }
+
+            $this->params = array_values($condition);
+        }
+
+        return $this;
+    }
+
+    /**
+     * where
+     *
+     * @param string|array $condition 
+     * @param string $params 
+     * @return object
+     */
+    public function where($condition, $params = "")
+    {
+        return $this->whereHaving($condition, $params);
+    }
+
+    /**
+     * where
+     *
+     * @param string|array $condition 
+     * @param string $params 
+     * @return object
+     */
+    public function orWhere($condition, $params = "")
+    {
+        return $this->whereHaving($condition, $params, "OR");
+    }
+
+    /**
+     * whereIn
+     *
+     * @param string $field 
+     * @param array $params 
+     * @param string $operadorLogico 
+     * @param bool $notIn 
+     * @return object
+     */
+    public function whereInHaving($field, $params, $operadorLogico = 'AND', $notIn = false)
+    {
+        $placeholders = [];
+
+        foreach ($params as $i => $value) {
+            $placeholders[] = "?";
+            $this->params[] = $value;
+        }
+
+        // Monta cláusula IN
+        $clause = "{$field} " . ($notIn ? "NOT" : "" ) . " IN (" . implode(', ', $placeholders) . ")";
+
+        // Adiciona a cláusula WHERE
+        if (empty($this->where)) {
+            $this->where = " WHERE {$clause}";
+        } else {
+            $this->where .= " {$operadorLogico} {$clause}";
+        }
+
+        return $this;
+    }
+
+    /**
+     * whereIn
+     *
+     * @param string $field 
+     * @param array $params 
+     * @param string $operadorLogico 
+     * @return object
+     */
+    public function whereIn($field, $params, $operadorLogico = 'AND')
+    {
+        return $this->whereInHaving($field, $params, $operadorLogico);
+    }
+
+    /**
+     * whereIn
+     *
+     * @param string $field 
+     * @param array $params 
+     * @param string $operadorLogico 
+     * @return object
+     */
+    public function whereNotIn($field, $params, $operadorLogico = 'AND')
+    {
+        return $this->whereInHaving($field, $params, $operadorLogico, true);
+    }
+
+    /**
+     * whereLike
+     *
+     * @param mixed $field 
+     * @param strung $value 
+     * @param string $operadorLogico 
+     * @return object
+     */
+    public function whereLike($field, $value, $operadorLogico = "AND")
+    {
+        // Monta cláusula IN
+        $clause = " {$field} LIKE ? ";
+
+        // Setando valores
+        $this->params[] = "'%$value%'";
+
+        // Adiciona a cláusula WHERE
+        if (empty($this->where)) {
+            $this->where = " WHERE {$clause}";
+        } else {
+            $this->where .= " {$operadorLogico} {$clause}";
+        }
+
+        return $this;
+    }
+
+    /**
+     * whereBetween
+     *
+     * @param string $field 
+     * @param mixed $valorIni 
+     * @param mixed $valorFim 
+     * @param string $operadorLogico 
+     * @return object
+     */
+    public function whereBetween($field, $valorIni, $valorFim, $operadorLogico = "AND")
+    {
+        // Monta cláusula IN
+        $clause = " {$field} BETWEEN ? AND  ? ";
+
+        // Setando valores
+        $this->params[] = $valorIni;
+        $this->params[] = $valorFim;
+
+        // Adiciona a cláusula WHERE
+        if (empty($this->where)) {
+            $this->where = " WHERE {$clause}";
+        } else {
+            $this->where .= " {$operadorLogico} {$clause}";
+        }
+
+        return $this;
+    }
+
+    /**
+     * group
+     *
+     * @param string $operadorLogico - AND, OR
+     * @return object
+     */
+    public function group($operadorLogico = "AND")
+    {
+        $this->where .= $operadorLogico . " ( ";
+        return $this;
+    }
+
+    /**
+     * endGroup
+     *
+     * @return object
+     */
+    public function endGroup()
+    {
+        $this->where .= " ) ";
+        return $this;
+    }
+
+    /**
      * groupBy
      *
      * @param string $column 
@@ -445,5 +668,87 @@ class Database
     public function findCount()
     {
         return $this->prepareSelect("count");
+    }
+
+    /**
+     * insert
+     *
+     * @param array $data 
+     * @return int
+     */
+    public function insert(array $data)
+    {
+        try {
+            $columns = implode(", ", array_keys($data));
+            $placeHolders = ":" . implode(", :", array_keys($data));
+            $sql = "INSERT INTO {$this->table} ($columns) VALUES ($placeHolders)";
+
+            $conexao = $this->connect();
+            $query = $conexao->prepare($sql);
+            $query->execute($data);
+
+            $rs = $conexao->lastInsertId();
+
+            self::dbClear();
+
+        } catch (\Exception $err) {
+            Session::set("msgError", "Erro ao inserir dados na base de dados: " . $err->getMessage());
+            $rs = 0;
+        }
+
+        return $rs;
+    }
+
+    /**
+     * update
+     *
+     * @param array $data 
+     * @return int
+     */
+    public function update(array $data)
+    {
+        try {
+            $fields = implode(" = ?, ", array_keys($data)) . " = ?";
+            $sql    = "UPDATE {$this->table} SET {$fields} WHERE {$this->where}";
+            $updData = array_merge(array_values($data), $this->params);
+
+            $query  = $this->connect()->prepare($sql);
+            $query->execute($updData);
+
+            $rs = $query->rowCount();
+
+            self::dbClear();
+
+        } catch (\Exception $err) {
+            Session::set("msgError", "Erro ao Atualizar dados na base de dados: " . $err->getMessage());
+            $rs = 0;
+        }
+
+        return $rs;
+    }
+
+    /**
+     * delete
+     *
+     * @return int
+     */
+    public function delete()
+    {
+        try {
+            $sql    = "DELETE FROM {$this->table} WHERE {$this->where};";
+
+            $query  = $this->connect()->prepare($sql);
+            $query->execute($this->params);
+
+            $rs = $query->rowCount();
+
+            self::dbClear();
+
+        } catch (\Exception $err) {
+            Session::set("msgError", "Erro ao Excluir dados na base de dados: " . $err->getMessage());
+            $rs = 0;
+        }
+
+        return $rs;
     }
 }
