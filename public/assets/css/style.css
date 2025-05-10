@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;700&display=swap");
 
 * {
     margin: 0;
@@ -7,7 +7,8 @@
 }
 
 body {
-    font-family: 'Comfortaa', sans-serif; /* Troca a fonte para Comfortaa */
+    font-family: "Comfortaa", sans-serif;
+    /* Troca a fonte para Comfortaa */
     background-color: #f4f4f4;
 }
 
@@ -16,7 +17,8 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: #003399;
-    padding: 30px 20px; /* Aumenta o tamanho do header */
+    padding: 30px 20px;
+    /* Aumenta o tamanho do header */
     color: white;
 }
 
@@ -28,13 +30,15 @@ body {
 
 .menuHamburger img {
     cursor: pointer;
-    margin-right: 20px; 
-    width: 24px; /* Ajuste no tamanho do ícone */
+    margin-right: 20px;
+    width: 24px;
+    /* Ajuste no tamanho do ícone */
     cursor: pointer;
 }
 
 .logo img {
-    width: 150px; /* Aumenta o tamanho da logo */
+    width: 150px;
+    /* Aumenta o tamanho da logo */
     margin-right: 30px;
     cursor: pointer;
 }
@@ -42,7 +46,7 @@ body {
 .pesquisa {
     display: flex;
     align-items: center;
-    flex-grow: 1; 
+    flex-grow: 1;
     justify-content: center;
     gap: 10px;
 }
@@ -67,10 +71,13 @@ body {
 }
 
 .entrar {
-    font-size: 14px; /* Diminui o tamanho da fonte */
+    font-size: 14px;
+    /* Diminui o tamanho da fonte */
     cursor: pointer;
-    padding: 8px 16px; /* Diminui o tamanho do botão */
-    border: 1.5px solid #00ff00; /* Borda neon mais fina */
+    padding: 8px 16px;
+    /* Diminui o tamanho do botão */
+    border: 1.5px solid #00ff00;
+    /* Borda neon mais fina */
     border-radius: 5px;
     font-weight: 800;
     color: #00ff00;
@@ -79,22 +86,28 @@ body {
 }
 
 .entrar:hover {
-    background-color: rgba(0, 255, 0, 0.466); /* Fundo verde neon mais claro */
+    background-color: rgba(0, 255, 0, 0.466);
+    /* Fundo verde neon mais claro */
 }
 
 .perfil img {
     width: 32px;
-    border-radius: 50%; /* Remove o filtro */
+    border-radius: 50%;
+    /* Remove o filtro */
     cursor: pointer;
     margin-left: 20px;
 }
 
 .footer {
-    position: fixed; /* Torna o footer fixo */
-    bottom: 0; /* Posiciona no final da tela */
+    position: fixed;
+    /* Torna o footer fixo */
+    bottom: 0;
+    /* Posiciona no final da tela */
     left: 0;
-    width: 100%; /* Faz o footer ocupar toda a largura */
-    height: 100px; /* Altura do footer */
+    width: 100%;
+    /* Faz o footer ocupar toda a largura */
+    height: 100px;
+    /* Altura do footer */
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -102,23 +115,47 @@ body {
     color: white;
     padding: 20px 40px;
     font-size: 14px;
-    border-top: 2px solid white; /* Linha separadora no topo */
-    z-index: 1000; /* Garante que o footer fique acima de outros elementos */
+    border-top: 2px solid white;
+    /* Linha separadora no topo */
+    z-index: 1000;
+    /* Garante que o footer fique acima de outros elementos */
 }
 
-.footer-left, .footer-right {
+.footer-left,
+.footer-right {
     display: flex;
     align-items: center;
-    flex-direction: column; /* Alinha os elementos verticalmente */
+    flex-direction: column;
+    /* Alinha os elementos verticalmente */
     text-align: center;
-    gap: 5px; /* Espaçamento entre a linha e o texto */
+    gap: 5px;
+    /* Espaçamento entre a linha e o texto */
 }
 
-.footer-left::before, .footer-right::before {
-    content: '';
+.footer-left::before,
+.footer-right::before {
+    content: "";
     display: block;
     width: 100%;
     height: 1px;
     margin-bottom: 10px;
     background-color: white;
+}
+
+/* Estilos para botões verticais */
+.d-grid .btn-book-a-table {
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.d-grid .btn-book-a-table:last-child {
+    margin-bottom: 0;
+}
+
+/* Ajuste para responsividade */
+@media (max-width: 768px) {
+    .d-grid .btn-book-a-table {
+        padding: 10px 24px;
+    }
 }
