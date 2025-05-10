@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<link rel="stylesheet" href="login.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+		<title>Documento</title>
+	</head>
+	<body>
+		<div class="container" id="container">
+			<div class="form-container sign-up-container">
+				<form action="#">
+					<h1>Crie sua conta</h1>
+					<div class="social-container">
+						<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+						<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+						<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+					</div>
+					<span>ou use seus dados para se registrar</span>
+					<input type="text" placeholder="Nome" />
+                    <input type="text" id="cpf" placeholder="CPF" maxlength="14"/>
+					<input type="email" placeholder="Email" />
+					<input type="password" placeholder="Senha" />
+					<button>Entrar</button>
+				</form>
+			</div>
+			<div class="form-container sign-in-container">
+				<form action="#">
+					<h1>Conecte-se</h1>
+					<div class="social-container">
+						<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+						<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+						<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+					</div>
+					<span>ou use sua conta</span>
+					<input type="email" placeholder="Email" />
+					<input type="password" placeholder="Senha" />
+					<a href="#">Esqueceu sua senha?</a>
+					<button>Entrar</button>
+				</form>
+			</div>
+			<div class="overlay-container">
+				<div class="overlay">
+					<div class="overlay-panel overlay-left">
+						<h1>Bem-vindo novamente</h1>
+						<p>Para se manter conectado conosco, faça login com seus dados</p>
+						<button class="ghost" id="signIn">Entrar</button>
+					</div>
+					<div class="overlay-panel overlay-right">
+						<h1>Seja bem-vindo!</h1>
+						<p>Insira seus dados e comece sua jornada conosco.</p>
+						<button class="ghost" id="signUp">Crie sua conta</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<footer>
+		<script src="login.js"></script>
+	</footer>
+</html>
