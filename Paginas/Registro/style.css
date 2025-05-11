@@ -1,0 +1,70 @@
+/*estilização geral com fontes e cores*/
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color:#f4f4f4;
+    margin: 0;
+    color: #333;
+}
+/* card principal com inputs do cadastro"*/
+.job-card{
+    background-color: #fff;
+    border: 1px solid #ccc; /*borda*/
+    margin: 230px auto; /* margem externa */
+    padding: 15px; /* espaço interno => acima, a direita, a baixo, esquerda*/
+    width: 90%;
+    max-width: 500px; /* largura máxima */
+    display: block; /* cada card ocupa sua linha */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* sombra do card*/
+    border-radius: 10px; /* bordas arredondadas em 10px */
+}
+/* link dentro do .job-card*/
+.job-card a {
+    display: inline-block;/* */
+    margin: 0 auto; /* margem cima 0, auto */
+    color: #0077cc; /* cor do texto */
+    text-decoration: none; /*remove o sublinhado*/
+}
+/* inputs ou, barras das informações de cadastro */
+.job-card input {
+    display: flex; /* transforma em um flex container para serem mais flexiveis */
+    background-color: #fffefe;
+    border-radius: 10px; /* borda arredondada em 10px*/
+    border: 1px solid #ccc; /* borda */
+    margin: 5px auto; /* margem externa auto*/
+    padding: 10px 120px 10px 20px; /* espaço interno, cima, baixo, direita e esquerda */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* sombreamento dos inputs */
+}
+/* botão de 'Registrar' no final do card */
+.job-card button {
+    background-color: #0077cc;
+    color: #fff; /* cor do texto*/
+    border: 1px; /* borda */
+    padding: 10px 30px; /*  espaço interno, cima, direita.*/
+    border-radius: 10px; /* borda arredondada  */
+    margin: 20px 0px 20px 185px;    /* margem externa, de uma forma para ficar centralizado no card*/
+}
+/* imagem de 'perfil' em cima do card*/
+.job-card img{
+    display: block; /* tranforma a imagem em um 'bloco', para ser mais fácil de centrlizar no card*/
+    border-radius: 50%; /* borda arredendada, 'circular' */
+    margin: 0 auto; /* margem externa auto */
+}
+/* rodapé comagem e fonte menor */
+footer {
+    text-align: center; /* alinhado ao centro */
+    padding: 10px; /* espaço interno*/
+    background-color: #eee; /* cor de fundo */
+    font-size: 14px; /* tamanho da fonte*/
+    margin-top: 50px; /* 50 px abaixo do último card*/
+}
+
+/* layout reponsivo */
+@media (max-width: 600px) {
+    header, .job-card {
+        padding: 10px; /* margem */
+    }
+    nav a {
+        display: block;
+        margin: 5px 0; /* 5px acima e abaixo / 0 à direita e à esquerda esquerda */
+    }
+}
