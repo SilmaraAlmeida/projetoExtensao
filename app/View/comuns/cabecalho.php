@@ -46,7 +46,8 @@
                             <li><a class="dropdown-item" href="#">Técnico de redes</a></li>
                         </ul>
                 </div>
-                <p class="entrar">Entrar</p>
+                <a href="/login" class="entrar">Entrar</a>
+
                 <div class="perfil">
                     <img src="<?= baseUrl() ?>/assets/img/perfil.png" alt="Ícone perfil">
                 </div>
