@@ -12,7 +12,7 @@
 	<body>
 		<div class="container" id="container">
 			<div class="form-container sign-up-container">
-				<form action="#">
+				<form action="/cadastrar" method="POST">
 					<h1>Crie sua conta</h1>
 					<div class="social-container">
 						<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -20,15 +20,15 @@
 						<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 					</div>
 					<span>ou use seus dados para se registrar</span>
-					<input type="text" placeholder="Nome" />
-                    <input type="text" id="cpf" placeholder="CPF" maxlength="14"/>
-					<input type="email" placeholder="Email" />
-					<input type="password" placeholder="Senha" />
+					<input type="text" placeholder="Nome" name="nome" required />
+                    <input type="text" id="cpf" placeholder="CPF" name="cpf" maxlength="14"required />
+					<input type="email" placeholder="Email" name="email" required />
+					<input type="password" placeholder="Senha" name="senha" required />
 					<button>Entrar</button>
 				</form>
 			</div>
 			<div class="form-container sign-in-container">
-				<form action="#">
+				<form action="/login" method="POST">
 					<h1>Conecte-se</h1>
 					<div class="social-container">
 						<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -36,8 +36,8 @@
 						<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 					</div>
 					<span>ou use sua conta</span>
-					<input type="email" placeholder="Email" />
-					<input type="password" placeholder="Senha" />
+					<input type="email" placeholder="Email" name="email" required />
+					<input type="password" placeholder="Senha" name="senha" required />
 					<a href="#">Esqueceu sua senha?</a>
 					<button>Entrar</button>
 				</form>
