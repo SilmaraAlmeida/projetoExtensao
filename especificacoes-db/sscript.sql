@@ -14,7 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema descubra_muriae
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `descubra_muriae` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+CREATE DATABASE IF NOT EXISTS `descubra_muriae` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `descubra_muriae` ;
 
 -- -----------------------------------------------------
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `descubra_muriae`.`usuario` (
   `usuario_id` INT NOT NULL AUTO_INCREMENT,
   `pessoa_fisica_id` INT NOT NULL,
   `login` VARCHAR(50) NULL DEFAULT NULL,
-  `senha` VARCHAR(50) NULL DEFAULT NULL,
+  `senha` VARCHAR(255) NULL DEFAULT NULL,
   `tipo` CHAR(2) NOT NULL COMMENT 'A = Anunciante, G = Gestor, CN = Contribuinte normativo',
   PRIMARY KEY (`usuario_id`),
   INDEX `fk_pessoa_fisica_usuario1_idx` (`pessoa_fisica_id` ASC) VISIBLE,
@@ -379,7 +379,7 @@ CREATE TABLE IF NOT EXISTS `descubra_muriae`.`termodeuso` (
   `statusRegistro` INT NOT NULL DEFAULT 1 COMMENT '1=Ativo;2=Inativo;3=Alterado',
   `rascunho` INT NULL DEFAULT 1 COMMENT '1=Sim; 2=Não',
   `usuario_id` INT NOT NULL,
-  PRIMARY KEY (`usuario_id`),
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_termodeuso_usuario1`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `descubra_muriae`.`usuario` (`usuario_id`)
@@ -410,7 +410,12 @@ CREATE TABLE IF NOT EXISTS `descubra_muriae`.`termodeusoaceite` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+ALTER TABLE termodeusoaceite
+DROP FOREIGN KEY fk_termodeuso_has_usuario_termodeuso1;
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+ALTER TABLE termodeusoaceite
+ADD CONSTRAINT fk_termodeusoaceite_termodeuso
+FOREIGN KEY (termodeuso_id)
+REFERENCES termodeuso(id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
