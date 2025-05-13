@@ -29,6 +29,8 @@ body {
 }
 
 .menuHamburger img {
+    display: flex;
+    justify-content: center;
     cursor: pointer;
     margin-right: 20px;
     width: 24px;
@@ -37,6 +39,8 @@ body {
 }
 
 .logo img {
+    display: flex;
+    justify-content: center;
     width: 150px;
     /* Aumenta o tamanho da logo */
     margin-right: 30px;
@@ -45,9 +49,8 @@ body {
 
 .pesquisa {
     display: flex;
-    align-items: center;
+    justify-content: flex-start !important;
     flex-grow: 1;
-    justify-content: center;
     gap: 10px;
 }
 
@@ -68,6 +71,25 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
+    color: #fff !important;
+}
+
+.rightMenu .home {
+    color: #fff !important;
+}
+
+.rightMenu .home:hover {
+    color: #adadad70 !important;
+}
+
+.rightMenu .vagas {
+    color: #fff !important;
+    text-decoration: none !important;
+}
+
+.rightMenu .vagas:hover {
+    color: #adadad70 !important;
+    background: none;
 }
 
 .entrar {
@@ -76,18 +98,20 @@ body {
     cursor: pointer;
     padding: 8px 16px;
     /* Diminui o tamanho do botão */
-    border: 1.5px solid #00ff00;
+    border: 2px solid rgba(0, 255, 0, 0.466) !important;
     /* Borda neon mais fina */
-    border-radius: 5px;
+    border-radius: 13px;
+    text-decoration: none;
     font-weight: 800;
-    color: #00ff00;
+    color: #fff !important;
     background-color: transparent;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .entrar:hover {
-    background-color: rgba(0, 255, 0, 0.466);
+    background-color: rgba(0, 255, 0, 0.466) !important;
     /* Fundo verde neon mais claro */
+    color: #fff;
 }
 
 .perfil img {
