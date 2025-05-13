@@ -6,7 +6,9 @@
         public static function getRoutes() {
             return [
                 '/' => ['controller' => 'Home', 'method' => 'index'],
-                '/login' => ['controller' => 'LoginCadastro', 'method' => 'index']
+                '/form_login' => ['controller' => 'LoginCadastro', 'method' => 'index'],
+                '/cadastrar' => ['controller' => 'LoginCadastro', 'method' => 'registrar'],
+                '/login' => ['controller' => 'LoginCadastro', 'method' => 'login']
             ];
         }
 
