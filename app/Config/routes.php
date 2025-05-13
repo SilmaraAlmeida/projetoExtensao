@@ -8,7 +8,9 @@
                 '/' => ['controller' => 'Home', 'method' => 'index'],
                 '/form_login' => ['controller' => 'LoginCadastro', 'method' => 'index'],
                 '/cadastrar' => ['controller' => 'LoginCadastro', 'method' => 'registrar'],
-                '/login' => ['controller' => 'LoginCadastro', 'method' => 'login']
+                '/login' => ['controller' => 'LoginCadastro', 'method' => 'login'],
+
+                '/deslogar' => ['controller' => 'LoginCadastro', 'method' => 'deslogar']
             ];
         }
 
