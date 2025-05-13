@@ -110,10 +110,14 @@ class LoginCadastro extends ControllerMain
         $resultado = $validarHash->fetch(PDO::FETCH_ASSOC);
 
         if ($resultado && password_verify($senhaDigitada, $resultado['senha'])) {
-            var_dump('Logado');
+            return view('comuns/portalUsuario/homePortal');
         } else {
             var_dump("não foi possível logar");
         }
+    }
 
+    // falta verificação
+    public function deslogar() {
+        return view('comuns/loginRegistro/login');
     }
 }
