@@ -19,39 +19,41 @@
         <script src="<?= baseUrl() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     </head>
     <body>
-        <header class="header">
-            <div class="leftMenu">
-                <div class="menuHamburger">
-                    <img src="<?= baseUrl() ?>/assets/img/menu.png" alt="Ícone menu" onclick="toggleMenu()">
-                </div>
-
-                <div class="logo">
-                    <img src="<?= baseUrl() ?>/assets/img/logo.png" alt="Logo">
-                </div>
-                <div class="pesquisa">
-                    <input type="text" placeholder="Pesquisar">
-                </div>
+        <nav class="navbar bg-body-tertiary px-3 mb-3 p-4 header">
+            <div class="menuHamburger">
+                <img src="<?= baseUrl() ?>/assets/img/menu.png" alt="Ícone menu" onclick="toggleMenu()">
             </div>
 
-            <div class="rightMenu">
-                <p class="home">Home</p>
-                <div class="dropdown w-25">
-                    <button class="btn btn-light dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="dropdown">
-                        Vagas
-                        <i class="bi bi-caret-down-fill ms-2"></i>
-                    </button>
-                        <ul class="dropdown-menu w-100">
-                            <li><a class="dropdown-item" href="#">Vagas de estágio</a></li>
-                            <li><a class="dropdown-item" href="#">Vagas de analistas de sistemas</a></li>
-                            <li><a class="dropdown-item" href="#">Técnico de redes</a></li>
-                        </ul>
-                </div>
-                <a href="/login" class="entrar">Entrar</a>
-
-                <div class="perfil">
-                    <img src="<?= baseUrl() ?>/assets/img/perfil.png" alt="Ícone perfil">
-                </div>
+            <div class="logo">
+                <img src="<?= baseUrl() ?>/assets/img/logo.png" alt="Logo">
             </div>
-        </header>
+            <div class="pesquisa">
+                <input type="text" placeholder="Pesquisar">
+            </div>
+
+            <ul class="nav nav-pills rightMenu">
+                <li class="nav-item">
+                    <a class="nav-link home" href="#">Home</a>
+                </li>
+                <li>
+                    <select name="vagas" class="dropdown-item vagas" id="">
+                        <option value="vagas"><a href="">Vagas</a></option>
+                        <option value="estagio"><a href="">Estágio</a></option>
+                        <option value="remoto"><a href="#">Remoto</a></option>
+                        <option value="redes"><a href="#">Redes</a></option>
+                    </select>
+                </li>
+                <li>
+                    <a class="dropdown-item entrar" href="/form_login">Entrar</a>
+
+                </li>
+                <li>
+                    <!-- perfil só será exibido após o login -->
+                    <!-- <div class="perfil">
+                        <img src="<?= baseUrl() ?>/assets/img/perfil.png" alt="Ícone perfil">
+                    </div> -->
+                </li>
+            </ul>
+        </nav>
         
         <main class="container">
