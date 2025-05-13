@@ -20,9 +20,10 @@
     </head>
     <body>
         <nav class="navbar bg-body-tertiary px-3 mb-3 p-4 header">
-            <div class="menuHamburger">
+            <!-- menu só será exibido após o login -->
+            <!-- <div class="menuHamburger">
                 <img src="<?= baseUrl() ?>/assets/img/menu.png" alt="Ícone menu" onclick="toggleMenu()">
-            </div>
+            </div> -->
 
             <div class="logo">
                 <img src="<?= baseUrl() ?>/assets/img/logo.png" alt="Logo">
