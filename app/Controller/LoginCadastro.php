@@ -23,14 +23,13 @@ class LoginCadastro extends ControllerMain
 
     public function index()
     {
-        // return view('comuns/loginRegistro/login');
-        return $this->loadView('comuns/loginRegistro/login', [], false);
+        return $this->loadView('loginRegistro/login', [], false);
     }
 
     public function registrar()
     {
-        $nome  = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING);
-        $cpf   = filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_STRING);
+        $nome  = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $cpf   = filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
@@ -76,7 +75,7 @@ class LoginCadastro extends ControllerMain
         $resultado = $usuario->getHash($email)->fetch(PDO::FETCH_ASSOC);
 
         if ($resultado && password_verify($senhaDigitada, $resultado['senha'])) {
-            return $this->loadView('comuns/portalUsuario/homePortal', [], false);
+            return $this->loadView('portalUsuario/homePortal', [], true);
         } else {
             var_dump("não foi possível logar");
         }
@@ -84,6 +83,6 @@ class LoginCadastro extends ControllerMain
 
     // falta verificação
     public function deslogar() {
-        return $this->loadView('comuns/loginRegistro/login', [], false);
+        return $this->loadView('loginRegistro/login', [], false);
     }
 }

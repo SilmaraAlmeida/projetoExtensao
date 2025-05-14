@@ -19,7 +19,7 @@ trait RequestTrait
         return [
             'controller' => isset($aParametros[0]) && !empty($aParametros[0]) ? ucfirst($aParametros[0]) : DEFAULT_CONTROLLER,
             'method'     => isset($aParametros[1]) ? $aParametros[1] : DEFAULT_METODO,
-            'action'     => isset($aParametros[2]) ? $aParametros[2] : "view",
+            'action'     => isset($aParametros[2]) ? $aParametros[2] : "",
             'id'         => isset($aParametros[3]) ? $aParametros[3] : 0,
             'outrosPar'  => $outrosPar,
             'get'        => $_GET,

@@ -45,7 +45,7 @@
                     </select>
                 </li>
                 <li>
-                    <a class="dropdown-item entrar" href="/form_login">Entrar</a>
+                    <a class="dropdown-item entrar" href="LoginCadastro/">Entrar</a>
 
                 </li>
                 <li>

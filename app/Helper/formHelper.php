@@ -1,6 +1,7 @@
 <?php
 
 use Core\Library\Request;
+use Core\Library\Session;
 
 function formTitulo($titulo, $btnNovo = false)
 {
@@ -14,14 +15,38 @@ function formTitulo($titulo, $btnNovo = false)
 
     $cHtml = '  <div class="row bg-primary text-white m-2">
                     <div class="col-10 p-2">
-                        <h3>' . $titulo . '</h3>
+                        <h3>' . $titulo . formSubTitulo($request->getAction()) . '</h3>
                     </div>
                     <div class="col-2 text-end p-2">
                         ' . $cHtmlBtn . '
                     </div>
                 </div>';
 
+    var_dump(Session::getDestroy("msgSucess"));
+    var_dump(Session::getDestroy("msgError"));
+
     return $cHtml;
+}
+
+/**
+ * formSubTitulo
+ *
+ * @param string $action 
+ * @return string
+ */
+function formSubTitulo($action)
+{
+    if ($action == "insert") {
+        return " - Novo";
+    } elseif ($action == "update") {
+        return " - Alteração";
+    } elseif ($action == "delete") {        
+        return " - Exclusão";
+    } elseif ($action == "view") {
+        return " - Visualização";
+    } else {
+        return "";
+    }
 }
 
 /**
@@ -44,4 +69,20 @@ function formButton()
     }
     
     return $cHtml;
+}
+
+/**
+ * setValor
+ *
+ * @param string $campo 
+ * @param mixed $default 
+ * @return mixed
+ */
+function setValor($campo, $default = "")
+{
+    if (isset($_POST[$campo])) {
+        return $_POST[$campo];
+    } else {
+        return $default;
+    }
 }
