@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/../app/Helper/chamarView.php';
 
 use Core\Library\Ambiente;
 use Core\Library\Routes;
