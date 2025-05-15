@@ -13,12 +13,15 @@ use PDOException;
 class LoginCadastro extends ControllerMain
 {
     private $conexao;
+    private $pessoaFisica;
 
     public function __construct()
     {
         $this->loadHelper('utilits');
         $this->conexao = new PDO('mysql:host=localhost;dbname=descubra_muriae', 'root', '');
-        $this->conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);        
+        $this->conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);      
+        
+        $this->pessoaFisica = new PessoaFisica($this->conexao);
     }
 
     public function index()
@@ -36,13 +39,12 @@ class LoginCadastro extends ControllerMain
         try {
             $this->conexao->beginTransaction();
 
-            $pessoaFisica = new PessoaFisica($this->conexao);
             $usuario = new UsuarioModel($this->conexao);
             $termoUso = new TermoUso($this->conexao);
             $termoDeUsoAceite = new TermoUsoAceite($this->conexao);
             $telefone = new Telefone($this->conexao);
 
-            $pessoaFisica->inserirPessoaFisica($nome, $cpf);
+            $this->pessoaFisica->inserirPessoaFisica($nome, $cpf);
             $pessoaFisicaId = $this->conexao->lastInsertId();
 
             if ($usuario->emailJaExiste($email)) {
@@ -75,6 +77,8 @@ class LoginCadastro extends ControllerMain
         $resultado = $usuario->getHash($email)->fetch(PDO::FETCH_ASSOC);
 
         if ($resultado && password_verify($senhaDigitada, $resultado['senha'])) {
+            $_SESSION['nomeUsuario'] = $this->pessoaFisica->getNomeUsuario($email);
+
             return $this->loadView('portalUsuario/homePortal', [], true);
         } else {
             var_dump("não foi possível logar");
