@@ -85,8 +85,12 @@ class LoginCadastro extends ControllerMain
         }
     }
 
-    // falta verificação
     public function deslogar() {
+        if (isset($_SESSION['nomeUsuario'])) {
+            unset($_SESSION['nomeUsuario']);
+        }
+        session_destroy();
+
         return $this->loadView('loginRegistro/login', [], false);
     }
 }
