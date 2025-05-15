@@ -31,6 +31,26 @@ class PessoaFisica extends ModelMain
 
         return $this->conexao->lastInsertId();
     }
-}
 
+    public function getNomeUsuario($email)
+    {
+        $getUsuario = "SELECT pessoa_fisica.nome, usuario.login
+                    FROM usuario
+                    INNER JOIN pessoa_fisica ON usuario.pessoa_fisica_id = pessoa_fisica.pessoa_fisica_id
+                    WHERE usuario.login = :email";
+        
+        $buscar = $this->conexao->prepare($getUsuario);
+        $buscar->execute([
+            ':email' => $email,
+        ]);
+
+        $resultado = $buscar->fetch(PDO::FETCH_ASSOC);
+
+        if ($resultado && isset($resultado['nome'])) {
+            return $resultado['nome'];
+        }
+
+        return null;
+    }
+}
 ?>
