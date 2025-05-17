@@ -1,1 +1,13 @@
-
+/* Apenas ajuste visual leve */
+body {
+  background-color: #f8f9fa;
+}
+input[type="text"]{
+  background-color: rgb(241, 241, 241);
+}
+input[type="email"]{
+  background-color: rgb(241, 241, 241);
+}
+input[type="password"]{
+  background-color: rgb(241, 241, 241);
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Formulário de Registro</title>
+  <!-- Importa o CSS do Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body class="p-4">
+
+<!-- Container centralizado com borda, sombra e padding -->
+  <div class="container position-absolute top-50 start-50 translate-middle w-25 p-3 border rounded shadow p-7" >
+
+     <!-- Imagem do topo -->
+    <img src="https://encurtador.com.br/DSVpg" style="max-width: 20px;">
+
+    <!-- Título do formulário -->
+    <h2 class="mb-4 fw-bold mb-3" style="text-align: center ;">Registro</h2>
+
+     <!-- Formulário com validação desativada pelo navegador -->
+    <form id="registroForm" novalidate>
+
+      <!-- Seletor para escolher o tipo de registro -->
+      <div class="mb-3">
+        <label class="form-label d-block text-center ">Voce ira se Registrar como</label>
+        <select class="form-select" id="tipoRegistro" required>
+          <option value="" selected disabled>Selecione</option>
+          <option value="empresa">Empresa</option>
+          <option value="candidato">Candidato</option>
+        </select>
+      </div>
+
+       <!-- Formulário da empresa (inicialmente escondido) -->
+      <div id="formEmpresa" style="display:none;">
+        <div class="mb-3">
+          <label for="nomeEmpresa" class="visually-hidden">Nome da Empresa</label>
+          <input type="text" class="form-control " id="nomeEmpresa" placeholder="Nome da Empresa" />
+        </div>
+        <div class="mb-3">
+          <label for="cnpj" class="visually-hidden">CNPJ</label>
+          <input type="text" class="form-control " id="cnpj" maxlength="18" placeholder="CNPJ 00.000.000/0000-00" />
+                <script>
+                  $(document).ready(function() {
+                  $('#cnpj').mask('00.000.000/0000-00');
+                  });
+                </script>
+        </div>
+        <div class="mb-3">
+          <label for="emailEmpresa" class="visually-hidden">Email</label>
+          <input type="email" class="form-control " id="emailEmpresa" placeholder="E-mail" />
+        </div>
+        <div class="mb-3">
+          <label for="senhaEmpresa" class="visually-hidden">Senha</label>
+          <input type="password" class="form-control " id="senhaEmpresa" placeholder="Senha" />
+        </div>
+        <div class="mb-3">
+          <label for="confSenhaEmpresa" class="visually-hidden">Confirmar Senha</label>
+          <input type="password" class="form-control " id="confSenhaEmpresa" placeholder="Confirmar Senha" />
+
+           <!-- Feedback de erro caso as senhas não coincidam -->
+          <div class="invalid-feedback">As senhas não coincidem.</div>
+        </div>
+      </div>
+
+      <!-- Formulário do candidato (inicialmente escondido) -->
+      <div id="formCandidato" style="display:none;">
+        <div class="mb-3">
+          <label for="nomeCandidato" class="visually-hidden">Nome</label>
+          <input type="text" class="form-control " id="nomeCandidato" placeholder="Nome"/>
+        </div>
+        <div class="mb-3">
+          <label for="sobrenomeCandidato" class="visually-hidden">Sobrenome</label>
+          <input type="text" class="form-control " id="sobrenomeCandidato" placeholder="Sobrenome"/>
+        </div>
+        <div class="mb-3">
+          <label for="emailCandidato" class="visually-hidden">Email</label>
+          <input type="email" class="form-control " id="emailCandidato" placeholder="E-mail" />
+        </div>
+        <div class="mb-3">
+          <label for="cpf" class="visually-hidden">CPF</label>
+          <input type="text" class="form-control " id="cpf" maxlength="11" placeholder="CPF 00.000.000-00" inputmode="numeric" pattern="[0-9]*"
+           oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+        </div>
+        <div class="mb-3">
+          <label for="senhaCandidato" class="visually-hidden">Senha</label>
+          <input type="password" class="form-control " id="senhaCandidato" placeholder="Senha" />
+        </div>
+        <div class="mb-3">
+
+          <!-- Feedback de erro caso as senhas não coincidam -->
+          <label for="confSenhaCandidato" class="visually-hidden">Confirmar Senha</label>
+          <input type="password" class="form-control " id="confSenhaCandidato" placeholder="Confirmar Senha"/>
+          <div class="invalid-feedback">As senhas não coincidem.</div>
+        </div>
+      </div>
+
+       <!-- Botão de continuar, centralizado -->
+      <div class="d-flex justify-content-center">
+      <button id="btnPress" class="btn btn-primary">Continuar</button>
+      
+      <!-- pequeno ajuste pro visual pro botão -->
+          <style>
+            #btnPress{
+             border-radius: 10px;
+             }
+             #btnPress {
+             transition: transform 0.1s ease;
+             }
+             #btnPress:active {
+             transform: scale(0.95);
+             }
+          </style>
+      </div>
+      <div></div>
+                <p class="mt-3" style="text-align: center;"">Já tem uma conta? <a href="index.html"  class="text-decoration-none">Fazer login</a></p>
+    </form>
+  </div>
+<!-- importando js do bootstrap e mascara para a digitação do CNPJ -->
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+  <script src="scrip.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
