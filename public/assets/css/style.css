@@ -70,7 +70,7 @@ body {
 .rightMenu {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 16px; /* Espaçamento entre os itens, ajuste conforme necessário */
     color: #fff !important;
 }
 
