@@ -26,7 +26,8 @@ class PessoaFisica extends ModelMain
         $sqlPessoaFisica = "INSERT INTO pessoa_fisica (nome, cpf) VALUES (:nome, :cpf)";
         $stmtPessoaFisica = $this->conexao->prepare($sqlPessoaFisica);
         $stmtPessoaFisica->execute([
-            ':nome' => $nome, ':cpf' => $cpf
+            ':nome' => $nome,
+            ':cpf' => $cpf
         ]);
 
         return $this->conexao->lastInsertId();

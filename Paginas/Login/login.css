@@ -80,6 +80,14 @@ form {
     text-align: center;
 }
 
+form select#tipoRegistro {
+    background-color: #eee !important;
+    border: none !important;
+    padding: 12px 15px !important;
+    margin: 8px 0 !important;
+    width: 100% !important;
+}
+
 input {
     background-color: #eee;
     border: none;
