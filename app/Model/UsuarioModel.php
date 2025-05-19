@@ -27,7 +27,9 @@ class UsuarioModel extends ModelMain
         $queryCheck = "SELECT COUNT(*) FROM usuario WHERE login = :email";
         $stmtCheck = $this->conexao->prepare($queryCheck);
         $stmtCheck->execute([':email' => $email]);
-        return $stmtCheck->fetchColumn() == 0;
+        $existe = $stmtCheck->fetchColumn() > 0;
+
+        return $existe;
     }
 
     public function inserirUsuario($pessoaFisicaId, $email, $senha)
@@ -38,7 +40,7 @@ class UsuarioModel extends ModelMain
             ':pessoa_fisica_id' => $pessoaFisicaId,
             ':login' => $email,
             ':senha' => $senha,
-            ':tipo' => 'usuario'
+            ':tipo' => '',
         ]);
 
         return $this->conexao->lastInsertId();
