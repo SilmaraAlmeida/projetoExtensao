@@ -513,7 +513,7 @@ class Database
         $clause = " {$field} LIKE ? ";
 
         // Setando valores
-        $this->params[] = "'%$value%'";
+        $this->params[] = "%$value%";
 
         // Adiciona a cláusula WHERE
         if (empty($this->where)) {

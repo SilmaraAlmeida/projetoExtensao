@@ -26,6 +26,21 @@ class ModelMain
     }
 
     /**
+     * getById
+     *
+     * @param int $id 
+     * @return array
+     */
+    public function getById($id)
+    {
+        if ($id == 0) {
+            return [];
+        } else {
+            return $this->db->where("id", $id)->first();
+        }
+    }
+
+    /**
      * lista
      *
      * @param string $orderby 
@@ -34,5 +49,20 @@ class ModelMain
     public function lista($orderby = 'descricao', $direction = "ASC")
     {   
         return $this->db->orderBy($orderby, $direction)->findAll();
+    }
+
+    /**
+     * insert
+     *
+     * @param array $dados 
+     * @return bool
+     */
+    public function insert($dados)
+    {
+        if ($this->db->insert($dados) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

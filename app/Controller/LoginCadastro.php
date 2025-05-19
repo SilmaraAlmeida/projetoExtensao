@@ -1,123 +1,96 @@
 <?php
 namespace App\Controller;
 
+use App\Model\PessoaFisica;
+use App\Model\Telefone;
+use App\Model\TermoUso;
+use App\Model\TermoUsoAceite;
+use App\Model\UsuarioModel;
 use Core\Library\ControllerMain;
 use PDO;
 use PDOException;
 
 class LoginCadastro extends ControllerMain
 {
+    private $conexao;
+    private $pessoaFisica;
+
+    public function __construct()
+    {
+        $this->loadHelper('utilits');
+        $this->conexao = new PDO('mysql:host=localhost;dbname=descubra_muriae', 'root', '');
+        $this->conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);      
+        
+        $this->pessoaFisica = new PessoaFisica($this->conexao);
+    }
+
     public function index()
     {
-        return view('comuns/loginRegistro/login');
+        return $this->loadView('loginRegistro/login', [], false);
     }
 
     public function registrar()
     {
-        $nome  = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING);
-        $cpf   = filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_STRING);
+        $nome  = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $cpf   = filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
         try {
-            $conexao = new PDO('mysql:host=localhost;dbname=descubra_muriae', 'root', '');
-            $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->conexao->beginTransaction();
 
-            $conexao->beginTransaction();
+            $usuario = new UsuarioModel($this->conexao);
+            $termoUso = new TermoUso($this->conexao);
+            $termoDeUsoAceite = new TermoUsoAceite($this->conexao);
+            $telefone = new Telefone($this->conexao);
 
-            // Inserir na tabela pessoa_fisica
-            $sqlPessoaFisica = "INSERT INTO pessoa_fisica (nome, cpf) VALUES (:nome, :cpf)";
-            $stmtPessoaFisica = $conexao->prepare($sqlPessoaFisica);
-            $stmtPessoaFisica->execute([':nome' => $nome, ':cpf' => $cpf]);
+            $this->pessoaFisica->inserirPessoaFisica($nome, $cpf);
+            $pessoaFisicaId = $this->conexao->lastInsertId();
 
-            $pessoaFisicaId = $conexao->lastInsertId();
+            if ($usuario->emailJaExiste($email)) {
+                $usuarioId = $usuario->inserirUsuario($pessoaFisicaId, $email, $senha);
+                echo 'Usuário inserido com sucesso';
 
-            // verifica se já tem um cadastro com esse e-mail
-            $queryCheck = "SELECT COUNT(*) FROM usuario WHERE login = :email";
-            $stmtCheck = $conexao->prepare($queryCheck);
-            $stmtCheck->execute([':email' => $email]);
-            if ($stmtCheck->fetchColumn() > 0) {
-                echo "E-mail já cadastrado";
-                return;
+                $termoUso->inserirTermoUso($usuarioId);
+                $termoDeUsoAceite->inserirTermoUsoAceite($this->conexao->lastInsertId(), $usuarioId);
+                $telefone->inserirTelefone($usuarioId);
+
+                $this->conexao->commit();
+                echo "Usuário registrado com sucesso.";
+            } else {
+                $this->conexao->rollBack();
+                echo 'E-mail já cadastrado';
             }
-            
-            // Inserir na tabela usuario
-            $sqlUsuario = "INSERT INTO usuario (pessoa_fisica_id, login, senha, tipo) VALUES (:pessoa_fisica_id, :login, :senha, :tipo)";
-            $stmtUsuario = $conexao->prepare($sqlUsuario);
-            $stmtUsuario->execute([
-                ':pessoa_fisica_id' => $pessoaFisicaId,
-                ':login' => $email,
-                ':senha' => $senha,
-                ':tipo' => 'usuario'
-            ]);
-
-            $usuarioId = $conexao->lastInsertId();
-
-            // inseriri no telefone
-            // $sqlTelefone = "INSERT INTO telefone (usuario_id, numero, tipo) VALUES (:usuario_id, :numero, :tipo)";
-            // $stmtTelefone = $conexao->prepare($sqlTelefone);
-            // $stmtTelefone->execute([
-            //     ':usuario_id' => $usuarioId,
-            //     ':numero' => '32999999999',
-            //     ':tipo' => 'celular'
-            // ]);
-
-            // Inserir no termodeuso
-            $sqlTermo = "INSERT INTO termodeuso (textoTermo, statusRegistro, rascunho, usuario_id) 
-                        VALUES (:textoTermo, :statusRegistro, :rascunho, :usuario_id)";
-            $stmtTermo = $conexao->prepare($sqlTermo);
-            $stmtTermo->execute([
-                ':textoTermo' => 'Texto do termo',
-                ':statusRegistro' => 1,
-                ':rascunho' => 0,
-                ':usuario_id' => $usuarioId
-            ]);
-
-            $termoDeUsoId = $conexao->lastInsertId();
-
-            // inserir no temodeusoaceite
-            $sqlAceite = "INSERT INTO termodeusoaceite (termodeuso_id, usuario_id, dataHoraAceite)
-                        VALUES (:termodeuso_id, :usuario_id, NOW())";
-            $stmtAceite = $conexao->prepare($sqlAceite);
-            $stmtAceite->execute([
-                ':termodeuso_id' => $termoDeUsoId,
-                ':usuario_id' => $usuarioId
-            ]);
-
-            $conexao->commit();
-
-            echo "Usuário registrado com sucesso.";
         } catch (PDOException $e) {
-            $conexao->rollBack();
+            $this->conexao->rollBack();
             echo "Erro ao registrar: " . $e->getMessage();
         }
     }
 
     public function login()
     {
-
-        $conexao = new PDO('mysql:host=localhost;dbname=descubra_muriae', 'root', '');
-
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $senhaDigitada = $_POST['senha'];
 
-        $getHash = "SELECT senha FROM usuario WHERE login = :email";
-        $validarHash = $conexao->prepare($getHash);
-        $validarHash->execute([
-            ':email' => $email,
-        ]);
+        $usuario = new UsuarioModel($this->conexao);
 
-        $resultado = $validarHash->fetch(PDO::FETCH_ASSOC);
+        $resultado = $usuario->getHash($email)->fetch(PDO::FETCH_ASSOC);
 
         if ($resultado && password_verify($senhaDigitada, $resultado['senha'])) {
-            return view('comuns/portalUsuario/homePortal');
+            $_SESSION['nomeUsuario'] = $this->pessoaFisica->getNomeUsuario($email);
+
+            return $this->loadView('portalUsuario/homePortal', [], true);
         } else {
             var_dump("não foi possível logar");
         }
     }
 
-    // falta verificação
     public function deslogar() {
-        return view('comuns/loginRegistro/login');
+        if (isset($_SESSION['nomeUsuario'])) {
+            unset($_SESSION['nomeUsuario']);
+        }
+        session_destroy();
+
+        return $this->loadView('loginRegistro/login', [], false);
     }
 }
