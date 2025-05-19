@@ -1,12 +1,14 @@
 <?php
 namespace App\Controller;
 
+use App\Model\Estabelecimento;
 use App\Model\PessoaFisica;
 use App\Model\Telefone;
 use App\Model\TermoUso;
 use App\Model\TermoUsoAceite;
 use App\Model\UsuarioModel;
 use Core\Library\ControllerMain;
+use Exception;
 use PDO;
 use PDOException;
 
@@ -14,6 +16,7 @@ class LoginCadastro extends ControllerMain
 {
     private $conexao;
     private $pessoaFisica;
+    private $usuario;
 
     public function __construct()
     {
@@ -22,6 +25,8 @@ class LoginCadastro extends ControllerMain
         $this->conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);      
         
         $this->pessoaFisica = new PessoaFisica($this->conexao);
+        $this->usuario = new UsuarioModel($this->conexao);
+
     }
 
     public function index()
@@ -29,37 +34,69 @@ class LoginCadastro extends ControllerMain
         return $this->loadView('loginRegistro/login', [], false);
     }
 
+    // lógica de inserção tanto de empresa quanto de candidato funcionando
     public function registrar()
     {
-        $nome  = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $cpf   = filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $tipoRegistro = $_POST['tipoRegistro'];
+        $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $cnpj = filter_input(INPUT_POST, 'cnpj', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $cpf = filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
         try {
             $this->conexao->beginTransaction();
 
-            $usuario = new UsuarioModel($this->conexao);
-            $termoUso = new TermoUso($this->conexao);
-            $termoDeUsoAceite = new TermoUsoAceite($this->conexao);
-            $telefone = new Telefone($this->conexao);
+            if ($tipoRegistro === 'candidato') {
+                $_SESSION['tipoRegistro'] = $tipoRegistro;
+                
+                $termoUso = new TermoUso($this->conexao);
+                $termoDeUsoAceite = new TermoUsoAceite($this->conexao);
+                $telefone = new Telefone($this->conexao);
+                
+                $this->pessoaFisica->inserirPessoaFisica($nome, $cpf);
+                $pessoaFisicaId = $this->conexao->lastInsertId();
+                
+                if (!$this->usuario->emailJaExiste($email)) {
+                    $usuarioId = $this->usuario->inserirUsuario($pessoaFisicaId, $email, $senha);
+                    echo 'Usuário inserido com sucesso';
+                    
+                    $termoUso->inserirTermoUso($usuarioId);
+                    $termoDeUsoAceite->inserirTermoUsoAceite($this->conexao->lastInsertId(), $usuarioId);
+                    $telefone->inserirTelefone($usuarioId);
+                    
+                    $this->conexao->commit();
+                    echo "Usuário registrado com sucesso.";
+                } else {
+                    echo 'E-mail já cadastrado';
+                    $this->conexao->rollBack();
+                }
 
-            $this->pessoaFisica->inserirPessoaFisica($nome, $cpf);
-            $pessoaFisicaId = $this->conexao->lastInsertId();
+            } elseif ($tipoRegistro === 'empresa') {
+                $_SESSION['tipoRegistro'] = $tipoRegistro;
+                try {
+                    $estabelecimento = new Estabelecimento($this->conexao);
 
-            if ($usuario->emailJaExiste($email)) {
-                $usuarioId = $usuario->inserirUsuario($pessoaFisicaId, $email, $senha);
-                echo 'Usuário inserido com sucesso';
+                    if ($this->usuario->emailJaExiste($email)) {
+                        echo "E-mail já cadastrado";
+                    } else {
 
-                $termoUso->inserirTermoUso($usuarioId);
-                $termoDeUsoAceite->inserirTermoUsoAceite($this->conexao->lastInsertId(), $usuarioId);
-                $telefone->inserirTelefone($usuarioId);
+                        $sucesso = $estabelecimento->inserirEmpresa($nome, $cnpj, $email);
+                        $this->conexao->commit();
+                        
+                        if ($sucesso) {
+                            echo "Empresa inserida com sucesso";
+                        } else {
+                            $this->conexao->rollBack();
+                            echo "Erro ao inserir empresa";
+                        }
+                    }
+                } catch (Exception $e) {
+                    $this->conexao->rollBack();
+                    echo "Ocorreu um erro: " . $e->getMessage();
+                }
 
-                $this->conexao->commit();
-                echo "Usuário registrado com sucesso.";
-            } else {
-                $this->conexao->rollBack();
-                echo 'E-mail já cadastrado';
+                // return $this->loadView('loginRegistro/login', [], false);
             }
         } catch (PDOException $e) {
             $this->conexao->rollBack();
@@ -67,6 +104,8 @@ class LoginCadastro extends ControllerMain
         }
     }
 
+    // falta implemetar o login da empresa
+    // (discutir a respeito das tabelas 'usuario' e 'estabelecimento')
     public function login()
     {
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
