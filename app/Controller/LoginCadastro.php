@@ -74,35 +74,36 @@ class LoginCadastro extends ControllerMain
 
             } elseif ($tipoRegistro === 'empresa') {
                 $_SESSION['tipoRegistro'] = $tipoRegistro;
-                try {
-                    $estabelecimento = new Estabelecimento($this->conexao);
+                $estabelecimento = new Estabelecimento($this->conexao);
 
-                    if ($this->usuario->emailJaExiste($email)) {
-                        echo "E-mail já cadastrado";
+                if ($this->usuario->emailJaExiste($email)) {
+                    echo "E-mail já cadastrado";
+                } else {
+
+                    $sucesso = $estabelecimento->inserirEmpresa($nome, $cnpj, $email);
+                    $this->conexao->commit();
+                    
+                    if ($sucesso) {
+                        echo "Empresa inserida com sucesso";
                     } else {
-
-                        $sucesso = $estabelecimento->inserirEmpresa($nome, $cnpj, $email);
-                        $this->conexao->commit();
-                        
-                        if ($sucesso) {
-                            echo "Empresa inserida com sucesso";
-                        } else {
-                            $this->conexao->rollBack();
-                            echo "Erro ao inserir empresa";
-                        }
+                        $this->conexao->rollBack();
+                        echo "Erro ao inserir empresa";
                     }
-                } catch (Exception $e) {
-                    $this->conexao->rollBack();
-                    echo "Ocorreu um erro: " . $e->getMessage();
                 }
 
-                // return $this->loadView('loginRegistro/login', [], false);
+                return $this->loadView('loginRegistro/login', [], false);
             }
         } catch (PDOException $e) {
             $this->conexao->rollBack();
             echo "Erro ao registrar: " . $e->getMessage();
         }
     }
+    // a tabela de estabelecimento deveria ter uma parte dedicada para
+    // login, senha, cnpj ..., já q na tabela 'usuario', tem o campo pessoa_fisica
+    // que é direcionado a uma pessoa com cpf
+
+    // como serão dois tipos de login (candidato e empresa), senti a necessidade
+    // de mais informações sobre o estabelecimento/empresa
 
     // falta implemetar o login da empresa
     // (discutir a respeito das tabelas 'usuario' e 'estabelecimento')
