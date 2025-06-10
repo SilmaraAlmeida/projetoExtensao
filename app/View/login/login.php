@@ -3,7 +3,7 @@
         <h3>Login</h3>
     </div>
     <div class="card-body">
-        <form action="/autenticacao/signIn" method="POST">
+        <form action="/login/signIn" method="POST">
             <div class="row">
                 <div class="mb-3 col-12">
                     <label for="login" class="form-label">Email</label>
@@ -14,9 +14,9 @@
                     <input type="password" class="form-control border-dark" id="senha" name="senha" required>
                 </div>
                 <div class="col-12 d-flex justify-content-between mt-3 mb-2">
-                    <h6><a href="<?= baseUrl() ?>Autenticacao/esqueciASenha" class="text-decoration-none">Esqueci minha senha!</a></h6>
+                    <h6><a href="<?= baseUrl() ?>Login/esqueciASenha" class="text-decoration-none">Esqueci minha senha!</a></h6>
                     <!--
-                    <h6><a href="/Autenticacao/cadastrarLogin" class="link-secondary fw-bold">Quero criar uma conta</a></h6>
+                    <h6><a href="/Login/cadastrarLogin" class="link-secondary fw-bold">Quero criar uma conta</a></h6>
                     -->
                 </div>
                 <div class="col-12 mb-3">
