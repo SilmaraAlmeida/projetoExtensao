@@ -1,3 +1,9 @@
+<?php
+
+use Core\Library\Session;
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -20,10 +26,6 @@
     </head>
     <body>
         <nav class="navbar bg-body-tertiary px-3 mb-3 p-4 header">
-            <!-- menu só será exibido após o login -->
-            <!-- <div class="menuHamburger">
-                <img src="<?= baseUrl() ?>/assets/img/menu.png" alt="Ícone menu" onclick="toggleMenu()">
-            </div> -->
 
             <div class="logo">
                 <img src="<?= baseUrl() ?>/assets/img/logo.png" alt="Logo">
@@ -44,10 +46,27 @@
                         <option value="redes"><a href="#">Redes</a></option>
                     </select>
                 </li>
-                <li>
-                    <a class="dropdown-item entrar" href="LoginCadastro/">Entrar</a>
+                <?php if (Session::get("userLogin")): ?>
+                    <?php if (Session::get("userNivel") == "G"): ?>
+                        <li>
+                            <a class="dropdown-item entrar" href="<?baseUrl()?>/homePortal">Acessar Área do Gestor</a>
+                        </li>
+                    <?php elseif (Session::get("userNivel") == "A"): ?>
+                        <li>
+                            <a class="dropdown-item entrar" href="">Acessar Área da Empresa</a>
+                        </li>
+                    <?php else: ?>
+                        <li>
+                            <a class="dropdown-item entrar" href="">Acessar Área do Usuário</a>
+                        </li>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <li>
+                        <a class="dropdown-item entrar" href="Login/">Entrar</a>
+                    </li>
+                <?php endif; ?>
 
-                </li>
+                
                 <li>
                     <!-- perfil só será exibido após o login -->
                     <!-- <div class="perfil">

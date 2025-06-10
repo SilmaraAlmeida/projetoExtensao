@@ -37,7 +37,7 @@ class ControllerMain
         $this->request      = new Request();
 
         // carregar helper padrão
-        $this->loadHelper("utilits");
+        $this->loadHelper(["formulario", "utilits"]);
     }
 
     /**
@@ -100,15 +100,23 @@ class ControllerMain
             require_once $pathView . "Comuns" . DIRECTORY_SEPARATOR . "cabecalho.php";
         }
 
-        // Será utilizado futuramente para recuperar valores quando idenficado
         // erros na validação do formulário
         if (Session::get("inputs") != false) {
-            $aDados = Session::getDestroy("inputs");
+            $dados['data'] = Session::getDestroy("inputs");
         }
 
         // Será utilizado para recuperar valores e preencher o formulário
-        if (count($aDados) > 0) {
-            $_POST = $aDados;
+        if (isset($dados['data'])) {
+			$_POST = $dados['data'];
+		} else {
+			if (count($dados) > 0) {
+				$_POST = $dados;
+			}
+		}
+        
+        // Será utilizado futuramente para recuperar valores quando idenficado
+        if (Session::get("errors") != false) {
+            $_POST['formErrors'] = Session::getDestroy('errors');
         }
 
         // carrega a página

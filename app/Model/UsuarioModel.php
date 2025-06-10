@@ -1,58 +1,40 @@
-<?php 
+<?php
+
 namespace App\Model;
 
 use Core\Library\ModelMain;
-use PDO;
 
 class UsuarioModel extends ModelMain
 {
-    protected $table = 'usuario';
-    protected $primaryKey = 'usuario_id';
-    protected $useAutoIncrement = true;
-    protected $allowedFields = [
-        'pessoa_fisica_id',
-        'login',
-        'senha',
-        'tipo',
+    protected $table = "usuario";
+
+    public $validationRules = [
+        "pessoa_fisica_id"  => [
+            "label" => 'Pessoa Fisica',
+            "rules" => 'required|min:3|max:60'
+        ],
+        "login"  => [
+            "label" => 'Email',
+            "rules" => 'required|min:5|max:150'
+        ],
+        "tipo"  => [
+            "label" => 'Tipo de Usuario',
+            "rules" => 'required|int'
+        ]
     ];
-    private $conexao;
 
-    public function __construct(PDO $conexao)
+    /**
+     * getUserEmail
+     *
+     * @param string $login 
+     * @return array
+     */
+    public function getUserEmail($login)
     {
-        $this->conexao = $conexao;
-    }
-
-    public function emailJaExiste($email)
-    {
-        $queryCheck = "SELECT COUNT(*) FROM usuario WHERE login = :email";
-        $stmtCheck = $this->conexao->prepare($queryCheck);
-        $stmtCheck->execute([':email' => $email]);
-        return $stmtCheck->fetchColumn() == 0;
-    }
-
-    public function inserirUsuario($pessoaFisicaId, $email, $senha)
-    {
-        $sqlUsuario = "INSERT INTO usuario (pessoa_fisica_id, login, senha, tipo) VALUES (:pessoa_fisica_id, :login, :senha, :tipo)";
-        $stmtUsuario = $this->conexao->prepare($sqlUsuario);
-        $stmtUsuario->execute([
-            ':pessoa_fisica_id' => $pessoaFisicaId,
-            ':login' => $email,
-            ':senha' => $senha,
-            ':tipo' => 'usuario'
-        ]);
-
-        return $this->conexao->lastInsertId();
-    }
-
-    public function getHash($email)
-    {
-        $getHash = "SELECT senha FROM usuario WHERE login = :email";
-        $validarHash = $this->conexao->prepare($getHash);
-        $validarHash->execute([
-            ':email' => $email,
-        ]);
-
-        return $validarHash;
+        return $this->db
+            ->join("pessoa_fisica", "usuario.pessoa_fisica_id", "INNER")
+            ->where("usuario.login", $login)
+            ->select("usuario.*, pessoa_fisica.nome")
+            ->first();
     }
 }
-?>

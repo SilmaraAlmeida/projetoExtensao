@@ -1,4 +1,4 @@
-<?= formTitulo("Lista UF", true) ?>
+<?= formTitulo("Lista Usuario", true) ?>
 
 <div class="m-2">
 
@@ -6,8 +6,9 @@
         <thead>
             <tr>
                 <th scope="col">Id</th>
-                <th scope="col">Sigla</th>
-                <th scope="col">Descrição</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Email</th>
+                <th scope="col">Tipo de Usuario</th>
                 <th scope="col">Opções</th>
             </tr>
         </thead>
@@ -15,8 +16,9 @@
             <?php foreach ($aDados as $value): ?>
                 <tr>
                     <th scope="row"><?= $value['id'] ?></th>
-                    <td><?= $value['sigla'] ?></td>
-                    <td><?= $value['descricao'] ?></td>
+                    <td><?= $value['nome'] ?></td>
+                    <td><?= $value['login'] ?></td>
+                    <td><?= $value['tipo'] ?></td>
                     <td>
                         <a href="" title="Visualizar">Visualizar</a>
                         <a href="" title="Alterar">Alterar</a>

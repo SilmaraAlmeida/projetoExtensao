@@ -3,3 +3,5 @@
 # Environment Files
 #-------------------------
 .env
+
+composer.lock

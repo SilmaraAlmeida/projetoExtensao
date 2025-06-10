@@ -7,6 +7,7 @@ class ModelMain
     public $db;
     public $validationRules = [];
     protected $table;
+    protected $primaryKey = "id";
 
     /**
      * construct
@@ -59,7 +60,45 @@ class ModelMain
      */
     public function insert($dados)
     {
-        if ($this->db->insert($dados) > 0) {
+        if (Validator::make($dados, $this->validationRules)) {
+            return 0;
+        } else {
+            if ($this->db->insert($dados) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } 
+    }
+
+    /**
+     * update
+     *
+     * @param array $dados 
+     * @return bool
+     */
+    public function update($dados)
+    {
+        if (Validator::make($dados, $this->validationRules)) {
+            return 0;
+        } else {
+            if ($this->db->where($this->primaryKey, $dados[$this->primaryKey])->update($dados) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    /**
+     * delete
+     *
+     * @param array $dados 
+     * @return bool
+     */
+    public function delete($dados)
+    {
+        if ($this->db->where($this->primaryKey, $dados[$this->primaryKey])->delete() > 0) {
             return true;
         } else {
             return false;

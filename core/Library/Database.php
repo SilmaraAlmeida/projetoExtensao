@@ -709,7 +709,7 @@ class Database
     {
         try {
             $fields = implode(" = ?, ", array_keys($data)) . " = ?";
-            $sql    = "UPDATE {$this->table} SET {$fields} WHERE {$this->where}";
+            $sql    = "UPDATE {$this->table} SET {$fields} {$this->where}";
             $updData = array_merge(array_values($data), $this->params);
 
             $query  = $this->connect()->prepare($sql);
@@ -735,7 +735,7 @@ class Database
     public function delete()
     {
         try {
-            $sql    = "DELETE FROM {$this->table} WHERE {$this->where};";
+            $sql    = "DELETE FROM {$this->table} {$this->where};";
 
             $query  = $this->connect()->prepare($sql);
             $query->execute($this->params);
