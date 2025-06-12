@@ -6,6 +6,12 @@ defined('DEFAULT_CONTROLLER') || define("DEFAULT_CONTROLLER", 'Home');
 // Método padrão
 defined('DEFAULT_METODO') || define("DEFAULT_METODO", 'index');
 
+// Controller autorizados a executar sem login
+defined('CONTROLLER_AUTH') || define('CONTROLLER_AUTH', [
+    "Home",
+    "Login"
+]);
+
 // Definir o time_zone_default
 defined("DEFAULT_TIME_ZONE") || define("DEFAULT_TIME_ZONE", "America/Sao_Paulo");
 

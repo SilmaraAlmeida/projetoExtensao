@@ -1,16 +1,15 @@
 <?php
 
 use Core\Library\Request;
-use Core\Library\Session;
 
 function formTitulo($titulo, $btnNovo = false)
 {
     $request = new Request();
 
     if ($btnNovo) {
-        $cHtmlBtn = '<a href="' . baseUrl() . $request->getController() . '/form/insert/0" title="Novo" class="btn btn-outline-info text-white">Novo</a>';
+        $cHtmlBtn = buttons("new");
     } else {
-        $cHtmlBtn = '<a href="' . baseUrl() . $request->getController() . '" title="Voltar" class="btn btn-outline-info text-white">Voltar</a>';
+        $cHtmlBtn = buttons("voltarTitulo");
     }
 
     $cHtml = '  <div class="row bg-primary text-white m-2">
@@ -22,9 +21,8 @@ function formTitulo($titulo, $btnNovo = false)
                     </div>
                 </div>';
 
-    var_dump(Session::getDestroy("msgSucess"));
-    var_dump(Session::getDestroy("msgError"));
-
+    $cHtml .= exibeAlerta();
+    
     return $cHtml;
 }
 
@@ -70,3 +68,32 @@ function formButton()
     
     return $cHtml;
 }
+
+/**
+ * buttons
+ *
+ * @param string $acao 
+ * @param int $id 
+ * @return string
+ */
+function buttons($acao, $id = 0) 
+{
+    $request = new Request();
+    $button = "";
+
+    if ($acao == "new") {
+        $button = '<a href="' . baseUrl()  . $request->getController() . '/form/new/0" class="btn btn-outline-info text-white btn-sm" title="Novo"><i class="fa-solid fa-pen"></i></a>';
+    } elseif ($acao == "update") {
+        $button = '<a href="' . baseUrl()  . $request->getController() . '/form/update/' . $id . '" class="btn btn-primary btn-sm" title="Alteração"><i class="fa-solid fa-pen-to-square"></i></a>';
+    } elseif ($acao == "delete") {
+        $button = '<a href="' . baseUrl()  . $request->getController() . '/form/delete/' . $id . '" class="btn btn-primary btn-sm" title="Exclusão"><i class="fa-solid fa-trash-can"></i></i></a>';
+    } elseif ($acao == "view") {
+        $button = '<a href="' . baseUrl()  . $request->getController() . '/form/view/' . $id . '" class="btn btn-primary btn-sm" title="Visualização"><i class="fa-solid fa-eye"></i></a>';
+    } elseif ($acao == "voltarTitulo") {
+        $button = '<a href="' . baseUrl()  . $request->getController() . '" class="btn btn-outline-info text-white btn-sm" title="Voltar"><i class="fa-solid fa-rotate-left"></i></a>';
+    }
+
+    return $button;    
+}
+
+

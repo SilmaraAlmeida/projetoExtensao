@@ -38,6 +38,17 @@ class ControllerMain
 
         // carregar helper padrão
         $this->loadHelper(["formulario", "utilits"]);
+
+        // Verifida os controllers autorizados sem login efetuado, permitindo passar controller Api que serão validados a parte
+        if (substr($this->controller, 0, 3) != "Api") {
+
+            if (!in_array($this->controller, CONTROLLER_AUTH)) {
+                if (!Session::get("userId")) {
+                    return Redirect::page("login", ['msgError' => "Para acessar a rotina favor antes efetuar o login."]);
+                }
+            }
+
+        }
     }
 
     /**

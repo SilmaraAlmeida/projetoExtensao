@@ -75,4 +75,17 @@ class Request
     {
         return baseUrl() . $this->getController() . '/' . $this->getAction();
     }
+
+    /**
+     * getJson - Lê dados recebidos no corpo da requisição
+     *
+     * @return array
+     */
+    public static function getJson(): array
+    {
+        $input = file_get_contents('php://input');  // Lê dados enviados no  corpo da requisição
+        $data   = json_decode($input, true);
+
+        return is_array($data) ? $data : [];
+    }
 }
