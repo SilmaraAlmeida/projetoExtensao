@@ -37,4 +37,19 @@ class UsuarioModel extends ModelMain
             ->select("usuario.*, pessoa_fisica.nome")
             ->first();
     }
+
+    /**
+     * getById
+     *
+     * @param int $id
+     * @return array|null
+     */
+    public function getUserId($usuario_id)
+    {
+        return $this->db
+            ->join("pessoa_fisica", "usuario.pessoa_fisica_id", "INNER")
+            ->where("usuario.usuario_id", $usuario_id)
+            ->select("usuario.*, pessoa_fisica.nome, pessoa_fisica.cpf")
+            ->first();
+    }
 }

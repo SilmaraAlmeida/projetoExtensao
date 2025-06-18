@@ -28,7 +28,7 @@ use Core\Library\Session;
         <nav class="navbar bg-body-tertiary px-3 mb-3 p-4 header">
 
             <div class="logo">
-                <img src="<?= baseUrl() ?>/assets/img/logo.png" alt="Logo">
+                <a href="/home/"><img src="<?= baseUrl() ?>/assets/img/logo.png" alt="Logo"></a>
             </div>
             <div class="pesquisa">
                 <input type="text" placeholder="Pesquisar">
@@ -49,7 +49,7 @@ use Core\Library\Session;
                 <?php if (Session::get("userLogin")): ?>
                     <?php if (Session::get("userNivel") == "G"): ?>
                         <li>
-                            <a class="dropdown-item entrar" href="<?baseUrl()?>/homePortal">Acessar Área do Gestor</a>
+                            <a class="dropdown-item entrar" href="/Sistema/">Acessar Área do Gestor</a>
                         </li>
                     <?php elseif (Session::get("userNivel") == "A"): ?>
                         <li>
