@@ -234,54 +234,54 @@ class Login extends ControllerMain
         }
     }
 
-//     /**
-//      * atualizaRecuperaSenha
-//      *
-//      * @return void
-//      */
-//     public function atualizaRecuperaSenha()
-//     {
-//         $UsuarioModel = $this->loadModel("Usuario");
+    /**
+     * atualizaRecuperaSenha
+     *
+     * @return void
+     */
+    public function atualizaRecuperaSenha()
+    {
+        $UsuarioModel = $this->loadModel("Usuario");
 
-//         $post       = $this->request->getPost();
-//         $userAtual  = $UsuarioModel->getById($post["id"]);
+        $post       = $this->request->getPost();
+        $userAtual  = $UsuarioModel->getUserId($post["id"]);
 
-//         if ($userAtual) {
+        if ($userAtual) {
 
-//             if (trim($post["NovaSenha"]) == trim($post["NovaSenha2"])) {
+            if (trim($post["NovaSenha"]) == trim($post["NovaSenha2"])) {
 
-//                 if ($UsuarioModel->db
-//                                 ->table("usuario")
-//                                 ->where(['id' => $post['id']])
-//                                 ->update([
-//                                     'senha'      => password_hash(trim($post["NovaSenha"]), PASSWORD_DEFAULT)
-//                                 ])
-//                     ) {
+                if ($UsuarioModel->db
+                                ->table("usuario")
+                                ->where(['id' => $post['id']])
+                                ->update([
+                                    'senha'      => password_hash(trim($post["NovaSenha"]), PASSWORD_DEFAULT)
+                                ])
+                    ) {
 
-//                     // Desativa chave
-//                     $usuarioRecuperaSenhaModel = $this->loadModel('UsuarioRecuperaSenha');
+                    // Desativa chave
+                    $usuarioRecuperaSenhaModel = $this->loadModel('UsuarioRecuperaSenha');
 
-//                     $upd = $usuarioRecuperaSenhaModel->desativaChave($post['usuariorecuperasenha_id']);
+                    $upd = $usuarioRecuperaSenhaModel->desativaChave($post['usuariorecuperasenha_id']);
 
-//                     Session::destroy("msgError");
-//                     return Redirect::page("Login", [
-//                         "msgSuccesso"    => "Senha atualizada com sucesso !"
-//                     ]);  
+                    Session::destroy("msgError");
+                    return Redirect::page("Login", [
+                        "msgSuccesso"    => "Senha atualizada com sucesso !"
+                    ]);  
 
-//                 } else {
-//                     return $this->loadView("login/recuperarSenha", $post);
-//                 }
+                } else {
+                    return $this->loadView("login/recuperarSenha", $post);
+                }
 
-//             } else {
-//                 Session::set("msgError", "Nova senha e conferência da senha estão divergentes !");
-//                 return $this->loadView("login/recuperarSenha", $post);
-//             }
+            } else {
+                Session::set("msgError", "Nova senha e conferência da senha estão divergentes !");
+                return $this->loadView("login/recuperarSenha", $post);
+            }
 
-//         } else {
-//             Session::set("msgError", "Usuário inválido !");
-//             return $this->loadView("login/recuperarSenha", $post);
-//         }
-//     }
+        } else {
+            Session::set("msgError", "Usuário inválido !");
+            return $this->loadView("login/recuperarSenha", $post);
+        }
+    }
 
 //     /**
 //      * criaSuperUser
