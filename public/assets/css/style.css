@@ -123,8 +123,6 @@ body {
 }
 
 .footer {
-    position: fixed;
-    /* Torna o footer fixo */
     bottom: 0;
     /* Posiciona no final da tela */
     left: 0;
@@ -139,10 +137,6 @@ body {
     color: white;
     padding: 20px 40px;
     font-size: 14px;
-    border-top: 2px solid white;
-    /* Linha separadora no topo */
-    z-index: 1000;
-    /* Garante que o footer fique acima de outros elementos */
 }
 
 .footer-left,
