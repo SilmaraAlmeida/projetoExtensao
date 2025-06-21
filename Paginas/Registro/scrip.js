@@ -1,98 +1,36 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const tipoRegistro = document.getElementById('tipoRegistro');
-  const formEmpresa = document.getElementById('formEmpresa');
-  const formCandidato = document.getElementById('formCandidato');
-  const registroForm = document.getElementById('registroForm');
+document.addEventListener('DOMContentLoaded', function() {
+    // ------ Lógica para mostrar campos de Trabalhador ou Empresa ------
+    const trabalhadorRadio = document.getElementById('trabalhador');
+    const empresaRadio = document.getElementById('empresa');
+    const trabalhadorFields = document.getElementById('trabalhadorFields');
+    const empresaFields = document.getElementById('empresaFields');
 
-  tipoRegistro.addEventListener('change', function () {
-    if (this.value === 'empresa') {
-      formEmpresa.style.display = 'block';
-      formCandidato.style.display = 'none';
-    } else if (this.value === 'candidato') {
-      formEmpresa.style.display = 'none';
-      formCandidato.style.display = 'block';
-    } else {
-      formEmpresa.style.display = 'none';
-      formCandidato.style.display = 'none';
-    }
-  });
-
-  registroForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    let isValid = true;
-
-    // Limpar classes de erro
-    registroForm.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
-
-    if (!tipoRegistro.value) {
-      // Se não escolheu empresa nem candidato
-      alert('Por favor, selecione o tipo de registro.');
-      isValid = false;
-      return;
-    }
-
-    if (tipoRegistro.value === 'empresa') {
-      // Campos empresa
-      const campos = [
-        'nomeEmpresa',
-        'cnpj',
-        'emailEmpresa',
-        'senhaEmpresa',
-        'confSenhaEmpresa',
-      ];
-
-      campos.forEach(id => {
-        const campo = document.getElementById(id);
-        if (!campo.value.trim()) {
-          campo.classList.add('is-invalid');
-          isValid = false;
+    function toggleFields() {
+        if (trabalhadorRadio.checked) {
+            trabalhadorFields.classList.remove('d-none');
+            empresaFields.classList.add('d-none');
+        } else if (empresaRadio.checked) {
+            trabalhadorFields.classList.add('d-none');
+            empresaFields.classList.remove('d-none');
         }
-      });
+    }
 
-      const senha = document.getElementById('senhaEmpresa');
-      const confSenha = document.getElementById('confSenhaEmpresa');
+    toggleFields();
+    trabalhadorRadio.addEventListener('change', toggleFields);
+    empresaRadio.addEventListener('change', toggleFields);
 
-      if (senha.value !== confSenha.value) {
-        confSenha.classList.add('is-invalid');
-        isValid = false;
-      }
-    } else if (tipoRegistro.value === 'candidato') {
-      // Campos candidato
-      const campos = [
-        'nomeCandidato',
-        'sobrenomeCandidato',
-        'emailCandidato',
-        'cpf',
-        'senhaCandidato',
-        'confSenhaCandidato',
-      ];
+    // ------ Validação de Senha e Confirmar Senha ------
+    const formulario = document.getElementById('formulario');
+    const senha = document.getElementById('senha');
+    const confirmarSenha = document.getElementById('confirmarSenha');
+    const mensagemErro = document.getElementById('mensagemErro');
 
-      campos.forEach(id => {
-        const campo = document.getElementById(id);
-        if (!campo.value.trim()) {
-          campo.classList.add('is-invalid');
-          isValid = false;
+    formulario.addEventListener('submit', function(event) {
+        if (senha.value !== confirmarSenha.value) {
+            event.preventDefault();  // Impede o envio do formulário
+            mensagemErro.textContent = 'As senhas não são iguais!';
+        } else {
+            mensagemErro.textContent = '';
         }
-      });
-
-      const senha = document.getElementById('senhaCandidato');
-      const confSenha = document.getElementById('confSenhaCandidato');
-
-      if (senha.value !== confSenha.value) {
-        confSenha.classList.add('is-invalid');
-        isValid = false;
-      }
-    }
-
-    if (isValid) {
-      alert('Formulário válido! Pronto para enviar.');
-      registroForm.reset();
-      formEmpresa.style.display = 'none';
-      formCandidato.style.display = 'none';
-    }
-  });
-   $(document).ready(function() {
-    $('#cnpj').mask('00.000.000/0000-00');
-  });
+    });
 });
