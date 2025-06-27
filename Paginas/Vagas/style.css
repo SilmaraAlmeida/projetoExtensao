@@ -1,0 +1,221 @@
+/* Seu código CSS anterior... */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif; /* Usando Arial como sans-serif padrão */
+    background-color: #f0f2f5; /* Cor de fundo geral da página */
+}
+
+/* Customização do Header e Footer */
+.bg-primary-custom {
+    background-color: #003B94 !important; /* Azul escuro conforme a imagem */
+}
+
+.logo-text {
+    color: white !important;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.search-input {
+    border-radius: 20px; /* Borda arredondada */
+    border: none;
+    padding: 0.375rem 1rem; /* Ajuste de padding */
+    width: 250px; /* Largura fixa para o campo de busca */
+}
+
+.custom-button {
+    border-radius: 5px;
+    border: 1px solid white; /* Borda branca */
+    color: white;
+}
+
+.custom-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.navbar-nav .nav-link {
+    color: white !important;
+    font-weight: 500;
+    margin-right: 15px; /* Espaçamento entre os links */
+}
+
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+    /* Adicionar um sublinhado ou destaque se desejar */
+}
+
+/* Conteúdo Principal */
+.page-content {
+    background-color: #e9ebee; /* Fundo cinza claro para o conteúdo */
+    min-height: calc(100vh - 120px); /* Altura da viewport menos altura do header e footer */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* Botões de Filtro */
+.filter-buttons .filter-btn {
+    text-decoration: none;
+    color: #003B94; /* Cor do texto dos filtros */
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 0.9rem;
+}
+
+.filter-buttons .filter-btn.active {
+    font-weight: bold;
+    border-bottom: 2px solid #003B94; /* Sublinhado para o ativo */
+}
+
+/* Cards de Vaga (Pequenos) */
+.job-card {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.job-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.job-card .card-title {
+    color: #003B94;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.job-card .card-text {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Colunas do Layout (Responsividade) */
+.left-column {
+    padding: auto;
+}
+
+.right-column {
+    padding: auto;
+}
+
+/* Card de Detalhes da Vaga (Grande) */
+.job-detail-card-container {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: relative; /* Para posicionar o botão de fechar */
+    min-height: 500px; /* Altura mínima para demonstração */
+}
+
+.custom-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1rem;
+    color: #666;
+    opacity: 1; /* Garante que o X esteja visível */
+}
+
+.custom-close-btn:hover {
+    opacity: 0.8;
+}
+
+.job-detail-card .card-title {
+    color: #003B94;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.job-detail-card .card-subtitle {
+    font-size: 1rem;
+    color: #777 !important;
+}
+
+.job-detail-card p,
+.job-detail-card li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.job-detail-card ul {
+    padding-left: 20px;
+}
+
+.apply-btn {
+    background-color: #003B94;
+    border-color: #003B94;
+    color: white;
+    font-weight: bold;
+}
+
+.apply-btn:hover {
+    background-color: #003B94;
+    border-color: #003B94;
+}
+
+/* Media Queries para responsividade (ajusta colunas) */
+@media (max-width: 991.98px) { /* Para tablets e dispositivos menores */
+    .left-column, .right-column {
+        padding-left: var(--bs-gutter-x, 0.75rem);
+        padding-right: var(--bs-gutter-x, 0.75rem);
+    }
+
+    .right-column .job-detail-card-container {
+        margin-top: 20px; /* Espaço entre os cards pequenos e o card grande em telas menores */
+    }
+
+    .header .navbar-brand {
+        margin-right: auto;
+    }
+    .header .search-input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .header .navbar-collapse {
+        margin-top: 10px;
+    }
+}
+
+
+/* Estilização do rodapé */
+.footer {
+    min-height: 120px; /* Ajuste a altura mínima do footer conforme necessário para o espaçamento vertical */
+    display: flex; /* Garante que o d-flex no HTML funcione */
+    align-items: center; /* Garante alinhamento vertical */
+    }
+
+.footer-line {
+    width: 400px; /* Ajuste a largura da linha conforme a imagem */
+    height: 1px;
+    background-color: white; /* Cor da linha */
+    opacity: 0.4; /* Opacidade para a linha parecer mais sutil, como na imagem */
+    margin-bottom: 10px; /* Espaço entre a linha e o texto */
+}
+
+.footer-text {
+    font-size: 0.8rem; /* Tamanho da fonte para o texto do footer */
+    color: white; /* Garante que o texto seja branco */
+}
+
+/* Garante que o Logoipsum dentro do footer tenha o estilo correto */
+.footer .logo-text {
+    color: white !important;
+    font-weight: bold;
+}
+
+/* Pequeno ajuste para o container do footer garantir que preencha a largura */
+.footer > .container-fluid {
+    width: 100%;
+}

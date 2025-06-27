@@ -1,14 +1,14 @@
 body {
-    background-color: #003B94; /* Light background color */
+    background-color: #003B94; 
     font-style: initial;
 }
 .container {
-    width: 800px; /* Adjust container width for better readability */
+    width: 800px; 
     position: center;
 }
 
 .card {
-    border-radius: 0.75rem; /* Slightly rounded corners for the card */
+    border-radius: 0.75rem; 
 }
 .user-type-toggle {
   background-color: #e5edf7;

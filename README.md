@@ -24,7 +24,7 @@ A plataforma permitirá que os usuários se cadastrem, atualizem seus perfis, in
 - **Outras Tecnologias**: << serão adicionadas conforme o desenvolvimento >>
 
 ## Colaboradores
-- [Arthur Aguilar](https://github.com/ArturAguilar)
+- [Jhames Paiva](https://github.com/JhamesPaiva)
 - [Bernardo Oliveira](https://github.com/Bernardoa7)
 - [Bruno Couri](https://github.com/N1nho0)
 - [Diego Coelho](https://github.com/Coelhosdi)

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logoispsum - Vagas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <header class="navbar navbar-expand-lg navbar-dark bg-primary-custom py-3">
+        <div class="container-fluid">
+            <a class="navbar-brand logo-text" href="#">Logoipsum</a>
+            <div class="d-flex ms-auto me-3">
+                <input class="form-control me-2 search-input" type="search" placeholder="Pesquisar" aria-label="Search">
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="../Home/Home.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Vagas/index.html">Vagas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Empresas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Área do Candidato</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="d-flex">
+                <button class="btn btn-outline-light me-2 custom-button" type="button">Login</button>
+                <button class="btn btn-outline-light custom-button" type="button">Cadastre-se</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container-fluid py-4 page-content">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 pe-lg-2 left-column" id="leftColumn">
+                <p class="mb-3 ps-3"><small>3 Vagas de Emprego de Estágio em Análise e Desenvolvimento de Sistema</small></p>
+                <div class="filter-buttons mb-4 ps-3">
+                    <a href="#" class="filter-btn active">Relevantes</a>
+                    <a href="#" class="filter-btn">Recentes</a>
+                    <a href="#" class="filter-btn">Próximas</a>
+                </div>
+
+                <div class="row row-cols-1 g-3 small-cards-container">
+                    <div class="col">
+                        <div class="job-card small-card" data-job-id="1">
+                            <h5 class="card-title">Estágio ADS - Empresa Alpha</h5>
+                            <p class="card-text">Local: Remoto - Salário: A combinar</p>
+                            <p class="card-text"><small class="text-muted">Publicado há 2 dias</small></p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="job-card small-card" data-job-id="2">
+                            <h5 class="card-title">Estágio Front-end</h5>
+                            <p class="card-text">Local: São Paulo - Salário: R$ 2.500</p>
+                            <p class="card-text"><small class="text-muted">Publicado há 5 dias</small></p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="job-card small-card" data-job-id="3">
+                            <h5 class="card-title">Analista de Dados Estágio</h5>
+                            <p class="card-text">Local: Rio de Janeiro - Salário: R$ 1.800</p>
+                            <p class="card-text"><small class="text-muted">Publicado há 1 semana</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 ps-lg-2 right-column" id="rightColumn">
+                <div class="job-detail-card-container d-none" id="jobDetailCardContainer">
+                    <div class="job-detail-card card">
+                        <button type="button" class="btn-close custom-close-btn" aria-label="Close"></button>
+                        <div class="card-body">
+                            <h4 class="card-title mb-3" id="detailJobTitle"></h4>
+                            <h6 class="card-subtitle mb-2 text-muted" id="detailJobCompany"></h6>
+                            <p class="card-text" id="detailJobLocation"></p>
+                            <p class="card-text" id="detailJobSalary"></p>
+                            <hr>
+                            <h5 class="mb-3">Descrição da Vaga</h5>
+                            <p id="detailJobDescription">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </p>
+                            <h5 class="mb-3 mt-4">Requisitos</h5>
+                            <ul id="detailJobRequirements">
+                                <li>Conhecimento básico em HTML, CSS, JavaScript.</li>
+                                <li>Capacidade de trabalhar em equipe.</li>
+                                <li>Proatividade e vontade de aprender.</li>
+                            </ul>
+                            <h5 class="mb-3 mt-4">Benefícios</h5>
+                            <ul id="detailJobBenefits">
+                                <li>Bolsa auxílio compatível com o mercado.</li>
+                                <li>Vale transporte.</li>
+                                <li>Ambiente de trabalho dinâmico.</li>
+                            </ul>
+                            <button class="btn btn-primary mt-4 apply-btn">Candidatar-se</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer bg-primary-custom py-4 text-light d-flex align-items-center">
+        <div class="container-fluid">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-lg-6 col-md-12 d-flex flex-column align-items-center text-center mb-3 mb-lg-0">
+                    <div class="footer-line mb-2"></div>
+                    <p class="mb-0 footer-text">Copyright &copy; 2024 <strong class="logo-text">Logoipsum</strong> Todos os direitos reservados.</p>
+                </div>
+                <div class="col-lg-6 col-md-12 d-flex flex-column align-items-center text-center">
+                    <div class="footer-line mb-2"></div>
+                    <p class="mb-0 footer-text">Entidades sem fins lucrativos</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eOzr9oE+BFIQjWdF9fH1I" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>
