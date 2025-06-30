@@ -52,6 +52,34 @@ class ControllerMain
     }
 
     /**
+     * validaNivelAcesso
+     *
+     * @param string $nivelMinimo Nível mínimo necessário (CN, A ou G)
+     * @return void
+     */
+    public function validaNivelAcesso(string $nivelMinimo = 'CN')
+    {
+        // Define a hierarquia de níveis (do menor para o maior privilégio)
+        $hierarquiaNiveis = [
+            'CN' => 1, // Contribuinte normativo
+            'A'  => 2, // Anunciante  
+            'G'  => 3  // Gestor
+        ];
+
+        $nivelUsuario = Session::get("userNivel");
+
+        // Verifica se os níveis existem na hierarquia
+        if (!isset($hierarquiaNiveis[$nivelUsuario]) || !isset($hierarquiaNiveis[$nivelMinimo])) {
+            return Redirect::page("sistema", ["msgError" => "Nível de acesso inválido"]);
+        }
+
+        // Verifica se o usuário possui nível suficiente
+        if ($hierarquiaNiveis[$nivelUsuario] < $hierarquiaNiveis[$nivelMinimo]) {
+            return Redirect::page("sistema", ["msgError" => "Você não possui permissão neste programa"]);
+        }
+    }
+
+    /**
      * loadModel
      *
      * @param string $nomeModel 

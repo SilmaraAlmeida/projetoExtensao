@@ -2,7 +2,6 @@
 <div class="card col-lg-4 card-background">
     <div class="card-header">
         <div class="justify-content-center">
-            <img class="login-img" src="/assets/img/AtomPHP-logo.png" alt="">
         </div>
         <h3>Cadastro</h3>
     </div>
@@ -26,7 +25,7 @@
                     <input type="password" class="form-control border-dark" id="confirm-register-password" name="confirm-register-password">
                 </div>
                 <div class="col-12 d-flex justify-content-between">
-                    <h6><a href="login.html" class="text-decoration-none fw-bold">Ja tem uma Conta?</a></h6>
+                    <h6><a href="/login" class="text-decoration-none fw-bold">Ja tem uma Conta?</a></h6>
                 </div>
                 <div class="mb-3 col-4">
                     <button class="btn btn-OrangeBlack">Registrar</button>

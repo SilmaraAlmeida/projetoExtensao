@@ -82,11 +82,11 @@ function buttons($acao, $id = 0)
     $button = "";
 
     if ($acao == "new") {
-        $button = '<a href="' . baseUrl()  . $request->getController() . '/form/new/0" class="btn btn-outline-info text-white btn-sm" title="Novo"><i class="fa-solid fa-pen"></i></a>';
+        $button = '<a href="' . baseUrl()  . $request->getController() . '/form/insert/0" class="btn btn-outline-info text-white btn-sm" title="Novo"><i class="fa-solid fa-pen"></i></a>';
     } elseif ($acao == "update") {
         $button = '<a href="' . baseUrl()  . $request->getController() . '/form/update/' . $id . '" class="btn btn-primary btn-sm" title="Alteração"><i class="fa-solid fa-pen-to-square"></i></a>';
     } elseif ($acao == "delete") {
-        $button = '<a href="' . baseUrl()  . $request->getController() . '/form/delete/' . $id . '" class="btn btn-primary btn-sm" title="Exclusão"><i class="fa-solid fa-trash-can"></i></i></a>';
+        $button = '<a href="' . baseUrl()  . $request->getController() . '/form/delete/' . $id . '" class="btn btn-primary btn-sm" title="Exclusão"><i class="fa-solid fa-trash-can"></i></a>';
     } elseif ($acao == "view") {
         $button = '<a href="' . baseUrl()  . $request->getController() . '/form/view/' . $id . '" class="btn btn-primary btn-sm" title="Visualização"><i class="fa-solid fa-eye"></i></a>';
     } elseif ($acao == "voltarTitulo") {

@@ -15,8 +15,9 @@ class Usuario extends ControllerMain
     {
         $this->auxiliarConstruct();
         $this->loadHelper(['formHelper', 'tabela']);
+        $this->validaNivelAcesso("G");                     // Valida nível de acesso apenas Gestor
     }
-    
+
     /**
      * index
      *
@@ -24,7 +25,7 @@ class Usuario extends ControllerMain
      */
     public function index()
     {
-        return $this->loadView("admin/listaUsuario", $this->model->lista("nome"));
+        return $this->loadView("sistema/listaUsuario", $this->model->listaUsuario("usuario_id"));
     }
 
     /**
@@ -38,26 +39,27 @@ class Usuario extends ControllerMain
     {
         if ($this->action == "insert") {
             $dados = [
-                "tipo" => 'A',
+                "tipo" => "CN",
                 "trocarSenha" => "S",
-                "statusRegistro" => 1
             ];
         } else {
-            $dados = $this->model->getById($id);
+            $dados = $this->model->getUserId($id);
         }
 
+        // Adiciona lista de pessoas físicas para o select
+        $dados['usuarios'] = $this->model->getUsuariosSelect();
 
-        return $this->loadView(
-            "admin/formUsuario", $dados);
+        return $this->loadView("sistema/formUsuario", $dados);
     }
 
+
     /**
-     * save
+     * insert
      *
      * @return void
      */
     public function insert()
-    {        
+    {
         $post = $this->request->getPost();
         $lError = false;
 
@@ -67,27 +69,30 @@ class Usuario extends ControllerMain
             Session::set('errors', $errors);
         } else {
             unset($post['confSenha']);
+            $post['senha'] = password_hash($post['senha'], PASSWORD_DEFAULT);
         }
 
         if (!$lError) {
             if ($this->model->insert($post)) {
-                return Redirect::page($this->controller, ["msgSucesso" => "Registro atualizado com sucesso."]);
+                return Redirect::page($this->controller, ["msgSucesso" => "Registro inserido com sucesso."]);
             } else {
                 $lError = true;
-            }    
-        } else {
+            }
+        }
+
+        if ($lError) {
             Session::set("inputs", $post);
-            return Redirect::page($this->controller . '/form/' . $post['action'] . '/' . $post['id']);
+            return Redirect::page($this->controller . '/form/' . $post['action'] . '/' . $post['usuario_id']);
         }
     }
 
     /**
-     * save
+     * update
      *
      * @return void
      */
     public function update()
-    {        
+    {
         $post = $this->request->getPost();
         $lError = false;
 
@@ -104,7 +109,7 @@ class Usuario extends ControllerMain
                 return Redirect::page($this->controller, ["msgSucesso" => "Registro atualizado com sucesso."]);
             } else {
                 $lError = true;
-            }    
+            }
         } else {
             Session::set("inputs", $post);
             return Redirect::page($this->controller . '/form/' . $post['action'] . '/' . $post['id']);
@@ -116,16 +121,24 @@ class Usuario extends ControllerMain
      *
      * @return void
      */
+    /**
+     * delete
+     *
+     * @return void
+     */
     public function delete()
     {
         $post = $this->request->getPost();
-        
-        if ($this->model->delete(["id" => $post['id']])) {
-            return Redirect::page($this->controller, ['msgSucesso' => "Registro excluído com sucesso."]);
+
+        $resultado = $this->model->deletarComDependencias($post['usuario_id']);
+
+        if ($resultado['sucesso']) {
+            return Redirect::page($this->controller, ['msgSucesso' => $resultado['mensagem']]);
         } else {
-            return Redirect::page($this->controller . "/form/new/0", ["msgError" => "Falha ao excluir os dados na base de dados."]);
+            return Redirect::page($this->controller, ['msgError' => $resultado['mensagem']]);
         }
     }
+
 
     /**
      * formTrocarSenha
@@ -134,7 +147,7 @@ class Usuario extends ControllerMain
      */
     public function formTrocarSenha()
     {
-        return $this->loadView("admin/formTrocaSenha");
+        return $this->loadView("sistema/formTrocaSenha");
     }
 
     /**
@@ -142,49 +155,42 @@ class Usuario extends ControllerMain
      *
      * @return void
      */
-    public function updateNovaSenha() 
+    public function updateNovaSenha()
     {
-        $post       = $this->request->getPost();
-        $userAtual  = $this->model->getById($post["id"]);
+        $post = $this->request->getPost();
+        $userAtual = $this->model->getById($post["usuario_id"]);
 
         if ($userAtual) {
-
             if (password_verify(trim($post["senhaAtual"]), $userAtual['senha'])) {
-
                 if (trim($post["novaSenha"]) == trim($post["novaSenha2"])) {
-
                     $novaSenhaCripyt = password_hash(trim($post["novaSenha"]), PASSWORD_DEFAULT);
 
-                    $lUpdate = $this->model->db->where(['id' => $post['id']])->update([
+                    $lUpdate = $this->model->db->where(['usuario_id' => $post['usuario_id']])->update([
                         'senha' => $novaSenhaCripyt
                     ]);
-                        
+
                     if ($lUpdate) {
-                        // Atualiza sessão de senhas
                         Session::set("userSenha", $novaSenhaCripyt);
-
                         return Redirect::page("Usuario/formTrocarSenha", [
-                            "msgSucesso"    => "Senha alterada com sucesso !"
-                        ]);  
+                            "msgSucesso" => "Senha alterada com sucesso !"
+                        ]);
                     } else {
-                        return Redirect::page("Usuario/formTrocarSenha");    
+                        return Redirect::page("Usuario/formTrocarSenha");
                     }
-
                 } else {
                     return Redirect::page("Usuario/formTrocarSenha", [
-                        "msgError"    => "Nova senha e conferência da senha estão divergentes !"
-                    ]);                  
+                        "msgError" => "Nova senha e conferência da senha estão divergentes !"
+                    ]);
                 }
-
             } else {
                 return Redirect::page("Usuario/formTrocarSenha", [
-                    "msgError"    => "Senha atual informada não confere!"
-                ]);               
+                    "msgError" => "Senha atual informada não confere!"
+                ]);
             }
         } else {
             return Redirect::page("Usuario/formTrocarSenha", [
-                "msgError"    => "Usuário inválido !"
-            ]);   
+                "msgError" => "Usuário inválido !"
+            ]);
         }
     }
 }

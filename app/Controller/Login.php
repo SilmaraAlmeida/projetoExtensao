@@ -38,7 +38,7 @@ class Login extends ControllerMain
     public function signIn()
     {
         $post   = $this->request->getPost();
-        $aUser  = $this->model->getUserEmail($post['login']);
+        $aUser  = $this->model->getUserLogin($post['login']);
 
         if (count($aUser) > 0) {
 
@@ -106,7 +106,7 @@ class Login extends ControllerMain
         $this->loadHelper("emailHelper");
 
         $post       = $this->request->getPost();
-        $user       = $this->model->getUserEmail($post['login']);
+        $user       = $this->model->getUserLogin($post['login']);
 
         if (!$user) {
 
@@ -297,7 +297,7 @@ class Login extends ControllerMain
 //             "senha"             => password_hash("fasm@2025", PASSWORD_DEFAULT),
 //         ];
 
-//         $aSuperUser = $this->model->getUserEmail($dados['email']);
+//         $aSuperUser = $this->model->getUserLogin($dados['email']);
 
 //         if (count($aSuperUser) > 0) {
 //             return Redirect::Page("login", ["msgError" => "Login já existe."]);
