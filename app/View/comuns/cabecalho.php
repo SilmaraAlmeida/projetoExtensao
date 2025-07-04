@@ -15,8 +15,10 @@ use Core\Library\Session;
     <title>Via Muriaé - Sistema de Gestão</title>
 
     <link href="<?= baseUrl() ?>assets/img/AtomPHP-icone.png" rel="icon" type="image/png">
-    <link href="<?= baseUrl() ?>assets/css/style.css" rel="stylesheet">
     <link href="<?= baseUrl() ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= baseUrl() ?>assets/css/style.css" rel="stylesheet">
+    <link href="<?= baseUrl() ?>assets/css/home.css" rel="stylesheet">
+    <link href="<?= baseUrl() ?>assets/css/footer.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="<?= baseUrl() ?>assets/js/script.js"></script>
     <script src="<?= baseUrl() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -24,11 +26,12 @@ use Core\Library\Session;
     <style>
         /* PRESERVAR ESTILOS ORIGINAIS DA NAVBAR - NÃO MODIFICAR */
         .header {
-            position: fixed;
+            /* position: fixed; */
             top: 0;
             left: 0;
             right: 0;
             z-index: 1040;
+            background: #003399;
             /* Mantém todos os estilos originais do seu CSS */
         }
 
@@ -169,7 +172,7 @@ use Core\Library\Session;
 <body <?= (Session::get("userLogin") && in_array(Session::get("userNivel"), USER_TYPES) && in_array($this->controller ?? '', SISTEMA_CONTROLLERS)) ? 'class="sistema-layout"' : '' ?>>
 
     <!-- Header - MANTIDO EXATAMENTE COMO ESTAVA NO ORIGINAL -->
-    <nav class="navbar bg-body-tertiary px-3 mb-3 p-4 header">
+    <nav class="navbar bg-body-tertiary px-3 p-4 header">
         <div class="logo">
             <a href="/home/"><img src="<?= baseUrl() ?>/assets/img/logo.png" alt="Logo"></a>
         </div>
@@ -251,5 +254,5 @@ use Core\Library\Session;
 
             <?php else: ?>
                 <!-- Container para páginas não-sistema -->
-                <main class="container mt-4">
+                <main>
                 <?php endif; ?>
