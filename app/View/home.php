@@ -23,7 +23,7 @@
       <p class="fs-4 m-0 lh-1">Se você está em busca de crescimento profissional, cadatre-se gratuitamente e tenha acesso às melhores vagas disponíveis na sua região. Crie se perfil, preencha seu currículo e encontre o emprego perfeito para o seu talento tudo em um só lugar. Comece agora mesmo!
       </p>
       <p class="fw-lighter fs-5 mt-1">Este é o momento. Cadastre-se agora e comece a transformar o seu futuro!</p>
-      <a href="#" class="btn btn-outline-orange">Cadastre-se</a>
+      <a href="#" class="btn btn-outline-blue">Cadastre-se</a>
     </div>
   </div>
   </div>
