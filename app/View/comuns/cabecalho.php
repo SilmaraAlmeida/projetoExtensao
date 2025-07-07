@@ -207,7 +207,7 @@ use Core\Library\Session;
                     <a class="dropdown-item text-decoration-none text-light entrar" href="<?= baseUrl() ?>Login/">Entrar</a>
                 </li>
                 <li>
-                    <a class="dropdown-item cadastrar" href="">Cadastre-se</a>
+                    <a class="dropdown-item cadastrar" href="<?= baseUrl() ?>Cadastro/">Cadastre-se</a>
                 </li>
             <?php endif; ?>
         </ul>
