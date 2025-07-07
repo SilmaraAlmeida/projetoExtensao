@@ -23,6 +23,8 @@ use Core\Library\Session;
     <script src="<?= baseUrl() ?>assets/js/script.js"></script>
     <script src="<?= baseUrl() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
     <style>
         /* PRESERVAR ESTILOS ORIGINAIS DA NAVBAR - NÃO MODIFICAR */
         .header {
@@ -181,15 +183,10 @@ use Core\Library\Session;
         </div>
         <ul class="nav nav-pills rightMenu">
             <li class="nav-item">
-                <a class="nav-link home" href="#">Home</a>
+                <a class="nav-link text-decoration-none text-light" href="#">Home</a>
             </li>
             <li>
-                <select name="vagas" class="dropdown-item vagas" id="">
-                    <option value="vagas">Vagas</option>
-                    <option value="estagio">Estágio</option>
-                    <option value="remoto">Remoto</option>
-                    <option value="redes">Redes</option>
-                </select>
+                <a class="nav-link text-decoration-none text-light" href="#">Vagas</a>
             </li>
             <?php if (Session::get("userLogin")): ?>
                 <?php if (Session::get("userNivel") == "G"): ?>
