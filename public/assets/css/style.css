@@ -86,20 +86,19 @@ body {
     font-size: 14px;
     /* Diminui o tamanho da fonte */
     cursor: pointer;
-    padding: 8px 16px;
+    padding: 5px 15px;
     /* Diminui o tamanho do botão */
-    border: 2px solid rgba(0, 255, 0, 0.466) !important;
+    border: 1px solid #fff !important;
     /* Borda neon mais fina */
     border-radius: 13px;
     text-decoration: none;
-    font-weight: 800;
     color: #fff !important;
     background-color: transparent;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .entrar:hover {
-    background-color: rgba(0, 255, 0, 0.466) !important;
+    background-color: rgba(255, 255, 255, 0.466) !important;
     /* Fundo verde neon mais claro */
     color: #fff;
 }
