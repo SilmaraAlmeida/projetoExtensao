@@ -3,8 +3,8 @@
       <svg viewBox="0 0 100 100" preserveAspectRatio="none">
         <path 
           d="M0,0 
-             L0,21.5 
-             Q46.6,48.6 76.25,100
+             L0,5 
+             Q46.6,20 76.25,100
              L100,100
              L100,0 
              Z"

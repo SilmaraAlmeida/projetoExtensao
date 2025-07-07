@@ -210,6 +210,7 @@ use Core\Library\Session;
         </ul>
     </nav>
 
+
     <?php if (Session::get("userLogin") && in_array(Session::get("userNivel"), USER_TYPES) && in_array($this->controller ?? '', SISTEMA_CONTROLLERS)): ?>
 
         <!-- Botão toggle mobile -->
