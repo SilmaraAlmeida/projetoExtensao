@@ -204,7 +204,10 @@ use Core\Library\Session;
                 <?php endif; ?>
             <?php else: ?>
                 <li>
-                    <a class="dropdown-item entrar" href="<?= baseUrl() ?>Login/">Entrar</a>
+                    <a class="dropdown-item text-decoration-none text-light entrar" href="<?= baseUrl() ?>Login/">Entrar</a>
+                </li>
+                <li>
+                    <a class="dropdown-item cadastrar" href="">Cadastre-se</a>
                 </li>
             <?php endif; ?>
         </ul>
