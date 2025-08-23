@@ -3,7 +3,10 @@ body {
     font-style: initial;
     font-family: 'Inter', sans-serif;
 }
-
+a {
+  color: #003B94;
+  text-decoration: none;
+}
 .container {
     width: 800px; 
     position: center;
