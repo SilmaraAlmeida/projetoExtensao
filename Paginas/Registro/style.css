@@ -1,7 +1,9 @@
 body {
     background-color: #003B94; 
     font-style: initial;
+    font-family: 'Inter', sans-serif;
 }
+
 .container {
     width: 800px; 
     position: center;
