@@ -1,3 +1,32 @@
+  <style>
+  .btn-outline-orange, .btn-outline-blue {
+    display: inline-block;
+    padding: 5px 15px !important;
+    border-radius: 13px;
+    border: 1px solid;
+  }
+
+  .btn-outline-orange {
+    color: #ff6600;
+    border-color: #ff6600;
+  }
+
+  .btn-outline-orange:hover {
+    background-color: #ff6600;
+    color: white;
+  }
+
+  .btn-outline-blue {
+    color: #003B94;
+    border-color: #003B94;
+  }
+
+  .btn-outline-blue:hover {
+    background-color: #003B94;
+    color: white;
+  }
+  </style>
+  
   <div class="fundo">
     <div class="curva">
       <svg viewBox="0 0 100 100" preserveAspectRatio="none">
