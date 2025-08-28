@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redefinir Senha</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="redefinir.css">
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+  <div class="w-full max-w-md px-6">
+    <h1 class="text-white text-lg font-normal">Redefinir Senha</h1>
+
+    <!-- Card mais fino -->
+    <div class="bg-white shadow-xl rounded-md p-2">
+      <p class="text-sm text-gray-800 ">
+        <b>Digite sua nova Senha abaixo.</b>
+      </p>
+      <p class="text-sm text-gray-600">
+        Certifique-se se ela é forte e fácil de lembrar.
+    </p>
+
+      <form id="form-senha">
+        <label for="senha" class="block text-sm font-normal text-gray-700 mb-1">Nova Senha:</label>
+    <input 
+        type="password" 
+        id="senha" 
+        placeholder="Digite sua nova senha" 
+        class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+    
+    <label for="confirmar-senha" class="block text-sm font-normal text-gray-700 mb-1 mt-2">Confirmar Nova Senha:</label>
+    <input 
+        type="password" 
+        id="confirmar-senha" 
+        placeholder="Confirme sua nova senha" 
+        class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+
+    <p id="mensagem-erro" class="text-red-500 text-xs mt-1 hidden">As senhas devem ser iguais.</p>
+
+        <button 
+          type="submit" 
+          class="mt-2 w-full bg-blue-600 text-white py-1 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
+        >
+          Criar nova Senha
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="redefinir.js"></script>
+</body>
+</html>
