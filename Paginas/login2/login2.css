@@ -1,0 +1,43 @@
+ body {
+            background-color: #003b94;
+        }
+
+        .error-message {
+            color: #EF4444;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Estilos para o checkbox personalizado */
+        input[type="checkbox"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 1rem;
+            height: 1rem;
+            border: 1px solid #D1D5DB;
+            border-radius: 0.25rem;
+            background-color: #fff;
+            cursor: pointer;
+            position: relative;
+        }
+
+        input[type="checkbox"]:checked {
+            background-color: #1D4ED8;
+            border-color: #1D4ED8;
+        }
+
+        input[type="checkbox"]:checked:after {
+            content: '\2713';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }

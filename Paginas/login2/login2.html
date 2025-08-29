@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Logoipsum</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="login2.css">
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen font-sans p-4 sm:p-6 md:p-8">
+
+    <header class="text-center mb-6 sm:mb-8">
+        <div class="flex items-center justify-center text-white mb-2">
+            <svg class="h-8 w-8 sm:h-10 sm:w-10 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12-12-5.373-12-12 5.373-12 12-12zm-2 16.5l-4.5-4.5 1.5-1.5 3 3 7.5-7.5 1.5 1.5-9 9z" />
+            </svg>
+            <h1 class="text-xl sm:text-2xl font-bold">ViaMurié</h1>
+        </div>
+        <p class="text-sm sm:text-base text-white">Acesse sua conta</p>
+    </header>
+
+    <div class="w-full max-w-md bg-white shadow-xl rounded-lg p-6 sm:p-8">
+
+        <div class="flex flex-col sm:flex-row justify-center mb-6">
+            <button id="btn-candidato" class="flex-1 px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-semibold focus:outline-none">
+                <i class="fas fa-user mr-2"></i> Sou Candidato
+            </button>
+            <button id="btn-empresa" class="flex-1 px-4 py-2 border-b-2 border-gray-200 text-gray-500 font-semibold focus:outline-none hover:text-gray-700">
+                <i class="fas fa-building mr-2"></i> Sou Empresa
+            </button>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl font-semibold text-center mb-4">Fazer Login</h2>
+
+        <form id="login-form">
+            <div id="form-content" class="space-y-4 transition-opacity duration-500">
+                <div>
+                    <label id="label-email" for="email" class="block text-sm font-medium text-gray-700">E-mail:</label>
+                    <input type="email" id="email" name="email" placeholder="seu@email.com" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    <p id="error-email" class="error-message hidden">E-mail inválido ou não preenchido.</p>
+                </div>
+
+                <div>
+                    <label for="senha" class="block text-sm font-medium text-gray-700">Senha:</label>
+                    <input type="password" id="senha" name="senha" placeholder="Sua senha" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    <p id="error-senha" class="error-message hidden">Senha deve ter no mínimo 8 caracteres.</p>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center mt-4">
+                <div class="flex items-center">
+                    <input id="remember-me" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                    <label for="remember-me" class="ml-2 block text-sm text-gray-900">
+                        Lembrar-me
+                    </label>
+                </div>
+                <div class="text-sm">
+                    <a href="../Recuperar Senha/recuperar.html" class="font-medium text-blue-600 hover:text-blue-500">
+                        Esqueci minha senha?
+                    </a>
+                </div>
+            </div>
+
+            <button id="btn-login" type="submit" class="w-full mt-6 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Entrar como Candidato
+            </button>
+        </form>
+        
+        <div class="relative flex items-center py-5">
+            <div class="flex-grow border-t border-gray-300"></div>
+            <span class="flex-shrink mx-4 text-gray-500 text-sm">Ou continue com</span>
+            <div class="flex-grow border-t border-gray-300"></div>
+        </div>
+
+        <div class="mt-4 flex space-x-4">
+            <button class="flex-1 w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <i class="fab fa-google text-red-500 text-lg mr-2"></i> Google
+            </button>
+            <button class="flex-1 w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <i class="fab fa-facebook text-blue-600 text-lg mr-2"></i> Facebook
+            </button>
+        </div>
+
+        <p class="mt-4 text-center text-sm text-gray-600">
+            Não tem uma conta? <a href="../Registro/registro.html" class="font-medium text-blue-600 hover:underline">Cadastre-se aqui</a>
+        </p>
+    </div>
+
+    <script src="login2.js"></script>
+</body>
+</html>
