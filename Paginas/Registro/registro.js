@@ -201,6 +201,6 @@
                 alert("Formulário enviado com sucesso!");
                 form.reset();
                 // Aqui você pode adicionar o código para redirecionar o usuário
-                // window.location.href = 'pagina-de-sucesso.html';
+               window.location.href = "../Home/Home.html"; // redirecionar para a página home
             }
         });
