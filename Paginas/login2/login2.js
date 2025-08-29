@@ -91,7 +91,6 @@ const form = document.getElementById('login-form');
             if (validateForm()) {
                 alert("Login realizado com sucesso!");
                 form.reset();
-                // Aqui você pode adicionar o código para redirecionar o usuário após o login
-                // window.location.href = 'pagina-de-dashboard.html';
+                 window.location.href = '../Vagas/index.html';
             }
         });

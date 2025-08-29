@@ -23,6 +23,6 @@
                 // As senhas são iguais e seguras, então redireciona
                 mensagemErro.classList.add('hidden');
                 // Altere 'pagina-de-sucesso.html' para a URL da sua página de destino
-                window.location.href = '../Login/index.html'; 
+                window.location.href = '../login2/login2.html'; 
             }
         });
