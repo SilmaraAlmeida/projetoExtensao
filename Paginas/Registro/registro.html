@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta - Logoipsum</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="registro.css">
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen font-sans p-4 sm:p-6 md:p-8">
+
+    <header class="text-center mb-6 sm:mb-8">
+        <div class="flex items-center justify-center text-white mb-2">
+            <svg class="h-8 w-8 sm:h-10 sm:w-10 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12-12-5.373-12-12 5.373-12 12-12zm-2 16.5l-4.5-4.5 1.5-1.5 3 3 7.5-7.5 1.5 1.5-9 9z" />
+            </svg>
+            <h1 class="text-xl sm:text-2xl font-bold text-white">ViaMuriaé</h1>
+        </div>
+        <p class="text-sm sm:text-base text-white">Crie sua conta gratuitamente</p>
+    </header>
+
+    <div class="w-full max-w-2xl bg-white shadow-xl rounded-lg p-6 sm:p-8">
+
+        <div class="flex flex-col sm:flex-row justify-center mb-6">
+            <button id="btn-candidato" class="flex-1 px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-semibold focus:outline-none">
+                <i class="fas fa-user mr-2"></i> Sou Candidato
+            </button>
+            <button id="btn-empresa" class="flex-1 px-4 py-2 border-b-2 border-gray-200 text-gray-500 font-semibold focus:outline-none hover:text-gray-700">
+                <i class="fas fa-building mr-2"></i> Sou Empresa
+            </button>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl font-medium text-center mb-4">Criar Conta</h2>
+
+        <form id="cadastro-form">
+            <div id="form-content" class="grid grid-cols-1 md:grid-cols-2 gap-4 transition-opacity duration-500">
+                <div>
+                    <label id="label-nome" for="nome" class="block text-sm font-sm text-gray-700">Nome:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Seu nome" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    <p id="error-nome" class="error-message hidden">Este campo é obrigatório.</p>
+                </div>
+
+                <div>
+                    <label id="label-sobrenome" for="sobrenome" class="block text-sm font-sm text-gray-700">Sobrenome:</label>
+                    <input type="text" id="sobrenome" name="sobrenome" placeholder="Seu sobrenome" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    <p id="error-sobrenome" class="error-message hidden">Este campo é obrigatório.</p>
+                </div>
+
+                <div class="col-span-1 md:col-span-2">
+                    <label id="label-documento" for="documento" class="block text-sm font-sm text-gray-700">CPF:</label>
+                    <input type="text" id="documento" name="documento" placeholder="000.000.000-00" maxlength="14" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    <p id="error-documento" class="error-message hidden">CPF inválido.</p>
+                </div>
+
+                <div class="col-span-1 md:col-span-2">
+                    <label id="label-email" for="email" class="block text-sm font-sm text-gray-700">E-mail:</label>
+                    <input type="email" id="email" name="email" placeholder="seu@email.com" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    <p id="error-email" class="error-message hidden">E-mail inválido.</p>
+                </div>
+
+                <div class="col-span-1 md:col-span-2">
+                    <label for="telefone" class="block text-sm font-sm text-gray-700">Telefone:</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" maxlength="15" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    <p id="error-telefone" class="error-message hidden">Telefone inválido.</p>
+                </div>
+
+                <div>
+                    <label for="senha" class="block text-sm font-sm text-gray-700">Senha:</label>
+                    <input type="password" id="senha" name="senha" placeholder="Mínimo 8 caracteres" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    <p id="error-senha" class="error-message hidden">A senha deve ter no mínimo 8 caracteres, com letra maiúscula, minúscula e número.</p>
+                </div>
+
+                <div>
+                    <label for="confirmar-senha" class="block text-sm font-sm text-gray-700">Confirmar Senha:</label>
+                    <input type="password" id="confirmar-senha" name="confirmar-senha" placeholder="Confirme sua senha" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    <p id="error-confirmar-senha" class="error-message hidden">As senhas não coincidem.</p>
+                </div>
+            </div>
+
+            <div class="flex items-start mt-4">
+                <input id="aceite-termos" type="checkbox" name="aceite-termos" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-1">
+                <label for="aceite-termos" class="ml-2 text-sm text-gray-700">
+                    Aceito os <a href="#" class="text-blue-600 hover:underline">Termos de Uso</a> e <a href="#" class="text-blue-600 hover:underline">Política de Privacidade</a>
+                </label>
+            </div>
+            <p id="error-termos" class="error-message hidden">Você deve aceitar os termos e condições.</p>
+            
+            <button id="btn-cadastro" type="submit" class="w-full mt-6 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Criar Conta como Candidato
+            </button>
+        </form>
+
+        <p class="mt-4 text-center text-sm text-gray-600">
+            Já tem uma conta? <a href="#" class="font-medium text-blue-600 hover:underline">Faça login aqui</a>
+        </p>
+    </div>
+    <script src="registro.js"></script>
+</body>
+</html>
