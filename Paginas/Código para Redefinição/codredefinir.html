@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperar Senha</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="codredefinir.css">
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen">
+
+        <header class="text-center mb-3 sm:mb-1">
+        <div class="flex items-center justify-center text-white mb-2">
+            <svg class="h-8 w-8 sm:h-10 sm:w-10 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12-12-5.373-12-12 5.373-12 12-12zm-2 16.5l-4.5-4.5 1.5-1.5 3 3 7.5-7.5 1.5 1.5-9 9z" />
+            </svg>
+            <h1 class="text-xl sm:text-2xl font-bold text-white">ViaMuriaé</h1>
+        </div>
+        </header>
+
+  <div class="w-full max-w-lg px-6">
+    <h1 class="text-white text-2xl font-light mb-2 text-center">Código de Verificação</h1>
+
+    <!-- Card mais fino -->
+    <div class="bg-white shadow-xl rounded-md p-2">
+      <p class="text-sm text-gray-700 mb-2 w-96">
+        Olá <span id="nomeusuario" class="font-bold">[Usuário]</span>,<br>
+        Você solicitou a redefinição da sua senha.<br>
+        Use o código abaixo para continuar o processo:
+      </p>
+
+        <h1 class="text-black text-xl font-bold text-center">Código de Verificação</h1>
+        <input 
+          type="text" 
+          id="input-codigo" 
+          placeholder="XXX-XXX" 
+          class="mb-3 w-full px-3 py-2 border-nonexistent font-bold text-center rounded-md text-2xl text-black placeholder-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+    </div>
+  </div>
+  <script src="codredefinir.js"></script>
+
+</body>
+</html>
