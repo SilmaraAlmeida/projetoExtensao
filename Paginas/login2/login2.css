@@ -1,3 +1,6 @@
+        body{
+            font-family: 'Poppins', sans-serif;
+        }
         .error-message {
             color: #EF4444;
             font-size: 0.75rem;
@@ -36,4 +39,7 @@
             color: #fff;
             font-size: 0.75rem;
             font-weight: bold;
+        }.input-field:focus {
+            
+            border-color: #3b82f6;
         }

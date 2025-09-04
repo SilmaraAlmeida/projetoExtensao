@@ -1,3 +1,8 @@
 body {
   background-color: #003B94; /* Cor personalizada */
+  font-family: 'Poppins', sans-serif;
 }
+.input-field:focus {
+            
+            border-color: #3b82f6;
+        }

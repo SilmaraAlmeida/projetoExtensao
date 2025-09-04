@@ -1,5 +1,7 @@
         body {
             background-color: #003B94;
+            font-family: 'Poppins', sans-serif;
+
         }
 
         input[type="checkbox"] {
@@ -39,4 +41,8 @@
 
         .hidden {
             display: none;
+        }
+        .input-field:focus {
+            
+            border-color: #3b82f6;
         }
