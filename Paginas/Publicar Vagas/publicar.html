@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anunciar Vaga de Emprego - ViaMuriaé</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="publicar.css">
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 md:p-8">
+
+    <div class="w-full max-w-4xl rounded-2xl p-6 sm:p-10 form-container bg-white shadow-lg">
+        
+        <header class="text-center mb-10">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">
+                <span class="text-blue-600">Publique Sua Vaga</span>
+            </h1>
+            <p class="mt-2 text-base text-gray-600">
+                Compartilhe sua oportunidade e encontre o talento ideal.
+            </p>
+        </header>
+
+        <form id="form-anuncio-vaga" class="space-y-8">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <label for="titulo" class="block text-sm font-medium text-gray-700">Título da Vaga</label>
+                    <input type="text" id="titulo" name="titulo" class="mt-1 block w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm transition-all input-field" placeholder="Ex: Desenvolvedor(a) Front-end Pleno">
+                    <p id="error-titulo" class="text-red-500 text-xs mt-1 hidden">O título da vaga é obrigatório.</p>
+                </div>
+                <div>
+                    <label for="localizacao" class="block text-sm font-medium text-gray-700">Localização</label>
+                    <input type="text" id="localizacao" name="localizacao" class="mt-1 block w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm transition-all input-field" placeholder="Ex: Remoto ou São Paulo, SP">
+                    <p id="error-localizacao" class="text-red-500 text-xs mt-1 hidden">A localização é obrigatória.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <label for="carga-horaria" class="block text-sm font-medium text-gray-700">Carga Horária</label>
+                    <select id="carga-horaria" name="carga-horaria" class="mt-1 block w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm transition-all input-field">
+                        <option value="">Selecione a carga horária</option>
+                        <option value="integral">Integral</option>
+                        <option value="parcial">Parcial</option>
+                        <option value="flexivel">Flexível</option>
+                    </select>
+                    <p id="error-carga-horaria" class="text-red-500 text-xs mt-1 hidden">A carga horária é obrigatória.</p>
+                </div>
+                <div>
+                    <label for="tipo-contrato" class="block text-sm font-medium text-gray-700">Tipo de Contrato</label>
+                    <select id="tipo-contrato" name="tipo-contrato" class="mt-1 block w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm transition-all input-field">
+                        <option value="">Selecione o tipo</option>
+                        <option value="clt">CLT</option>
+                        <option value="pj">PJ</option>
+                        <option value="freelance">Freelance</option>
+                        <option value="estagio">Estágio</option>
+                    </select>
+                    <p id="error-tipo-contrato" class="text-red-500 text-xs mt-1 hidden">O tipo de contrato é obrigatório.</p>
+                </div>
+            </div>
+
+            <div>
+                <label for="salario" class="block text-sm font-medium text-gray-700">Salário (Opcional)</label>
+                <input type="text" id="salario" name="salario" class="mt-1 block w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm transition-all input-field" placeholder="Ex: R$ 5.000,00 ou A combinar">
+            </div>
+
+            <div>
+                <label for="descricao" class="block text-sm font-medium text-gray-700">Descrição da Vaga</label>
+                <textarea id="descricao" name="descricao" rows="5" class="mt-1 block w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm transition-all input-field" placeholder="Detalhe as responsabilidades, requisitos e a cultura da empresa."></textarea>
+                <p id="error-descricao" class="text-red-500 text-xs mt-1 hidden">A descrição da vaga é obrigatória.</p>
+            </div>
+
+            <div>
+                <label for="requisitos" class="block text-sm font-medium text-gray-700">Requisitos (Liste os requisitos da vaga, separados por vírgula)</label>
+                <input type="text" id="requisitos" name="requisitos" class="mt-1 block w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm transition-all input-field" placeholder="Ex: JavaScript, React, Git, 2 anos de experiência">
+            </div>
+
+            <div>
+                <button type="submit" class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-800 text-white font-semibold rounded-xl shadow-lg hover:from-blue-700 hover:to-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all transform hover:scale-105">
+                    <i class="fas fa-bullhorn mr-2"></i> Publicar Vaga
+                </button>
+            </div>
+
+            <div id="mensagem-sucesso" class="hidden text-center bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl mt-4">
+                <i class="fas fa-check-circle mr-2"></i> Vaga publicada com sucesso!
+            </div>
+            
+        </form>
+    </div>
+
+    <script src="publicar.js"></script>
+</body>
+</html>
