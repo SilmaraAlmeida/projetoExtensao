@@ -9,77 +9,66 @@
 </head>
 <body class="bg-white text-gray-900 font-sans">
 
-  <header class="fixed top-0 left-0 right-0 bg-[#003399] shadow-xl text-white p-1 flex justify-between items-center z-50">
-    <div class="flex items-center space-x-3">
-      <div class="logo flex items-center justify-center p-4">
-        <a href="#"><img src="../../public/assets/img/logo.png" alt="Logo" class="h-8 md:h-10 w-auto w-auto"></a>
-      </div>
-        <div class="hidden md:block">
-            <input type="text" placeholder="Pesquisar" class="bg-white text-gray-700 placeholder-gray-700 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-        <nav class="hidden md:flex items-center space-x-8">
-            <a href="#" class="hover:text-gray-300 transition-colors">Home</a>
-            <div class="relative group">
-                <ul>
-                    <li><a href="#" class="hover:text-gray-300 transition-colors">Vagas</a></li>
-                    <li class="absolute left-0 mt-2 w-40 bg-white text-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+    <header class="fixed top-0 left-0 right-0 bg-[#003399] shadow-xl text-white p-3 flex justify-between items-center z-50">
+        <div class="flex items-center space-x-3">
+            <div class="logo flex items-center justify-center p-4">
+                <a href="#"><img src="../../public/assets/img/logo.png" alt="Logo" class="h-8 md:h-10 w-auto"></a>
+            </div>
+            <div class="hidden md:block">
+                <input type="text" placeholder="Pesquisar" class="bg-white text-gray-700 placeholder-gray-700 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#" class="hover:text-gray-300 transition-colors">Home</a>
+                <div class="relative group">
+                    <a href="#" class="hover:text-gray-300 transition-colors">Vagas</a>
+                    <div class="absolute left-0 mt-2 w-40 bg-white text-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                         <a href="../Vagas/index.html" class="block px-3 py-2 hover:bg-gray-200">Ver Vagas</a>
                         <a href="../PublicarVaga/publicarvaga.html" class="block px-4 py-2 hover:bg-gray-200">Publicar Vaga</a>
-                </ul>
-            </div>
-            <a href="#" class="hover:text-gray-300 transition-colors">Empresas</a>
-        </nav>
-    </div>
-    <div class="flex items-center space-x-4">
-        <a href="../login2/login2.html" class="hidden md:block hover:underline">Login</a>
-        <a href="../Registro/registro.html" class=" text-white border border-white rounded px-3 py-1 focus:outline-none 
-               transform hover:scale-105 transition-transform duration-200">Cadastre-se</a>
-    </div>
-    <button class="md:hidden text-white border border-white rounded px-3 py-2 focus:outline-none 
-               transform hover:scale-105 transition-transform duration-200">
-     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-    </button>
-</header>
+                    </div>
+                </div>
+                <a href="#" class="hover:text-gray-300 transition-colors">Empresas</a>
+            </nav>
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="../login2/login2.html" class="hidden md:block hover:underline">Login</a>
+            <a href="../Registro/registro.html" class="text-white border border-white rounded px-3 py-1 focus:outline-none transform hover:scale-105 transition-transform duration-200">Cadastre-se</a>
+        </div>
+        <button class="md:hidden text-white border border-white rounded px-3 py-2 focus:outline-none transform hover:scale-105 transition-transform duration-200">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+    </header>
 
     <div class="relative min-h-screen flex flex-col lg:flex-row items-center justify-center p-6 lg:p-12">
-
-        <div class="curved-background hidden shadow-lg lg:block curva">
+        <div class="curved-background">
             <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-        <path 
-          d="M0,0 
-            L0,13.5 
-            Q40.6,20.6 76.25,99.9
-            L100,100 
-            L100,0 
-            Z"
-          fill="#003399" />
-      </svg>
+                <path d="M0,0 L0,13.5 Q40.6,20.6 76.25,99.9 L100,100 L100,0 Z" fill="#003399" />
+            </svg>
         </div>
 
-    <div class=" absolute top-10 right-0 content w-auto p-8 lg:p-20 text-white bg-blue-900 lg:bg-transparent rounded-lg lg:rounded-none shadow-lg lg:shadow-none max-w-lg lg:max-w-none">
-        <h2 class="text-xl md:text-md font-bold mb-4">Sua empresa merece os melhores talentos de Muriaé</h2>
-        <p class="text-sm md:text-lg leading-0 ">Conquiste profissionais qualificados para crescer o seu negócio.</p>
-          <p class="text-sm md:text-lg leading-0 ">Nossa plataforma conecta você aos candidatos certos, de forma</p>
-          <p class="text-sm md:text-lg leading-0 ">prática, rápida e eficaz. Não fique de fora do movimento que está</p>
-          <p class="text-sm md:text-lg leading-0 ">transformando o mercado de trabalho da cidade.</p>
-        <p class="text-sm md:text-md leading-relaxed mb-1">Fortaleça sua equipe. Cadastre sua empresa e anuncie suas vagas hoje mesmo!</p>
-        <button class="bg-transparent text-orange-500 border border-orange-500 px-6 py-1 rounded-md font-semibold hover:bg-orange-500 hover:text-white transform hover:scale-105 transition-transform duration-200 w-full lg:w-auto">
-         Cadastre-se
-        </button>
-    </div>
+        <div class="absolute top-20 right-0 content w-auto p-8 lg:p-20 text-gray-300 bg-transparent lg:bg-transparent rounded-lg lg:rounded-none lg:shadow-none max-w-lg lg:max-w-none">
+            <h2 class="text-xl md:text-md font-bold mb-4">Sua empresa merece os melhores talentos de Muriaé</h2>
+            <p class="text-sm md:text-lg leading-0">Conquiste profissionais qualificados para crescer o seu negócio.</p>
+            <p class="text-sm md:text-lg leading-0">Nossa plataforma conecta você aos candidatos certos, de forma</p>
+            <p class="text-sm md:text-lg leading-0">prática, rápida e eficaz. Não fique de fora do movimento que está</p>
+            <p class="text-sm md:text-lg leading-0">transformando o mercado de trabalho da cidade.</p>
+            <p class="text-sm md:text-md leading-relaxed mb-1">Fortaleça sua equipe. Cadastre sua empresa e anuncie suas vagas hoje mesmo!</p>
+            <button class="bg-transparent text-orange-500 border border-orange-500 px-6 py-1 rounded-md font-semibold hover:bg-orange-500 hover:text-white transform hover:scale-105 transition-transform duration-200 w-full lg:w-auto">
+                Cadastre-se
+            </button>
+        </div>
 
-    <div class="absolute bottom-8 left-0 content w-auto p-8 lg:p-12 text-gray-900 bg-white lg:bg-transparent lg:text-gray-900 rounded-lg lg:rounded-none shadow-lg lg:shadow-none mb-0 lg:mb-0 max-w-lg lg:max-w-none">
-        <h2 class="text-xl md:text-md font-bold text-gray-900 mb-4">Descubra novas oportunidades em Muriaé</h2>
-        <p class="text-sm md:text-lg text-gray-900 leading-0">Se você está em busca de crescimento profissional, cadastre-se</p>
-        <p class="text-sm md:text-lg text-gray-900 leading-0">gratuitamente e tenha acesso às melhores vagas disponíveis</p>
-        <p class="text-sm md:text-lg text-gray-900 leading-0">na sua região. Crie seu perfil, preencha seu currículo e encontre</p>
-        <p class="text-sm md:text-lg text-gray-900 leading-0">o emprego perfeito para o seu talento — tudo em um só lugar.</p>
-        <p class="text-sm md:text-lg text-gray-900 leading-0">Comece agora mesmo!</p>
-        <p class="text-sm md:text-md text-gray-900 leading-relaxed mb-1">Este é o seu momento. Cadastre-se agora e comece a transformar seu futuro!</p>
-        <button class="bg-transparent text-blue-500 border border-blue-500 px-6 py-1 rounded-md font-semibold hover:bg-blue-500 hover:text-white transform hover:scale-105 transition-transform duration-200 w-full lg:w-auto">
-         Cadastre-se
-        </button>
+        <div class="absolute bottom-8 left-4 content w-auto p-8 lg:p-12 text-gray-900 bg-trasparent lg:bg-transparent lg:text-gray-900 rounded-lg lg:rounded-none  lg:shadow-none mb-0 lg:mb-0 max-w-lg lg:max-w-none">
+            <h2 class="text-xl md:text-md font-bold text-gray-900 mb-4">Descubra novas oportunidades em Muriaé</h2>
+            <p class="text-sm md:text-lg text-gray-900 leading-0">Se você está em busca de crescimento profissional, cadastre-se</p>
+            <p class="text-sm md:text-lg text-gray-900 leading-0">gratuitamente e tenha acesso às melhores vagas disponíveis</p>
+            <p class="text-sm md:text-lg text-gray-900 leading-0">na sua região. Crie seu perfil, preencha seu currículo e encontre</p>
+            <p class="text-sm md:text-lg text-gray-900 leading-0">o emprego perfeito para o seu talento — tudo em um só lugar.</p>
+            <p class="text-sm md:text-lg text-gray-900 leading-0">Comece agora mesmo!</p>
+            <p class="text-sm md:text-md text-gray-900 leading-relaxed mb-1">Este é o seu momento. Cadastre-se agora e comece a transformar seu futuro!</p>
+            <button class="bg-transparent text-blue-500 border border-blue-500 px-6 py-1 rounded-md font-semibold hover:bg-blue-500 hover:text-white transform hover:scale-105 transition-transform duration-200 w-full lg:w-auto">
+                Cadastre-se
+            </button>
+        </div>
     </div>
-</div>
 </body>
 </html>

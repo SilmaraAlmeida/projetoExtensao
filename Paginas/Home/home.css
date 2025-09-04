@@ -4,15 +4,6 @@ body, html {
   height: 100%;
   font-family: sans-serif;
 }
-.conteudo2{
-  position: relative;
-  z-index: 2; 
-  padding: 40px;
-  color: black;
-  margin: 0px 100px 50px;
-  background-color: transparent;
-
-}
 .btn-outline-blue{
   color: #003B94;
   border: 1px solid #003B94;
@@ -44,14 +35,6 @@ svg {
   height: 100%;
   display: block;
 }
-
-.conteudo {
-  position: relative;
-  z-index: 2;
-  padding: 40px;
-  color: white;
-  margin: 200px 150px 100px;
-}
 .btn-outline-orange {
   color: #ff6600;
   border: 1px solid #ff6600;
@@ -60,4 +43,15 @@ svg {
 }
 .btn-outline-orange:hover {
   color: #ff6600;
+}
+@media (max-width: 768px) { /* Para telas menores que 768px (tablets e celulares) */
+  .conteudo2 h1 {
+    font-size: 1.5rem !important; /* Diminui o tamanho do título */
+  }
+  .conteudo2 p {
+    font-size: 0.9rem !important; /* Diminui o tamanho do texto dos parágrafos */
+  }
+  .conteudo2 .fw-lighter {
+    font-size: 0.8rem !important; /* Diminui o tamanho do texto mais leve */
+  }
 }
