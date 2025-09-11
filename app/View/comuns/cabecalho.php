@@ -1,7 +1,6 @@
 <?php
 
-use Core\Library\Session;
-?>
+use Core\Library\Session; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -14,246 +13,195 @@ use Core\Library\Session;
 
     <title>Via Muriaé - Sistema de Gestão</title>
 
+    <!-- Favicon -->
     <link href="<?= baseUrl() ?>assets/img/AtomPHP-icone.png" rel="icon" type="image/png">
-    <link href="<?= baseUrl() ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?= baseUrl() ?>assets/css/style.css" rel="stylesheet">
-    <link href="<?= baseUrl() ?>assets/css/home.css" rel="stylesheet">
-    <link href="<?= baseUrl() ?>assets/css/footer.css" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <link href="<?= baseUrl() ?>assets/css/tailwind-output.css" rel="stylesheet">
+
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="<?= baseUrl() ?>assets/js/script.js"></script>
-    <script src="<?= baseUrl() ?>assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
-    <style>
-        /* PRESERVAR ESTILOS ORIGINAIS DA NAVBAR - NÃO MODIFICAR */
-        .header {
-            /* position: fixed; */
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1040;
-            background: #003399;
-            /* Mantém todos os estilos originais do seu CSS */
-        }
-
-        /* Ajustes específicos para o sistema */
-        body.sistema-layout {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        /* Layout container para sistema */
-        .sistema-container {
-            display: flex;
-            flex-direction: row;
-            margin-top: 87px;
-            min-height: calc(100vh - 87px);
-            width: 100%;
-        }
-
-        /* Sidebar Bootstrap seguindo o exemplo fornecido */
-        .sidebar-wrapper {
-            width: 280px;
-            min-height: calc(100vh - 87px);
-            background: #f8f9fa;
-            border-right: 1px solid #dee2e6;
-            flex-shrink: 0;
-            padding: 1rem;
-            position: relative;
-        }
-
-        .sidebar-wrapper .nav-link {
-            color: #495057;
-            padding: 0.75rem 1rem;
-            border-radius: 0.375rem;
-            margin: 0.125rem 0;
-            transition: all 0.15s ease-in-out;
-            display: flex;
-            align-items: center;
-        }
-
-        .sidebar-wrapper .nav-link:hover {
-            background-color: #e9ecef;
-            color: #0d6efd;
-        }
-
-        .sidebar-wrapper .nav-link.active {
-            background-color: #0d6efd;
-            color: #fff;
-        }
-
-        .sidebar-wrapper .nav-link i {
-            width: 1.25rem;
-            margin-right: 0.5rem;
-            text-align: center;
-        }
-
-        /* Conteúdo principal */
-        .main-content {
-            flex: 1;
-            padding: 2rem;
-            background: #fff;
-            overflow-y: auto;
-            min-height: calc(100vh - 87px);
-            width: calc(100% - 280px);
-        }
-
-        /* Botão toggle mobile */
-        .sidebar-toggle {
-            display: none;
-            position: fixed;
-            top: 100px;
-            left: 10px;
-            z-index: 1025;
-            background: #0d6efd;
-            border: none;
-            color: #fff;
-            border-radius: 0.375rem;
-            padding: 0.5rem 0.75rem;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-        }
-
-        /* Responsivo */
-        @media (max-width: 991.98px) {
-            .sidebar-wrapper {
-                position: fixed;
-                left: -280px;
-                top: 87px;
-                height: calc(100vh - 87px);
-                z-index: 1020;
-                transition: left 0.3s ease;
-            }
-
-            .sidebar-wrapper.show {
-                left: 0;
-            }
-
-            .main-content {
-                width: 100%;
-            }
-
-            .sidebar-toggle {
-                display: block !important;
-            }
-        }
-
-        /* Preservar container original para páginas não-sistema */
-        body:not(.sistema-layout) .container {
-            margin-top: 87px;
-        }
-
-        /* Garantir que o footer não apareça no meio da página */
-        body.sistema-layout footer {
-            display: none;
-        }
-    </style>
-
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('show');
-        }
-
-        // Fecha sidebar ao clicar fora (mobile)
-        document.addEventListener('click', function(e) {
-            const sidebar = document.getElementById('sidebar');
-            const toggle = document.querySelector('.sidebar-toggle');
-
-            if (window.innerWidth <= 991.98 &&
-                !sidebar.contains(e.target) &&
-                !toggle.contains(e.target) &&
-                sidebar.classList.contains('show')) {
-                sidebar.classList.remove('show');
-            }
-        });
-    </script>
 </head>
 
-<body <?= (Session::get("userLogin") && in_array(Session::get("userNivel"), USER_TYPES) && in_array($this->controller ?? '', SISTEMA_CONTROLLERS)) ? 'class="sistema-layout"' : '' ?>>
+<body class="bg-gray-50 font-sans antialiased">
 
-    <!-- Header - MANTIDO EXATAMENTE COMO ESTAVA NO ORIGINAL -->
-    <nav class="navbar bg-body-tertiary px-3 p-4 header">
-        <div class="logo">
-            <a href="/home/"><img src="<?= baseUrl() ?>/assets/img/logo.png" alt="Logo"></a>
-        </div>
-        <div class="pesquisa">
-            <input type="text" placeholder="Pesquisar">
-        </div>
-        <ul class="nav nav-pills rightMenu">
-            <li class="nav-item">
-                <a class="nav-link text-decoration-none text-light" href="#">Home</a>
-            </li>
-            <li>
-                <a class="nav-link text-decoration-none text-light" href="#">Vagas</a>
-            </li>
-            <?php if (Session::get("userLogin")): ?>
-                <?php if (Session::get("userNivel") == "G"): ?>
-                    <li>
-                        <a class="dropdown-item entrar" href="<?= baseUrl() ?>Sistema/">Área do Gestor</a>
-                    </li>
-                <?php elseif (Session::get("userNivel") == "A"): ?>
-                    <li>
-                        <a class="dropdown-item entrar" href="<?= baseUrl() ?>Sistema/">Área da Empresa</a>
-                    </li>
-                <?php else: ?>
-                    <li>
-                        <a class="dropdown-item entrar" href="<?= baseUrl() ?>Sistema/">Área do Usuário</a>
-                    </li>
-                <?php endif; ?>
-            <?php else: ?>
-                <li>
-                    <a class="dropdown-item text-decoration-none text-light entrar" href="<?= baseUrl() ?>Login/">Entrar</a>
-                </li>
-                <li>
-                    <a class="dropdown-item cadastrar" href="<?= baseUrl() ?>Cadastro/">Cadastre-se</a>
-                </li>
-            <?php endif; ?>
-        </ul>
-    </nav>
+    <!-- Header Navigation -->
+    <header class="bg-blue-900 shadow-lg sticky top-0 z-50" x-data="{ mobileMenuOpen: false }">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 lg:h-24">
 
-    
-    <?php if (Session::get("userLogin") && in_array(Session::get("userNivel"), USER_TYPES) && in_array($this->controller ?? '', SISTEMA_CONTROLLERS)): ?>
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="/home/" class="flex items-center">
+                        <img src="<?= baseUrl() ?>/assets/img/logo-horiz-claro.png" alt="Via Muriaé Logo" class="h-28 lg:h-32 w-auto">
+                    </a>
+                </div>
 
-        <!-- Botão toggle mobile -->
-        <button class="sidebar-toggle" onclick="toggleSidebar()">
-            <i class="fas fa-bars"></i>
-        </button>
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-white hover:text-blue-200 px-4 py-3 rounded-md text-base lg:text-lg font-medium transition-colors duration-200">
+                        Home
+                    </a>
+                    <a href="#" class="text-white hover:text-blue-200 px-4 py-3 rounded-md text-base lg:text-lg font-medium transition-colors duration-200">
+                        Vagas
+                    </a>
+                </div>
 
-        <!-- Container do sistema -->
-        <div class="sistema-container">
-            <!-- Sidebar modularizada -->
-            <?php
-            $currentController = $this->controller ?? '';
-            $userNivel = Session::get("userNivel");
-            $pathComuns = ".." . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "View" . DIRECTORY_SEPARATOR . "Comuns" . DIRECTORY_SEPARATOR;
+                <!-- Search Bar - Desktop -->
+                <div class="hidden md:flex flex-1 max-w-lg mx-8">
+                    <div class="relative w-full">
+                        <form action="/home/busca" method="GET">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400 text-base"></i>
+                            </div>
+                            <input
+                                type="text" name="busca"
+                                placeholder="Pesquisar vagas, empresas..."
+                                class="block w-full pl-12 pr-4 py-3 text-base border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                                >
+                            <button class="hidden" type="submit"></button>
+                        </form>
+                    </div>
+                </div>
 
-            switch ($userNivel) {
-                case 'G':
-                    if (file_exists($pathComuns . "sidebar-gestor.php")) {
-                        require_once $pathComuns . "sidebar-gestor.php";
-                    }
-                    break;
-                case 'A':
-                    if (file_exists($pathComuns . "sidebar-anunciante.php")) {
-                        require_once $pathComuns . "sidebar-anunciante.php";
-                    }
-                    break;
-                case 'CN':
-                    if (file_exists($pathComuns . "sidebar-contribuinte.php")) {
-                        require_once $pathComuns . "sidebar-contribuinte.php";
-                    }
-                    break;
-            }
-            ?>
+                <!-- User Actions -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <?php if (Session::get("userLogin")): ?>
+                        <!-- Logged User Menu -->
+                        <div class="relative" x-data="{ open: false }">
+                            <button
+                                @click="open = !open"
+                                @click.away="open = false"
+                                class="text-white hover:text-blue-200 px-4 py-3 rounded-md text-base lg:text-lg font-medium flex items-center space-x-2 transition-colors duration-200">
+                                <i class="fas fa-user-circle text-lg"></i>
+                                <span>Minha Área</span>
+                                <i class="fas fa-chevron-down text-sm transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                            </button>
 
+                            <!-- Dropdown -->
+                            <div
+                                x-show="open"
+                                x-transition:enter="transition ease-out duration-200"
+                                x-transition:enter-start="opacity-0 scale-95"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-150"
+                                x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0 scale-95"
+                                class="absolute right-0 mt-2 w-52 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50"
+                                x-cloak>
+                                <div class="py-2">
+                                    <?php if (Session::get("userNivel") == "G"): ?>
+                                        <a href="<?= baseUrl() ?>Sistema/" class="block px-4 py-3 text-base text-gray-700 hover:bg-blue-50 hover:text-blue-900 transition-colors duration-200">
+                                            <i class="fas fa-cogs mr-3"></i>Área do Gestor
+                                        </a>
+                                    <?php elseif (Session::get("userNivel") == "A"): ?>
+                                        <a href="<?= baseUrl() ?>Sistema/" class="block px-4 py-3 text-base text-gray-700 hover:bg-blue-50 hover:text-blue-900 transition-colors duration-200">
+                                            <i class="fas fa-building mr-3"></i>Área da Empresa
+                                        </a>
+                                    <?php else: ?>
+                                        <a href="<?= baseUrl() ?>Sistema/" class="block px-4 py-3 text-base text-gray-700 hover:bg-blue-50 hover:text-blue-900 transition-colors duration-200">
+                                            <i class="fas fa-user mr-3"></i>Área do Usuário
+                                        </a>
+                                    <?php endif; ?>
 
+                                    <div class="border-t border-gray-100"></div>
+                                    <a href="<?= baseUrl() ?>Logout/" class="block px-4 py-3 text-base text-red-600 hover:bg-red-50 transition-colors duration-200">
+                                        <i class="fas fa-sign-out-alt mr-3"></i>Sair
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <!-- Guest Actions -->
+                        <a href="<?= baseUrl() ?>Login/" class="text-white hover:text-blue-200 px-4 py-3 rounded-md text-base lg:text-lg font-medium transition-colors duration-200">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Entrar
+                        </a>
+                        <a href="<?= baseUrl() ?>Cadastro/" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-md text-base lg:text-lg font-medium transition-all duration-200 transform hover:scale-105">
+                            Cadastre-se
+                        </a>
+                    <?php endif; ?>
+                </div>
 
-            <!-- Conteúdo principal -->
-            <main class="main-content">
+                <!-- Mobile Menu Button -->
+                <button
+                    @click="mobileMenuOpen = !mobileMenuOpen"
+                    class="md:hidden ml-4 text-white hover:text-blue-200 focus:outline-none focus:text-blue-200 transition-colors duration-200">
+                    <i class="fas fa-bars text-2xl" x-show="!mobileMenuOpen"></i>
+                    <i class="fas fa-times text-2xl" x-show="mobileMenuOpen" x-cloak></i>
+                </button>
+            </div>
 
-            <?php else: ?>
-                <!-- Container para páginas não-sistema -->
-                <main>
-                <?php endif; ?>
+            <!-- Mobile Menu -->
+            <div
+                x-show="mobileMenuOpen"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 -translate-y-2"
+                x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0"
+                x-transition:leave-end="opacity-0 -translate-y-2"
+                class="md:hidden border-t border-blue-800 bg-blue-800"
+                x-cloak>
+                <div class="px-4 pt-4 pb-6 space-y-3 sm:px-6">
+
+                    <!-- Mobile Search -->
+                    <div class="py-2">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400 text-base"></i>
+                            </div>
+                            <input
+                                type="text"
+                                placeholder="Pesquisar..."
+                                class="block w-full pl-12 pr-4 py-3 text-base border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        </div>
+                    </div>
+
+                    <!-- Mobile Navigation -->
+                    <a href="#" class="text-white hover:text-blue-200 hover:bg-blue-700 block px-4 py-3 rounded-md text-lg font-medium transition-colors duration-200">
+                        Home
+                    </a>
+                    <a href="#" class="text-white hover:text-blue-200 hover:bg-blue-700 block px-4 py-3 rounded-md text-lg font-medium transition-colors duration-200">
+                        Vagas
+                    </a>
+
+                    <?php if (Session::get("userLogin")): ?>
+                        <div class="border-t border-blue-700 pt-4">
+                            <?php if (Session::get("userNivel") == "G"): ?>
+                                <a href="<?= baseUrl() ?>Sistema/" class="text-white hover:text-blue-200 hover:bg-blue-700 block px-4 py-3 rounded-md text-lg font-medium transition-colors duration-200">
+                                    <i class="fas fa-cogs mr-3"></i>Área do Gestor
+                                </a>
+                            <?php elseif (Session::get("userNivel") == "A"): ?>
+                                <a href="<?= baseUrl() ?>Sistema/" class="text-white hover:text-blue-200 hover:bg-blue-700 block px-4 py-3 rounded-md text-lg font-medium transition-colors duration-200">
+                                    <i class="fas fa-building mr-3"></i>Área da Empresa
+                                </a>
+                            <?php else: ?>
+                                <a href="<?= baseUrl() ?>Sistema/" class="text-white hover:text-blue-200 hover:bg-blue-700 block px-4 py-3 rounded-md text-lg font-medium transition-colors duration-200">
+                                    <i class="fas fa-user mr-3"></i>Área do Usuário
+                                </a>
+                            <?php endif; ?>
+
+                            <a href="<?= baseUrl() ?>Logout/" class="text-red-300 hover:text-red-100 hover:bg-red-600 block px-4 py-3 rounded-md text-lg font-medium transition-colors duration-200">
+                                <i class="fas fa-sign-out-alt mr-3"></i>Sair
+                            </a>
+                        </div>
+                    <?php else: ?>
+                        <div class="border-t border-blue-700 pt-4 space-y-3">
+                            <a href="<?= baseUrl() ?>Login/" class="text-white hover:text-blue-200 hover:bg-blue-700 block px-4 py-3 rounded-md text-lg font-medium transition-colors duration-200">
+                                <i class="fas fa-sign-in-alt mr-3"></i>Entrar
+                            </a>
+                            <a href="<?= baseUrl() ?>Cadastro/" class="bg-orange-500 hover:bg-orange-600 text-white block mx-3 px-4 py-3 rounded-md text-lg font-medium text-center transition-colors duration-200">
+                                Cadastre-se
+                            </a>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="min-h-screen">

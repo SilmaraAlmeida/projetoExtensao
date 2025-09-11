@@ -1,227 +1,370 @@
 <?php use Core\Library\Session; ?>
 
-<style>
-  body {
-    background-color: #003399;
-    font-family: sans-serif;
-  }
-
-  .card-register {
-    background: white;
-    border-radius: 10px;
-    max-width: 600px;
-    width: 100%;
-    padding: 2rem 2.5rem;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  }
-
-  .toggle-container {
-    background-color: #f1f5fb;
-    border-radius: 10px;
-    padding: 4px;
-    display: flex;
-    gap: 4px;
-    margin-bottom: 1.5rem;
-  }
-
-  .toggle-btn {
-    flex: 1;
-    border: none;
-    border-radius: 8px;
-    background-color: transparent;
-    font-weight: 500;
-    color: #333;
-    padding: 8px 0;
-    transition: all 0.2s ease;
-  }
-
-  .toggle-btn.active {
-    background-color: #ffffff;
-    border: 1px solid #cdd6f3;
-    font-weight: bold;
-    color: #000;
-  }
-
-  .form-box {
-    display: none;
-  }
-
-  .form-box.active {
-    display: block;
-  }
-</style>
-
 <?php
 $msgError = Session::getDestroy('msgError');
 $errors = Session::get('errors');
 $inputs = Session::get('inputs');
 ?>
 
-<div class="d-flex justify-content-center align-items-center vh-100">
-  <div class="card-register">
-    <div class="text-center mb-3">
-      <a href="/home/"><img src="<?= baseUrl() ?>/assets/img/logo.png" alt="Logo" style="max-width: 100px;"></a>
-      <p class="text-muted mt-2 mb-0">Crie sua conta gratuitamente</p>
+<div class="min-h-screen bg-blue-900 flex items-center justify-center p-4">
+  <div 
+    class="bg-white rounded-xl shadow-xl p-8 w-full max-w-2xl"
+    x-data="{ 
+      activeTab: 'candidato',
+      setTab(tab) { this.activeTab = tab },
+      formatPhone(event) {
+        let value = event.target.value.replace(/\D/g, '');
+        value = value.replace(/(\d{2})(\d{5})(\d{0,4})/, function(match, p1, p2, p3) {
+          return p3 ? `(${p1}) ${p2}-${p3}` : `(${p1}) ${p2}`;
+        });
+        event.target.value = value;
+      },
+      formatCPF(event) {
+        let value = event.target.value.replace(/\D/g, '');
+        value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, function(match, p1, p2, p3, p4) {
+          return p4 ? `${p1}.${p2}.${p3}-${p4}` : `${p1}.${p2}.${p3}`;
+        });
+        event.target.value = value;
+      },
+      formatCNPJ(event) {
+        let value = event.target.value.replace(/\D/g, '');
+        value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{0,2})/, function(match, p1, p2, p3, p4, p5) {
+          return p5 ? `${p1}.${p2}.${p3}/${p4}-${p5}` : `${p1}.${p2}.${p3}/${p4}`;
+        });
+        event.target.value = value;
+      }
+    }"
+  >
+    
+    <!-- Logo e Título -->
+    <div class="text-center mb-6">
+      <a href="/home/" class="inline-block">
+        <img src="<?= baseUrl() ?>/assets/img/logo.png" alt="Logo Via Muriaé" class="mx-auto h-16 w-auto">
+      </a>
+      <p class="text-gray-500 mt-3 mb-0">Crie sua conta gratuitamente</p>
     </div>
 
-    <h4 class="text-center fw-bold mb-4">Criar Conta</h4>
+    <h2 class="text-center text-xl font-bold text-gray-800 mb-6">Criar Conta</h2>
 
+    <!-- Mensagem de Erro -->
     <?php if ($msgError): ?>
-      <div class="alert alert-danger" role="alert">
+      <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
         <?= $msgError ?>
       </div>
     <?php endif; ?>
 
-    <div class="toggle-container">
-      <button id="btnCandidato" class="toggle-btn active">👤 Sou Candidato</button>
-      <button id="btnEmpresa" class="toggle-btn">🏢 Sou Empresa</button>
+    <!-- Toggle Buttons -->
+    <div class="bg-blue-50 rounded-xl p-1 flex gap-1 mb-6">
+      <button 
+        @click="setTab('candidato')"
+        :class="activeTab === 'candidato' ? 'bg-white border border-blue-200 shadow-sm font-bold text-gray-900' : 'bg-transparent font-medium text-gray-600 hover:text-gray-800'"
+        class="flex-1 py-3 px-4 rounded-lg transition-all duration-200 text-sm"
+      >
+        <i class="fas fa-user mr-2"></i>Sou Candidato
+      </button>
+      <button 
+        @click="setTab('empresa')"
+        :class="activeTab === 'empresa' ? 'bg-white border border-blue-200 shadow-sm font-bold text-gray-900' : 'bg-transparent font-medium text-gray-600 hover:text-gray-800'"
+        class="flex-1 py-3 px-4 rounded-lg transition-all duration-200 text-sm"
+      >
+        <i class="fas fa-building mr-2"></i>Sou Empresa
+      </button>
     </div>
 
-    <!-- Formulário Candidato -->
-    <form id="formCandidato" class="form-box active" action="<?= baseUrl() ?>cadastro/cadastroUsuario" method="post">
-      <div class="row g-3">
-        <div class="col-md-6">
-          <label class="form-label">Nome:</label>
-          <input type="text" name="nome" class="form-control <?= isset($errors['nome']) ? 'is-invalid' : '' ?>" placeholder="Seu nome" value="<?= $inputs['nome'] ?? '' ?>" required>
+    <!-- Form Candidato -->
+    <form 
+      x-show="activeTab === 'candidato'"
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 transform translate-x-4"
+      x-transition:enter-end="opacity-100 transform translate-x-0"
+      action="<?= baseUrl() ?>cadastro/cadastroUsuario" 
+      method="post"
+      class="space-y-4"
+    >
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Nome:</label>
+          <input 
+            type="text" 
+            name="nome" 
+            placeholder="Seu nome" 
+            value="<?= $inputs['nome'] ?? '' ?>" 
+            required
+            class="w-full px-4 py-3 border <?= isset($errors['nome']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+          >
           <?php if (isset($errors['nome'])): ?>
-            <div class="invalid-feedback"><?= $errors['nome'] ?></div>
+            <p class="text-red-600 text-xs mt-1"><?= $errors['nome'] ?></p>
           <?php endif; ?>
         </div>
-        <div class="col-md-6">
-          <label class="form-label">Sobrenome:</label>
-          <input type="text" name="sobrenome" class="form-control" placeholder="Seu sobrenome" value="<?= $inputs['sobrenome'] ?? '' ?>" required>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Sobrenome:</label>
+          <input 
+            type="text" 
+            name="sobrenome" 
+            placeholder="Seu sobrenome" 
+            value="<?= $inputs['sobrenome'] ?? '' ?>" 
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+          >
         </div>
-        <div class="col-12">
-          <label class="form-label">CPF:</label>
-          <input type="text" name="cpf" id="cpf" class="form-control <?= isset($errors['cpf']) ? 'is-invalid' : '' ?>" placeholder="000.000.000-00" value="<?= $inputs['cpf'] ?? '' ?>">
-          <?php if (isset($errors['cpf'])): ?>
-            <div class="invalid-feedback"><?= $errors['cpf'] ?></div>
-          <?php endif; ?>
-        </div>
-        <div class="col-12">
-          <label class="form-label">E-mail:</label>
-          <input type="email" name="email" class="form-control <?= isset($errors['email']) ? 'is-invalid' : '' ?>" placeholder="seu@email.com" value="<?= $inputs['email'] ?? '' ?>" required>
-          <?php if (isset($errors['email'])): ?>
-            <div class="invalid-feedback"><?= $errors['email'] ?></div>
-          <?php endif; ?>
-        </div>
-        <div class="col-12">
-          <label class="form-label">Telefone:</label>
-          <input type="text" name="telefone" id="telefone" class="form-control <?= isset($errors['telefone']) ? 'is-invalid' : '' ?>" placeholder="(11) 99999-9999" value="<?= $inputs['telefone'] ?? '' ?>">
-          <?php if (isset($errors['telefone'])): ?>
-            <div class="invalid-feedback"><?= $errors['telefone'] ?></div>
-          <?php endif; ?>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Senha:</label>
-          <input type="password" name="senha" class="form-control <?= isset($errors['senha']) ? 'is-invalid' : '' ?>" placeholder="Mínimo 8 caracteres" required>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">CPF:</label>
+        <input 
+          type="text" 
+          name="cpf" 
+          placeholder="000.000.000-00" 
+          value="<?= $inputs['cpf'] ?? '' ?>"
+          @input="formatCPF($event)"
+          maxlength="14"
+          class="w-full px-4 py-3 border <?= isset($errors['cpf']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+        >
+        <?php if (isset($errors['cpf'])): ?>
+          <p class="text-red-600 text-xs mt-1"><?= $errors['cpf'] ?></p>
+        <?php endif; ?>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">E-mail:</label>
+        <input 
+          type="email" 
+          name="email" 
+          placeholder="seu@email.com" 
+          value="<?= $inputs['email'] ?? '' ?>" 
+          required
+          class="w-full px-4 py-3 border <?= isset($errors['email']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+        >
+        <?php if (isset($errors['email'])): ?>
+          <p class="text-red-600 text-xs mt-1"><?= $errors['email'] ?></p>
+        <?php endif; ?>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Telefone:</label>
+        <input 
+          type="text" 
+          name="telefone" 
+          placeholder="(11) 99999-9999" 
+          value="<?= $inputs['telefone'] ?? '' ?>"
+          @input="formatPhone($event)"
+          maxlength="15"
+          class="w-full px-4 py-3 border <?= isset($errors['telefone']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+        >
+        <?php if (isset($errors['telefone'])): ?>
+          <p class="text-red-600 text-xs mt-1"><?= $errors['telefone'] ?></p>
+        <?php endif; ?>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Senha:</label>
+          <div class="relative" x-data="{ show: false }">
+            <input 
+              :type="show ? 'text' : 'password'"
+              name="senha" 
+              placeholder="Mínimo 8 caracteres" 
+              required
+              class="w-full px-4 py-3 border <?= isset($errors['senha']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm pr-10"
+            >
+            <button 
+              type="button"
+              @click="show = !show"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+            >
+              <i class="fas fa-eye" x-show="!show"></i>
+              <i class="fas fa-eye-slash" x-show="show" x-cloak></i>
+            </button>
+          </div>
           <?php if (isset($errors['senha'])): ?>
-            <div class="invalid-feedback"><?= $errors['senha'] ?></div>
+            <p class="text-red-600 text-xs mt-1"><?= $errors['senha'] ?></p>
           <?php endif; ?>
         </div>
-        <div class="col-md-6">
-          <label class="form-label">Confirmar Senha:</label>
-          <input type="password" name="confSenha" class="form-control <?= isset($errors['confSenha']) ? 'is-invalid' : '' ?>" placeholder="Confirme sua senha" required>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar Senha:</label>
+          <div class="relative" x-data="{ show: false }">
+            <input 
+              :type="show ? 'text' : 'password'"
+              name="confSenha" 
+              placeholder="Confirme sua senha" 
+              required
+              class="w-full px-4 py-3 border <?= isset($errors['confSenha']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm pr-10"
+            >
+            <button 
+              type="button"
+              @click="show = !show"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+            >
+              <i class="fas fa-eye" x-show="!show"></i>
+              <i class="fas fa-eye-slash" x-show="show" x-cloak></i>
+            </button>
+          </div>
           <?php if (isset($errors['confSenha'])): ?>
-            <div class="invalid-feedback"><?= $errors['confSenha'] ?></div>
+            <p class="text-red-600 text-xs mt-1"><?= $errors['confSenha'] ?></p>
           <?php endif; ?>
         </div>
-        <div class="col-12 mt-2">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input <?= isset($errors['termos']) ? 'is-invalid' : '' ?>" name="termos" value="1" <?= isset($inputs['termos']) ? 'checked' : '' ?> required>
-            <label class="form-check-label">Aceito os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a></label>
-            <?php if (isset($errors['termos'])): ?>
-              <div class="invalid-feedback"><?= $errors['termos'] ?></div>
-            <?php endif; ?>
-          </div>
-        </div>
-        <div class="col-12 mt-3">
-          <button type="submit" class="btn btn-primary w-100">Criar Conta como Candidato</button>
-        </div>
       </div>
+
+      <div class="flex items-start">
+        <input 
+          type="checkbox" 
+          name="termos" 
+          value="1" 
+          <?= isset($inputs['termos']) ? 'checked' : '' ?>
+          required
+          class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1"
+        >
+        <label class="ml-3 text-sm text-gray-600">
+          Aceito os <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Termos de Uso</a> e 
+          <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Política de Privacidade</a>
+        </label>
+        <?php if (isset($errors['termos'])): ?>
+          <p class="text-red-600 text-xs mt-1 ml-3"><?= $errors['termos'] ?></p>
+        <?php endif; ?>
+      </div>
+
+      <button 
+        type="submit" 
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 transform hover:scale-[1.02]"
+      >
+        Criar Conta como Candidato
+      </button>
     </form>
 
-    <!-- Formulário Empresa -->
-    <form id="formEmpresa" class="form-box" action="<?= baseUrl() ?>cadastro/cadastroEmpresa" method="post">
-      <div class="row g-3">
-        <div class="col-12">
-          <label class="form-label">Razão Social:</label>
-          <input type="text" name="razaoSocial" class="form-control" placeholder="Nome da empresa" required>
-        </div>
-        <div class="col-12">
-          <label class="form-label">CNPJ:</label>
-          <input type="text" name="cnpj" class="form-control" placeholder="00.000.000/0000-00" required>
-        </div>
-        <div class="col-12">
-          <label class="form-label">E-mail Corporativo:</label>
-          <input type="email" name="emailEmpresa" class="form-control" placeholder="contato@empresa.com" required>
-        </div>
-        <div class="col-12">
-          <label class="form-label">Telefone:</label>
-          <input type="text" name="telefoneEmpresa" class="form-control" placeholder="(11) 99999-9999">
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Senha:</label>
-          <input type="password" name="senhaEmpresa" class="form-control" placeholder="Mínimo 8 caracteres" required>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Confirmar Senha:</label>
-          <input type="password" name="confSenhaEmpresa" class="form-control" placeholder="Confirme sua senha" required>
-        </div>
-        <div class="col-12 mt-2">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="termosEmpresa" required>
-            <label class="form-check-label">Aceito os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a></label>
+    <!-- Form Empresa -->
+    <form 
+      x-show="activeTab === 'empresa'"
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 transform translate-x-4"
+      x-transition:enter-end="opacity-100 transform translate-x-0"
+      action="<?= baseUrl() ?>cadastro/cadastroEmpresa" 
+      method="post"
+      class="space-y-4"
+      x-cloak
+    >
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Razão Social:</label>
+        <input 
+          type="text" 
+          name="razaoSocial" 
+          placeholder="Nome da empresa" 
+          required
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+        >
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">CNPJ:</label>
+        <input 
+          type="text" 
+          name="cnpj" 
+          placeholder="00.000.000/0000-00" 
+          @input="formatCNPJ($event)"
+          maxlength="18"
+          required
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+        >
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">E-mail Corporativo:</label>
+        <input 
+          type="email" 
+          name="emailEmpresa" 
+          placeholder="contato@empresa.com" 
+          required
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+        >
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Telefone:</label>
+        <input 
+          type="text" 
+          name="telefoneEmpresa" 
+          placeholder="(11) 99999-9999"
+          @input="formatPhone($event)"
+          maxlength="15"
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+        >
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Senha:</label>
+          <div class="relative" x-data="{ show: false }">
+            <input 
+              :type="show ? 'text' : 'password'"
+              name="senhaEmpresa" 
+              placeholder="Mínimo 8 caracteres" 
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm pr-10"
+            >
+            <button 
+              type="button"
+              @click="show = !show"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+            >
+              <i class="fas fa-eye" x-show="!show"></i>
+              <i class="fas fa-eye-slash" x-show="show" x-cloak></i>
+            </button>
           </div>
         </div>
-        <div class="col-12 mt-3">
-          <button type="submit" class="btn btn-primary w-100">Criar Conta como Empresa</button>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar Senha:</label>
+          <div class="relative" x-data="{ show: false }">
+            <input 
+              :type="show ? 'text' : 'password'"
+              name="confSenhaEmpresa" 
+              placeholder="Confirme sua senha" 
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm pr-10"
+            >
+            <button 
+              type="button"
+              @click="show = !show"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+            >
+              <i class="fas fa-eye" x-show="!show"></i>
+              <i class="fas fa-eye-slash" x-show="show" x-cloak></i>
+            </button>
+          </div>
         </div>
       </div>
+
+      <div class="flex items-start">
+        <input 
+          type="checkbox" 
+          name="termosEmpresa" 
+          required
+          class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1"
+        >
+        <label class="ml-3 text-sm text-gray-600">
+          Aceito os <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Termos de Uso</a> e 
+          <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Política de Privacidade</a>
+        </label>
+      </div>
+
+      <button 
+        type="submit" 
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 transform hover:scale-[1.02]"
+      >
+        Criar Conta como Empresa
+      </button>
     </form>
 
-    <p class="text-center mt-3 small">Já tem uma conta? <a href="<?= baseUrl() ?>login">Faça login aqui</a></p>
+    <!-- Link de Login -->
+    <p class="text-center mt-6 text-sm text-gray-600">
+      Já tem uma conta? 
+      <a href="<?= baseUrl() ?>login" class="font-bold text-blue-600 hover:text-blue-800 transition-colors duration-200">
+        Faça login aqui
+      </a>
+    </p>
   </div>
 </div>
-
-<script>
-  const btnCandidato = document.getElementById('btnCandidato');
-  const btnEmpresa = document.getElementById('btnEmpresa');
-  const formCandidato = document.getElementById('formCandidato');
-  const formEmpresa = document.getElementById('formEmpresa');
-
-  btnCandidato.addEventListener('click', () => {
-    btnCandidato.classList.add('active');
-    btnEmpresa.classList.remove('active');
-    formCandidato.classList.add('active');
-    formEmpresa.classList.remove('active');
-  });
-
-  btnEmpresa.addEventListener('click', () => {
-    btnEmpresa.classList.add('active');
-    btnCandidato.classList.remove('active');
-    formEmpresa.classList.add('active');
-    formCandidato.classList.remove('active');
-  });
-
-  // Máscara para telefone
-  document.getElementById('telefone')?.addEventListener('input', function(e) {
-    let value = e.target.value.replace(/\D/g, '');
-    value = value.replace(/(\d{2})(\d{5})(\d{0,4})/, function(match, p1, p2, p3) {
-      return p3 ? `(${p1}) ${p2}-${p3}` : `(${p1}) ${p2}`;
-    });
-    e.target.value = value;
-  });
-
-  // Máscara para CPF
-  document.getElementById('cpf')?.addEventListener('input', function(e) {
-    let value = e.target.value.replace(/\D/g, '');
-    value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, function(match, p1, p2, p3, p4) {
-      return p4 ? `${p1}.${p2}.${p3}-${p4}` : `${p1}.${p2}.${p3}`;
-    });
-    e.target.value = value;
-  });
-</script>
 
 <?php
 // Limpar as sessions após exibir

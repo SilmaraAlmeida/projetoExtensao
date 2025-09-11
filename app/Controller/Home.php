@@ -24,4 +24,16 @@ class Home extends ControllerMain
         echo "<br />ID: " . $id;
         echo "<br />PARÂMETROS: " . implode(", ", $params);
     }
+    public function busca()
+    {
+        echo "<pre>";
+        var_dump($_GET); // para depuração
+        echo "</pre>";
+
+        if (!empty($_GET['busca'])) {
+            echo "Você pesquisou: " . htmlspecialchars($_GET['busca']);
+        } else {
+            echo "Nenhum termo informado.";
+        }
+    }
 }

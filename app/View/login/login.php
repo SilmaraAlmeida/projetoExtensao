@@ -1,162 +1,139 @@
-  <style>
-    body {
-      background: #003399;
-      font-family: sans-serif;
-    }
+<?php use Core\Library\Session; ?>
 
-    .card-login {
-      border-radius: 15px;
-      max-width: 400px;
-      width: 100%;
-    }
+<?php
+$msgError = Session::getDestroy('msgError');
+$msgSucesso = Session::getDestroy('msgSucesso');
+$msgSuccesso = Session::getDestroy('msgSuccesso');
+$inputs = Session::get('inputs') ?? [];
+?>
 
-    .toggle-container {
-        background-color: #f1f5fb; /* fundo do container */
-        border-radius: 10px;
-        padding: 4px;
-        display: flex;
-        gap: 4px;
-    }
+<div class="min-h-screen bg-blue-900 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
 
-    .toggle-btn {
-        flex: 1;
-        border: none;
-        border-radius: 8px;
-        background-color: transparent;
-        font-weight: 500;
-        color: #333;
-        padding: 8px 0;
-        transition: all 0.2s ease;
-    }
-
-    .toggle-btn.active {
-        background-color: #ffffff;
-        border: 1px solid #cdd6f3;
-        font-weight: bold;
-        color: #000;
-    }
-
-    .form-box {
-      display: none;
-    }
-
-    .form-box.active {
-      display: block;
-    }
-
-    .divider-text {
-      position: relative;
-      text-align: center;
-      margin: 1rem 0;
-      color: #aaa;
-      font-size: 0.875rem;
-    }
-
-    .divider-text::before,
-    .divider-text::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      width: 40%;
-      height: 1px;
-      background: #ccc;
-    }
-
-    .divider-text::before {
-      left: 0;
-    }
-
-    .divider-text::after {
-      right: 0;
-    }
-  </style>
-<div class="d-flex justify-content-center align-items-center vh-100">
-  <div class="card card-login shadow p-4">
-    <div class="text-center mb-3">
-      <a href="/home/">
-        <img src="<?= baseUrl() ?>/assets/img/logo.png" alt="Logo" style="max-width: 100px;">
+    <!-- Logo e Título -->
+    <div class="text-center mb-6">
+      <a href="/home/" class="inline-block">
+        <img src="<?= baseUrl() ?>/assets/img/logo.png" alt="Logo Via Muriaé" class="mx-auto h-16 w-auto">
       </a>
-      <p class="text-muted mt-2 mb-0">Entre na sua conta</p>
+      <p class="text-gray-500 mt-3 mb-0">Entre na sua conta</p>
     </div>
 
-    <h5 class="text-center fw-bold mb-3">Fazer Login</h5>
+    <h2 class="text-center text-xl font-bold text-gray-800 mb-6">Fazer Login</h2>
 
-    <!-- Botões de alternância -->
-    <div class="toggle-container mb-3">
-    <button id="btnCandidato" class="toggle-btn active">👤 Candidato</button>
-    <button id="btnEmpresa" class="toggle-btn">🏢 Empresa</button>
-    </div>
+    <!-- Mensagem de Erro -->
+    <?php if ($msgError): ?>
+      <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center">
+        <i class="fas fa-exclamation-circle mr-2"></i>
+        <?= $msgError ?>
+      </div>
+    <?php endif; ?>
 
-    <!-- Formulário Candidato -->
-    <form id="formCandidato" class="form-box active" action="/login/candidato" method="POST">
-      <div class="mb-3">
-        <label for="emailCandidato" class="form-label">E-mail:</label>
-        <input type="email" class="form-control" id="emailCandidato" name="email" placeholder="seu@email.com" required>
+    <!-- Mensagem de Sucesso -->
+    <?php if ($msgSucesso || $msgSuccesso): ?>
+      <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center">
+        <i class="fas fa-check-circle mr-2"></i>
+        <?= $msgSucesso ?: $msgSuccesso ?>
       </div>
-      <div class="mb-3">
-        <label for="senhaCandidato" class="form-label">Senha:</label>
-        <input type="password" class="form-control" id="senhaCandidato" name="senha" placeholder="Sua senha" required>
+    <?php endif; ?>
+
+    <!-- Formulário de Login -->
+    <form action="<?= baseUrl() ?>login/signin" method="POST" class="space-y-4">
+      <div>
+        <label for="login" class="block text-sm font-medium text-gray-700 mb-2">
+          Login:
+        </label>
+        <input
+          type="email"
+          id="login"
+          name="login"
+          placeholder="seu@email.com"
+          value="<?= $inputs['login'] ?? '' ?>"
+          required
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+        >
       </div>
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="lembrarCandidato">
-          <label class="form-check-label" for="lembrarCandidato">Lembrar-me</label>
+
+      <div>
+        <label for="senha" class="block text-sm font-medium text-gray-700 mb-2">
+          Senha:
+        </label>
+        <div class="relative" x-data="{ show: false }">
+          <input
+            :type="show ? 'text' : 'password'"
+            id="senha"
+            name="senha"
+            placeholder="Sua senha"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm pr-10"
+          >
+          <button
+            type="button"
+            @click="show = !show"
+            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+          >
+            <i class="fas fa-eye" x-show="!show"></i>
+            <i class="fas fa-eye-slash" x-show="show" x-cloak></i>
+          </button>
         </div>
-        <a href="#" class="small text-decoration-none">Esqueci minha senha</a>
       </div>
-      <button type="submit" class="btn btn-primary w-100">Entrar como Candidato</button>
+
+      <div class="flex items-center justify-between">
+        <label class="flex items-center">
+          <input type="checkbox" id="lembrar" name="lembrar" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+          <span class="ml-2 text-sm text-gray-600">Lembrar-me</span>
+        </label>
+        <a href="<?= baseUrl() ?>login/esqueciASenha" class="text-sm text-blue-600 hover:text-blue-800 font-medium">
+          Esqueci minha senha
+        </a>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 transform hover:scale-[1.02]"
+      >
+        Entrar
+      </button>
     </form>
 
-    <!-- Formulário Empresa -->
-    <form id="formEmpresa" class="form-box" action="/login/empresa" method="POST">
-      <div class="mb-3">
-        <label for="emailEmpresa" class="form-label">E-mail Corporativo:</label>
-        <input type="email" class="form-control" id="emailEmpresa" name="email" placeholder="contato@empresa.com" required>
-      </div>
-      <div class="mb-3">
-        <label for="senhaEmpresa" class="form-label">Senha:</label>
-        <input type="password" class="form-control" id="senhaEmpresa" name="senha" placeholder="Sua senha" required>
-      </div>
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="lembrarEmpresa">
-          <label class="form-check-label" for="lembrarEmpresa">Lembrar-me</label>
-        </div>
-        <a href="#" class="small text-decoration-none">Esqueci minha senha</a>
-      </div>
-      <button type="submit" class="btn btn-primary w-100">Entrar como Empresa</button>
-    </form>
-
-    <p class="text-center mt-3 small">
-      Não tem uma conta? <a href="#" class="fw-bold text-decoration-none">Cadastre-se aqui</a>
+    <!-- Link de Cadastro -->
+    <p class="text-center mt-6 text-sm text-gray-600">
+      Não tem uma conta?
+      <a href="<?= baseUrl() ?>Cadastro/" class="font-bold text-blue-600 hover:text-blue-800 transition-colors duration-200">
+        Cadastre-se aqui
+      </a>
     </p>
 
-    <div class="divider-text">Ou continue com</div>
+    <!-- Divider -->
+    <div class="relative my-6">
+      <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-t border-gray-300"></div>
+      </div>
+      <div class="relative flex justify-center text-sm">
+        <span class="px-4 bg-white text-gray-500">Ou continue com</span>
+      </div>
+    </div>
 
-    <div class="d-flex gap-2">
-      <button class="btn btn-outline-dark w-50">Google</button>
-      <button class="btn btn-outline-dark w-50">Facebook</button>
+    <!-- Social Login -->
+    <div class="grid grid-cols-2 gap-3">
+      <button
+        type="button"
+        class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-sm font-medium text-gray-700"
+      >
+        <i class="fab fa-google mr-2 text-red-500"></i>
+        Google
+      </button>
+      <button
+        type="button"
+        class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-sm font-medium text-gray-700"
+      >
+        <i class="fab fa-facebook mr-2 text-blue-600"></i>
+        Facebook
+      </button>
     </div>
   </div>
 </div>
 
-<script>
-  const btnCandidato = document.getElementById('btnCandidato');
-  const btnEmpresa = document.getElementById('btnEmpresa');
-  const formCandidato = document.getElementById('formCandidato');
-  const formEmpresa = document.getElementById('formEmpresa');
-
-  btnCandidato.addEventListener('click', () => {
-    btnCandidato.classList.add('active');
-    btnEmpresa.classList.remove('active');
-    formCandidato.classList.add('active');
-    formEmpresa.classList.remove('active');
-  });
-
-  btnEmpresa.addEventListener('click', () => {
-    btnEmpresa.classList.add('active');
-    btnCandidato.classList.remove('active');
-    formEmpresa.classList.add('active');
-    formCandidato.classList.remove('active');
-  });
-</script>
+<?php
+// Limpar inputs após exibir
+Session::destroy('inputs');
+?>
