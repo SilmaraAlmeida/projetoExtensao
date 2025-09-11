@@ -1,6 +1,14 @@
         body{
             font-family: 'Poppins', sans-serif;
+            background: #003B94;
+
+             /*background-image: url('../../public/assets/img/citymuriae\ -\ Editado.jpg');
+             background-size: cover;      /* cobre toda a tela */
+             
+            background-position: center; /* centraliza a imagem */
+            background-repeat: no-repeat; /* não repete a imagem */
         }
+        
         .error-message {
             color: #EF4444;
             font-size: 0.75rem;
