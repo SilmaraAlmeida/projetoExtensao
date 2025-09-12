@@ -75,9 +75,9 @@
         }
 
         function setCandidatoForm() {
-            btnCandidato.classList.replace('border-gray-200', 'border-blue-600');
+            btnCandidato.classList.replace('bg-none', 'bg-blue-100');
             btnCandidato.classList.replace('text-gray-500', 'text-blue-600');
-            btnEmpresa.classList.replace('border-blue-600', 'border-gray-200');
+            btnEmpresa.classList.replace('bg-blue-100', 'bg-none');
             btnEmpresa.classList.replace('text-blue-600', 'text-gray-500');
 
             labelNome.textContent = 'Nome:';
@@ -93,9 +93,9 @@
         }
 
         function setEmpresaForm() {
-            btnEmpresa.classList.replace('border-gray-200', 'border-blue-600');
+            btnEmpresa.classList.replace('bg-none', 'bg-blue-100');
             btnEmpresa.classList.replace('text-gray-500', 'text-blue-600');
-            btnCandidato.classList.replace('border-blue-600', 'border-gray-200');
+            btnCandidato.classList.replace('bg-blue-100', 'bg-none');
             btnCandidato.classList.replace('text-blue-600', 'text-gray-500');
 
             labelNome.textContent = 'Razão Social:';
@@ -117,7 +117,7 @@
                 setCandidatoForm();
                 currentRole = 'candidato';
                 formContent.classList.remove('opacity-0');
-            }, 500);
+            }, 300);
         });
 
         btnEmpresa.addEventListener('click', () => {
@@ -127,7 +127,7 @@
                 setEmpresaForm();
                 currentRole = 'empresa';
                 formContent.classList.remove('opacity-0');
-            }, 500);
+            }, 300);
         });
 
         function validateForm() {
