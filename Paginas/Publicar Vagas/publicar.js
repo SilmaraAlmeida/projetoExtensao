@@ -1,80 +1,27 @@
-        const form = document.getElementById('form-anuncio-vaga');
-        const successMessage = document.getElementById('mensagem-sucesso');
+const vagaForm = document.getElementById('vagaForm');
 
-        const campos = {
-            titulo: document.getElementById('titulo'),
-            localizacao: document.getElementById('localizacao'),
-            cargaHoraria: document.getElementById('carga-horaria'),
-            tipoContrato: document.getElementById('tipo-contrato'),
-            descricao: document.getElementById('descricao')
-        };
-        
-        const erros = {
-            titulo: document.getElementById('error-titulo'),
-            localizacao: document.getElementById('error-localizacao'),
-            cargaHoraria: document.getElementById('error-carga-horaria'),
-            tipoContrato: document.getElementById('error-tipo-contrato'),
-            descricao: document.getElementById('error-descricao')
-        };
+        vagaForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
 
-        function validarFormulario() {
-            let formValido = true;
-            Object.values(erros).forEach(el => el.classList.add('hidden'));
+            // Cria um objeto com os dados do formulário
+            const novaVaga = {
+                id: Date.now(), // Simula um ID único
+                titulo: document.getElementById('titulo').value,
+                empresa: document.getElementById('empresa').value,
+                localizacao: document.getElementById('localizacao').value,
+                tipo: document.getElementById('tipo').value,
+                descricao: document.getElementById('descricao').value,
+                detalhes: document.getElementById('detalhes').value,
+                perfilEmpresa: document.getElementById('perfilEmpresa').value,
+                urlCandidatura: document.getElementById('urlCandidatura').value,
+                logoEmpresa: document.getElementById('logoEmpresa').value,
+            };
 
-            if (campos.titulo.value.trim() === '') {
-                erros.titulo.classList.remove('hidden');
-                formValido = false;
-            }
-            if (campos.localizacao.value.trim() === '') {
-                erros.localizacao.classList.remove('hidden');
-                formValido = false;
-            }
-            if (campos.cargaHoraria.value === '') {
-                erros.cargaHoraria.classList.remove('hidden');
-                formValido = false;
-            }
-            if (campos.tipoContrato.value === '') {
-                erros.tipoContrato.classList.remove('hidden');
-                formValido = false;
-            }
-            if (campos.descricao.value.trim() === '') {
-                erros.descricao.classList.remove('hidden');
-                formValido = false;
-            }
+            // Futuramente, esta parte irá enviar 'novaVaga' para um backend
+            // para ser salva no banco de dados e exibida na página de vagas.
+            console.log('Dados da nova vaga:', novaVaga);
 
-            return formValido;
-        }
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            if (validarFormulario()) {
-                const dadosVaga = {
-                    id: Date.now(), // Um ID único para a vaga
-                    titulo: campos.titulo.value,
-                    localizacao: campos.localizacao.value,
-                    cargaHoraria: campos.cargaHoraria.value,
-                    tipoContrato: campos.tipoContrato.value,
-                    salario: document.getElementById('salario').value,
-                    descricao: campos.descricao.value,
-                    requisitos: document.getElementById('requisitos').value.split(',').map(item => item.trim())
-                };
-
-                // Pega as vagas existentes ou cria um novo array
-                const vagasExistentes = JSON.parse(localStorage.getItem('vagas')) || [];
-                
-                // Adiciona a nova vaga ao array
-                vagasExistentes.push(dadosVaga);
-                
-                // Salva o array de volta no localStorage
-                localStorage.setItem('vagas', JSON.stringify(vagasExistentes));
-                
-                successMessage.classList.remove('hidden');
-                setTimeout(() => {
-                    successMessage.classList.add('hidden');
-                }, 4000);
-                
-                form.reset();
-                console.log('Vaga publicada e salva no localStorage:', dadosVaga);
-            }
+            // Simula o sucesso da publicação e limpa o formulário
+            alert('Vaga publicada com sucesso!');
+            vagaForm.reset();
         });
