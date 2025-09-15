@@ -1,6 +1,10 @@
         body {
-            background-color: #003B94;
+            background: #003B94;
             font-family: 'Poppins', sans-serif;
+
+            /*background-image: url('../../public/assets/img/citymuriae\ -\ Editado.jpg');
+             background-size: cover;      /* cobre toda a tela */
+            
 
         }
 
