@@ -97,7 +97,7 @@
                 noResults.classList.add('hidden');
                 filteredVagas.forEach(vaga => {
                     const card = document.createElement('div');
-                    card.classList.add('bg-white', 'p-6', 'rounded-xl', 'shadow-md', 'hover:shadow-lg', 'transition-all', 'duration-200');
+                    card.classList.add('bg-white', 'p-6', 'rounded-3xl', 'shadow-md', 'hover:shadow-lg', 'transition-all', 'duration-200');
                     card.setAttribute('data-id', vaga.id);
                     card.innerHTML = `
                         <h3 class="text-xl font-bold text-blue-600 mb-1">${vaga.titulo}</h3>
@@ -234,3 +234,12 @@
         // Chamada inicial para renderizar a página
         renderVagas(vagas);
         renderProfileSection();
+        
+          // Dropdown Desktop Toggle
+  const dropdownBtn = document.getElementById("dropdownBtn");
+  const dropdownMenu = document.getElementById("dropdownMenu");
+  dropdownBtn.addEventListener("click", () => {
+    dropdownMenu.classList.toggle("hidden");
+  });
+
+        

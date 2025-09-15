@@ -9,24 +9,24 @@
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans">
 
-    <div id="sideMenu" class="menu-lateral fixed top-0 left-0 h-full w-64 bg-[#003B94] shadow-2xl z-[1000] p-6 flex flex-col">
+    <div id="sideMenu" class="menu-lateral fixed top-0 left-0 h-full w-64 bg-gray-200 shadow-2xl z-[1000] p-6 flex flex-col">
         <div class="flex-grow">
-            <h2 class="text-3xl font-extrabold text-white mb-8">Menu</h2>
+            <h2 class="text-3xl font-extrabold text-[#003B94] mb-8">Menu</h2>
             <nav class="space-y-4">
-                <a href="#" class="block text-white hover:text-blue-600 font-medium text-lg">Home</a>
-                <a href="#" class="block text-white hover:text-blue-600 font-medium text-lg">Empresas</a>
-                <a href="#" class="block text-white hover:text-blue-600 font-medium text-lg">Área do Candidato</a>
+                <a href="#" class="block text-gray-500 hover:text-blue-600 font-medium text-lg">Home</a>
+                <a href="#" class="block text-gray-500 hover:text-blue-600 font-medium text-lg">Empresas</a>
+                <a href="#" class="block text-gray-500 hover:text-blue-600 font-medium text-lg">Área do Candidato</a>
                 
                 <div class="space-y-2">
-                    <button id="vagasMenuToggle" class="w-full flex justify-between items-center text-white hover:text-blue-600 font-medium text-lg focus:outline-none">
+                    <button id="vagasMenuToggle" class="w-full flex justify-between items-center text-gray-500 hover:text-blue-600 font-medium text-lg focus:outline-none">
                         <span>Vagas</span>
                         <svg class="w-4 h-4 transform transition-transform duration-300" id="vagasMenuIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div id="vagasSubMenu" class="pl-4 space-y-2 hidden">
-                        <a href="#" class="block text-white hover:text-blue-600">Área de Atuação</a>
-                        <a href="#" class="block text-white hover:text-blue-600">Tipo de Contrato</a>
-                        <a href="#" class="block text-white hover:text-blue-600">Vagas Recentes</a>
-                        <a href="#" class="block text-white hover:text-blue-600">Vagas em Destaque</a>
+                        <a href="#" class="block text-gray-400 transform hover:scale-105 transition-transform duration-200">Área de Atuação</a>
+                        <a href="#" class="block text-gray-400 transform hover:scale-105 transition-transform duration-200">Tipo de Contrato</a>
+                        <a href="#" class="block text-gray-400 transform hover:scale-105 transition-transform duration-200">Vagas Recentes</a>
+                        <a href="#" class="block text-gray-400 transform hover:scale-105 transition-transform duration-200">Vagas em Destaque</a>
                     </div>
                 </div>
             </nav>
@@ -47,21 +47,40 @@
 
     <div id="menuOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-75 hidden z-[999]"></div>
 
-    <header class="bg-[#003B94] shadow-lg p-0 sticky top-0 z-50">
+    <header class="bg-[#003B94] shadow-lg p-3 sticky top-0 z-50">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <button id="openMenuBtn" class="flex items-center text-white hover:text-gray-200 absolute left-4">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
             <div class="logo flex items-center justify-center ">
-                <a href="../Home 2/home.html"><img src="../../public/assets/img/logo.png" alt="Logo" class="h-8 md:h-24 w-auto"></a>
+                <h1 class="font-bold text-2xl text-white">ViaMuriaé</h1>
             </div>
 
-            <div class="relative w-full md:w-1/3">
+            <div class="relative md:w-1/5">
                 <input type="text" id="searchInput" placeholder="Pesquisar vagas..." class="w-full bg-gray-200 text-gray-700 placeholder-gray-700 border border-blue-700 rounded-full py-2 px-6 pl-10  transition-all">
                 <svg class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
             </div>
+        <nav class="hidden md:flex space-x-6 text-white relative">
+            <a href="../Home 2/home.html" class="hover:text-blue-400">Home</a>
+
+             <!-- Dropdown -->
+          <div class="relative">
+              <button id="dropdownBtn" class="hover:text-blue-500 flex items-center">
+               Vagas ⌄
+              </button>
+              <div id="dropdownMenu" class="hidden text-gray-300 absolute bg-[#003B94] rounded shadow-2xl mt-2 w-40 z-50">
+                <a href="#" class="block px-4 py-2 transform hover:scale-105 transition-transform duration-200">Aea de Atuação</a>
+                <a href="#" class="block px-4 py-2 transform hover:scale-105 transition-transform duration-200">Tipo de Contrato</a>
+                <a href="#" class="block px-4 py-2 transform hover:scale-105 transition-transform duration-200">Vagas Recentes</a>
+                <a href="#" class="block px-4 py-2 transform hover:scale-105 transition-transform duration-200">Vagas em Destaque</a>
+             </div>
+           </div>
+
+           <a href="../Empresas/empresas.html" class="hover:text-blue-400">Empresas</a>
+           <a href="../Area do Candidato/areaCandidato.html" class="hover:text-blue-400">Área do Candidato</a>
+        </nav>
              <div class="flex items-center space-x-4">
-            <a href="../login2/login2.html" class="hidden text-white md:block hover:underline">Login</a>
+            <a href="../login2/login2.html" class="hidden text-white md:block hover:scale-105 transition-transform duration-200">Login</a>
             <a href="../Registro/registro.html" class="text-white border border-white rounded px-3 py-1 focus:outline-none transform hover:scale-105 transition-transform duration-200">Cadastre-se</a>
         </div>
 
