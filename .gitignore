@@ -5,3 +5,5 @@
 .env
 
 composer.lock
+
+tailwindcss.exe

@@ -35,37 +35,39 @@ use Core\Library\Session; ?>
 
                 <!-- Logo -->
                 <div class="flex-shrink-0">
-                    <a href="/home/" class="flex items-center">
+                    <a href="/" class="flex items-center">
                         <img src="<?= baseUrl() ?>/assets/img/logo-horiz-claro.png" alt="Via Muriaé Logo" class="h-28 lg:h-32 w-auto">
                     </a>
                 </div>
 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#" class="text-white hover:text-blue-200 px-4 py-3 rounded-md text-base lg:text-lg font-medium transition-colors duration-200">
+                    <a href="/" class="text-white hover:text-blue-200 px-4 py-3 rounded-md text-base lg:text-lg font-medium transition-colors duration-200">
                         Home
                     </a>
-                    <a href="#" class="text-white hover:text-blue-200 px-4 py-3 rounded-md text-base lg:text-lg font-medium transition-colors duration-200">
+                    <a href="/vaga" class="text-white hover:text-blue-200 px-4 py-3 rounded-md text-base lg:text-lg font-medium transition-colors duration-200">
                         Vagas
                     </a>
                 </div>
 
-                <!-- Search Bar - Desktop -->
-                <div class="hidden md:flex flex-1 max-w-lg mx-8">
-                    <div class="relative w-full">
-                        <form action="/home/busca" method="GET">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <i class="fas fa-search text-gray-400 text-base"></i>
-                            </div>
-                            <input
-                                type="text" name="busca"
-                                placeholder="Pesquisar vagas, empresas..."
-                                class="block w-full pl-12 pr-4 py-3 text-base border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
-                                >
-                            <button class="hidden" type="submit"></button>
-                        </form>
+                <?php if (!in_array($this->request->getController(), CONTROLLER_NO_SEARCH)): ?>
+                    <!-- Search Bar - Desktop -->
+                    <div class="hidden md:flex flex-1 max-w-lg mx-8">
+                        <div class="relative w-full">
+                            <form action="/vaga/busca" method="GET">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <i class="fas fa-search text-gray-400 text-base"></i>
+                                </div>
+                                <input
+                                    type="text" name="busca"
+                                    placeholder="Pesquisar vagas, empresas..."
+                                    class="block w-full pl-12 pr-4 py-3 text-base border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200">
+                                <button class="hidden" type="submit"></button>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
+
 
                 <!-- User Actions -->
                 <div class="hidden md:flex items-center space-x-6">
@@ -108,7 +110,7 @@ use Core\Library\Session; ?>
                                     <?php endif; ?>
 
                                     <div class="border-t border-gray-100"></div>
-                                    <a href="<?= baseUrl() ?>Logout/" class="block px-4 py-3 text-base text-red-600 hover:bg-red-50 transition-colors duration-200">
+                                    <a href="<?= baseUrl() ?>Login/signout/" class="block px-4 py-3 text-base text-red-600 hover:bg-red-50 transition-colors duration-200">
                                         <i class="fas fa-sign-out-alt mr-3"></i>Sair
                                     </a>
                                 </div>

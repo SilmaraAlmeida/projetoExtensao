@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `cargo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.cargo: ~0 rows (aproximadamente)
+DELETE FROM `cargo`;
 
 -- Copiando estrutura para tabela descubra_muriae.categoria_estabelecimento
 CREATE TABLE IF NOT EXISTS `categoria_estabelecimento` (
@@ -39,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `categoria_estabelecimento` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1249 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.categoria_estabelecimento: ~0 rows (aproximadamente)
+DELETE FROM `categoria_estabelecimento`;
 
 -- Copiando estrutura para tabela descubra_muriae.cidade
 CREATE TABLE IF NOT EXISTS `cidade` (
@@ -49,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `cidade` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5565 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.cidade: ~0 rows (aproximadamente)
+DELETE FROM `cidade`;
 
 -- Copiando estrutura para tabela descubra_muriae.clique_celular
 CREATE TABLE IF NOT EXISTS `clique_celular` (
@@ -66,6 +69,7 @@ CREATE TABLE IF NOT EXISTS `clique_celular` (
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.clique_celular: ~0 rows (aproximadamente)
+DELETE FROM `clique_celular`;
 
 -- Copiando estrutura para tabela descubra_muriae.clique_telefone
 CREATE TABLE IF NOT EXISTS `clique_telefone` (
@@ -83,6 +87,7 @@ CREATE TABLE IF NOT EXISTS `clique_telefone` (
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.clique_telefone: ~0 rows (aproximadamente)
+DELETE FROM `clique_telefone`;
 
 -- Copiando estrutura para tabela descubra_muriae.curriculum
 CREATE TABLE IF NOT EXISTS `curriculum` (
@@ -108,6 +113,7 @@ CREATE TABLE IF NOT EXISTS `curriculum` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.curriculum: ~0 rows (aproximadamente)
+DELETE FROM `curriculum`;
 
 -- Copiando estrutura para tabela descubra_muriae.curriculum_escolaridade
 CREATE TABLE IF NOT EXISTS `curriculum_escolaridade` (
@@ -131,6 +137,7 @@ CREATE TABLE IF NOT EXISTS `curriculum_escolaridade` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.curriculum_escolaridade: ~0 rows (aproximadamente)
+DELETE FROM `curriculum_escolaridade`;
 
 -- Copiando estrutura para tabela descubra_muriae.curriculum_experiencia
 CREATE TABLE IF NOT EXISTS `curriculum_experiencia` (
@@ -152,6 +159,7 @@ CREATE TABLE IF NOT EXISTS `curriculum_experiencia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.curriculum_experiencia: ~0 rows (aproximadamente)
+DELETE FROM `curriculum_experiencia`;
 
 -- Copiando estrutura para tabela descubra_muriae.curriculum_qualificacao
 CREATE TABLE IF NOT EXISTS `curriculum_qualificacao` (
@@ -168,6 +176,7 @@ CREATE TABLE IF NOT EXISTS `curriculum_qualificacao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.curriculum_qualificacao: ~0 rows (aproximadamente)
+DELETE FROM `curriculum_qualificacao`;
 
 -- Copiando estrutura para tabela descubra_muriae.escolaridade
 CREATE TABLE IF NOT EXISTS `escolaridade` (
@@ -177,6 +186,7 @@ CREATE TABLE IF NOT EXISTS `escolaridade` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.escolaridade: ~0 rows (aproximadamente)
+DELETE FROM `escolaridade`;
 
 -- Copiando estrutura para tabela descubra_muriae.estabelecimento
 CREATE TABLE IF NOT EXISTS `estabelecimento` (
@@ -191,6 +201,7 @@ CREATE TABLE IF NOT EXISTS `estabelecimento` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1202 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.estabelecimento: ~0 rows (aproximadamente)
+DELETE FROM `estabelecimento`;
 
 -- Copiando estrutura para tabela descubra_muriae.pessoa_fisica
 CREATE TABLE IF NOT EXISTS `pessoa_fisica` (
@@ -199,14 +210,12 @@ CREATE TABLE IF NOT EXISTS `pessoa_fisica` (
   `cpf` char(11) DEFAULT NULL,
   `visitante_id` int DEFAULT NULL,
   PRIMARY KEY (`pessoa_fisica_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1257 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1255 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela descubra_muriae.pessoa_fisica: ~4 rows (aproximadamente)
-INSERT IGNORE INTO `pessoa_fisica` (`pessoa_fisica_id`, `nome`, `cpf`, `visitante_id`) VALUES
-	(1252, 'Bruno', '08417634614', NULL),
-	(1253, 'abc', '084.176.346', NULL),
-	(1255, 'abc', '084.176.346', NULL),
-	(1256, 'abcs', '084.176.346', NULL);
+-- Copiando dados para a tabela descubra_muriae.pessoa_fisica: ~2 rows (aproximadamente)
+DELETE FROM `pessoa_fisica`;
+INSERT INTO `pessoa_fisica` (`pessoa_fisica_id`, `nome`, `cpf`, `visitante_id`) VALUES
+	(1252, 'Bruno Couri', '<?php', NULL);
 
 -- Copiando estrutura para tabela descubra_muriae.telefone
 CREATE TABLE IF NOT EXISTS `telefone` (
@@ -220,11 +229,10 @@ CREATE TABLE IF NOT EXISTS `telefone` (
   KEY `fk_usuario_telefone_idx` (`usuario_id`),
   CONSTRAINT `fk_estabelecimento_telefone` FOREIGN KEY (`estabelecimento_id`) REFERENCES `estabelecimento` (`estabelecimento_id`),
   CONSTRAINT `fk_usuario_telefone` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2429 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2430 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.telefone: ~0 rows (aproximadamente)
-INSERT IGNORE INTO `telefone` (`telefone_id`, `estabelecimento_id`, `usuario_id`, `numero`, `tipo`) VALUES
-	(2428, NULL, 1237, '32999999999', '');
+DELETE FROM `telefone`;
 
 -- Copiando estrutura para tabela descubra_muriae.termodeuso
 CREATE TABLE IF NOT EXISTS `termodeuso` (
@@ -233,16 +241,15 @@ CREATE TABLE IF NOT EXISTS `termodeuso` (
   `statusRegistro` int NOT NULL DEFAULT '1' COMMENT '1=Ativo;2=Inativo;3=Alterado',
   `rascunho` int DEFAULT '1' COMMENT '1=Sim; 2=Não',
   `usuario_id` int NOT NULL,
-  PRIMARY KEY (`termodeuso_id`,`usuario_id`),
-  UNIQUE KEY `uk_termodeuso_id` (`termodeuso_id`),
+  PRIMARY KEY (`termodeuso_id`) USING BTREE,
   KEY `fk_termodeuso_usuario1` (`usuario_id`),
   CONSTRAINT `fk_termodeuso_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.termodeuso: ~1 rows (aproximadamente)
-INSERT IGNORE INTO `termodeuso` (`termodeuso_id`, `textoTermo`, `statusRegistro`, `rascunho`, `usuario_id`) VALUES
-	(2, 'Texto do termo', 1, 0, 1236),
-	(3, 'Texto do termo', 1, 0, 1237);
+DELETE FROM `termodeuso`;
+INSERT INTO `termodeuso` (`termodeuso_id`, `textoTermo`, `statusRegistro`, `rascunho`, `usuario_id`) VALUES
+	(4, 'TermoTeste01', 1, 2, 1235);
 
 -- Copiando estrutura para tabela descubra_muriae.termodeusoaceite
 CREATE TABLE IF NOT EXISTS `termodeusoaceite` (
@@ -256,46 +263,28 @@ CREATE TABLE IF NOT EXISTS `termodeusoaceite` (
   CONSTRAINT `fk_termodeuso_has_usuario_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela descubra_muriae.termodeusoaceite: ~1 rows (aproximadamente)
-INSERT IGNORE INTO `termodeusoaceite` (`termodeuso_id`, `usuario_id`, `dataHoraAceite`) VALUES
-	(2, 1236, '2025-05-13 19:59:58'),
-	(3, 1237, '2025-05-14 17:28:44');
+-- Copiando dados para a tabela descubra_muriae.termodeusoaceite: ~0 rows (aproximadamente)
+DELETE FROM `termodeusoaceite`;
 
 -- Copiando estrutura para tabela descubra_muriae.usuario
 CREATE TABLE IF NOT EXISTS `usuario` (
   `usuario_id` int NOT NULL AUTO_INCREMENT,
-  `pessoa_fisica_id` int NOT NULL,
+  `pessoa_fisica_id` int DEFAULT NULL,
+  `estabelecimento_id` int DEFAULT NULL,
   `login` varchar(50) DEFAULT NULL,
   `senha` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `tipo` char(2) NOT NULL COMMENT 'A = Anunciante, G = Gestor, CN = Contribuinte normativo',
   PRIMARY KEY (`usuario_id`),
   KEY `fk_pessoa_fisica_usuario1_idx` (`pessoa_fisica_id`),
-  CONSTRAINT `fk_pessoa_fisica_usuario1` FOREIGN KEY (`pessoa_fisica_id`) REFERENCES `pessoa_fisica` (`pessoa_fisica_id`)
+  KEY `fk_usuario_estabelecimento1_idx` (`estabelecimento_id`),
+  CONSTRAINT `fk_pessoa_fisica_usuario1` FOREIGN KEY (`pessoa_fisica_id`) REFERENCES `pessoa_fisica` (`pessoa_fisica_id`),
+  CONSTRAINT `fk_usuario_estabelecimento1` FOREIGN KEY (`estabelecimento_id`) REFERENCES `estabelecimento` (`estabelecimento_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1238 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Copiando dados para a tabela descubra_muriae.usuario: ~3 rows (aproximadamente)
-INSERT IGNORE INTO `usuario` (`usuario_id`, `pessoa_fisica_id`, `login`, `senha`, `tipo`) VALUES
-	(1234, 1252, 'junior@gmail.com', '$2a$12$Zw9QCCdUosS5eGDxsYu9henviNeCV9cMnJhwDOiVGh1vkLSYQ6ZKm', 'CN'),
-	(1236, 1255, 'brunocourii@gmail.com', '$2a$12$Zw9QCCdUosS5eGDxsYu9henviNeCV9cMnJhwDOiVGh1vkLSYQ6ZKm', 'G'),
-	(1237, 1256, 'brunocourisch@gmail.com', '$2a$12$Zw9QCCdUosS5eGDxsYu9henviNeCV9cMnJhwDOiVGh1vkLSYQ6ZKm', 'G');
-
--- Copiando estrutura para tabela descubra_muriae.usuariorecuperasenha
-CREATE TABLE IF NOT EXISTS `usuariorecuperasenha` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `usuario_id` int NOT NULL,
-  `chave` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `statusRegistro` int NOT NULL DEFAULT '1' COMMENT '1=Ativo;2=Inativo',
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `chave` (`chave`) USING BTREE,
-  KEY `FK1_usuariorecuperacaosenha` (`usuario_id`) USING BTREE,
-  CONSTRAINT `FK1_usuariorecuperacaosenha` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Copiando dados para a tabela descubra_muriae.usuariorecuperasenha: ~0 rows (aproximadamente)
-INSERT IGNORE INTO `usuariorecuperasenha` (`id`, `usuario_id`, `chave`, `statusRegistro`, `created_at`, `updated_at`) VALUES
-	(3, 1236, '4e2dbed3ec5d99a015859a6f48cd10786252dea2', 1, '2025-06-17 20:45:22', NULL);
+-- Copiando dados para a tabela descubra_muriae.usuario: ~2 rows (aproximadamente)
+DELETE FROM `usuario`;
+INSERT INTO `usuario` (`usuario_id`, `pessoa_fisica_id`, `estabelecimento_id`, `login`, `senha`, `tipo`) VALUES
+	(1235, 1252, NULL, 'brunocourii@gmail.com', '$2a$12$8i9dCyaaXwce3kgNMvGyBOLPJ854f3tDuzH5dlNO9IEs0Xk3c6.Pe', 'CN');
 
 -- Copiando estrutura para tabela descubra_muriae.vaga
 CREATE TABLE IF NOT EXISTS `vaga` (
@@ -317,6 +306,7 @@ CREATE TABLE IF NOT EXISTS `vaga` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.vaga: ~0 rows (aproximadamente)
+DELETE FROM `vaga`;
 
 -- Copiando estrutura para tabela descubra_muriae.vaga_curriculum
 CREATE TABLE IF NOT EXISTS `vaga_curriculum` (
@@ -331,6 +321,7 @@ CREATE TABLE IF NOT EXISTS `vaga_curriculum` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela descubra_muriae.vaga_curriculum: ~0 rows (aproximadamente)
+DELETE FROM `vaga_curriculum`;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

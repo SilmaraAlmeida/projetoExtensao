@@ -190,20 +190,7 @@ use Core\Library\Session; ?>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Buscar Vagas</h3>
                     <p class="text-gray-600 text-sm mb-4">Encontrar oportunidades de emprego</p>
-                    <a href="<?= baseUrl() ?>candidato/vagas" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors duration-200">
-                            <i class="fas fa-heart text-2xl text-green-600"></i>
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Vagas Favoritas</h3>
-                    <p class="text-gray-600 text-sm mb-4">Vagas salvas como favoritas</p>
-                    <a href="<?= baseUrl() ?>candidato/favoritas" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                    <a href="<?= baseUrl() ?>vaga" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
                         Acessar →
                     </a>
                 </div>

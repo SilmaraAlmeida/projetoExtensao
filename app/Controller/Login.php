@@ -16,8 +16,8 @@ class Login extends ControllerMain
     public function __construct()
     {
         $this->auxiliarConstruct();
-        $this->model = new UsuarioModel();
         $this->loadHelper("formHelper");
+        $this->model   = new UsuarioModel();
     }
 
     /**

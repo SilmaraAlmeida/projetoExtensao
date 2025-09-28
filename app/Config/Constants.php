@@ -10,55 +10,18 @@ defined('DEFAULT_METODO') || define("DEFAULT_METODO", 'index');
 defined('CONTROLLER_AUTH') || define('CONTROLLER_AUTH', [
     "Home",
     "Login",
-    "Cadastro"
+    "Cadastro",
+    "Vaga"
 ]);
 
-// Controllers para área administrativa (todos os tipos de usuário logado)
-defined('SISTEMA_CONTROLLERS') || define('SISTEMA_CONTROLLERS', [
+// Controllers que não exibem barra de busca
+defined('CONTROLLER_NO_SEARCH') || define('CONTROLLER_NO_SEARCH', [
     'Sistema',
-    'Usuario',
-    'PessoaFisica',
-    'Telefone',
-    'TermoDeUsoAceite',
-    'Estabelecimento',
-    'Vaga',
-    'Curriculum',
-    'Dashboard',
-    'Painel',
-    'Candidaturas',
-    'VagasDisponiveis',
-    'MeuCurriculo'
-]);
-
-// Controllers específicos por tipo de usuário
-defined('GESTOR_CONTROLLERS') || define('GESTOR_CONTROLLERS', [
-    'Sistema',
-    'Usuario',
-    'Configuracao',
-    'Relatorio',
-    'Log',
-    'Estabelecimento',
-    'Vaga',
-    'Curriculum'
-]);
-
-defined('ANUNCIANTE_CONTROLLERS') || define('ANUNCIANTE_CONTROLLERS', [
-    'Dashboard',
-    'Estabelecimento',
-    'Vaga',
-    'Candidatos',
-    'Relatorio'
-]);
-
-defined('CONTRIBUINTE_CONTROLLERS') || define('CONTRIBUINTE_CONTROLLERS', [
-    'Painel',
-    'Curriculum',
-    'VagasDisponiveis',
-    'Candidaturas'
+    'Vaga'
 ]);
 
 // Tipos de usuário válidos
-defined('USER_TYPES') || define('USER_TYPES', ['G', 'A', 'CN']);
+// defined('USER_TYPES') || define('USER_TYPES', ['G', 'A', 'CN']);
 
 // Definir o time_zone_default
 defined("DEFAULT_TIME_ZONE") || define("DEFAULT_TIME_ZONE", "America/Sao_Paulo");
