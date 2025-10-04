@@ -6,19 +6,19 @@
     <title>Página de Vagas - Vagas.io</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="vagas.css">
-</head>
+</head> 
 <body class="bg-gray-100 text-gray-800 font-sans">
 
     <div id="sideMenu" class="menu-lateral fixed top-0 left-0 h-full w-64 bg-[#003B94] shadow-2xl z-[1000] p-6 flex flex-col">
         <div class="flex-grow">
-            <h2 class="text-3xl font-extrabold text-white mb-8">Menu</h2>
+            <h2 class="text-3xl font-extrabold text-gray-200 mb-8">Menu</h2>
             <nav class="space-y-4">
-                <a href="#" class="block text-white hover:text-blue-600 font-medium text-lg">Home</a>
-                <a href="#" class="block text-white hover:text-blue-600 font-medium text-lg">Empresas</a>
-                <a href="#" class="block text-white hover:text-blue-600 font-medium text-lg">Área do Candidato</a>
+                <a href="#" class="block text-gray-300 hover:text-blue-600 font-medium text-lg">Home</a>
+                <a href="#" class="block text-gray-300 hover:text-blue-600 font-medium text-lg">Empresas</a>
+                <a href="#" class="block text-gray-300 hover:text-blue-600 font-medium text-lg">Área do Candidato</a>
 
                 <div class="space-y-2">
-                    <button id="vagasMenuToggle" class="w-full flex justify-between items-center text-gray-500 hover:text-blue-600 font-medium text-lg focus:outline-none">
+                    <button id="vagasMenuToggle" class="w-full flex justify-between items-center text-gray-300 hover:text-blue-600 font-medium text-lg focus:outline-none">
                         <span>Vagas</span>
                         <svg class="w-4 h-4 transform transition-transform duration-300" id="vagasMenuIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
@@ -38,11 +38,11 @@
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                 </div>
                 <div id="profileOptions">
-                    </div>
+                </div>
             </div>
         </div>
 
-        <button id="closeMenuBtn" class="mt-8 py-2 px-4 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300">Fechar Menu</button>
+        <button id="closeMenuBtn" class="mt-8 py-2 px-4 bg-transparent border border-gray-200 text-gray-200 rounded-lg hover:bg-blue-600">Fechar Menu</button>
     </div>
 
     <div id="menuOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-75 hidden z-[999]"></div>
@@ -55,29 +55,30 @@
             <div class="logo flex items-center justify-center">
                 <h1 class="font-bold text-2xl text-white">ViaMuriaé</h1>
             </div>
-
-            <div class="relative md:w-1/5">
+            
+            <!-- Barra de pesquisa invisivel pois tem outra mais intuitiva em baixo -->
+            <div class="relative md:w-1/5 hidden">
                 <input type="text" id="searchInput" placeholder="Pesquisar vagas..." class="w-full bg-gray-200 text-gray-700 placeholder-gray-700 border border-blue-700 rounded-full py-2 px-6 pl-10  transition-all">
                 <svg class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
             </div>
+
         <nav class="hidden md:flex space-x-6 text-white relative">
             <a href="../Home 2/home.html" class="hover:text-blue-400">Home</a>
 
-             <!-- Dropdown -->
-          <div class="relative">
-              <button id="dropdownBtn" class="hover:text-blue-500 flex items-center">
-               Vagas ⌄
-              </button>
-              <div id="dropdownMenu" class="hidden text-gray-300 absolute bg-[#003B94] rounded shadow-2xl mt-2 w-40 z-50">
+              <div class="relative">
+            <button id="dropdownBtn" class="hover:text-blue-500 flex items-center">
+              Vagas ⌄
+            </button>
+            <div id="dropdownMenu" class="hidden text-gray-300 absolute bg-[#003B94] rounded shadow-2xl mt-2 w-40 z-50">
                 <a href="#" class="block px-4 py-2 transform hover:scale-105 transition-transform duration-200">Aea de Atuação</a>
                 <a href="#" class="block px-4 py-2 transform hover:scale-105 transition-transform duration-200">Tipo de Contrato</a>
                 <a href="#" class="block px-4 py-2 transform hover:scale-105 transition-transform duration-200">Vagas Recentes</a>
                 <a href="#" class="block px-4 py-2 transform hover:scale-105 transition-transform duration-200">Vagas em Destaque</a>
              </div>
-           </div>
+          </div>
 
-           <a href="../Empresas/empresas.html" class="hover:text-blue-400">Empresas</a>
-           <a href="../Area do Candidato/areaCandidato.html" class="hover:text-blue-400">Área do Candidato</a>
+            <a href="../Empresas/empresas.html" class="hover:text-blue-400">Empresas</a>
+            <a href="../Area do Candidato/areaCandidato.html" class="hover:text-blue-400">Área do Candidato</a>
         </nav>
              <div class="flex items-center space-x-4">
             <a href="../login2/login2.html" class="hidden text-white md:block hover:scale-105 transition-transform duration-200">Login</a>
@@ -87,56 +88,75 @@
         </div>
     </header>
 
-    <main class="container mx-auto p-6 md:p-10 flex flex-col md:flex-row gap-8">
-        <aside class="w-full md:w-1/4 bg-white p-6 rounded-2xl shadow-lg h-fit">
-            <h2 class="text-2xl font-bold mb-6 text-gray-700">Filtros</h2>
-            <form id="filterForm" class="space-y-6">
-                <div>
-                    <h3 class="font-bold text-gray-700 mb-2">Localização</h3>
-                    <select name="location" id="locationFilter" class="w-full bg-gray-100 border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+    <section class="p-4 bg-white border-b sticky top-[68px] z-40 shadow-sm md:top-[60px]">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row gap-3 md:gap-4 mb-4">
+                <div class="relative flex-grow">
+                    <input type="text" id="searchTermInput" placeholder="Pesquise Vagas..." class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg class="absolute left-3 top-3 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+
+                <div class="relative flex-grow">
+                    <select id="locationMainFilter" class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none">
                         <option value="all">Todas as Localidades</option>
                         <option value="Remoto">Remoto</option>
-                        <option value="São Paulo">São Paulo, SP</option>
+                        <option value="São Paulo">Murié, MG</option>
+
+                        <!-- Outras opções de lugares
                         <option value="Rio de Janeiro">Rio de Janeiro, RJ</option>
                         <option value="Belo Horizonte">Belo Horizonte, MG</option>
-                    </select>
-                </div>
-                <div>
-                    <h3 class="font-bold text-gray-700 mb-2">Tipo de Vaga</h3>
-                    <div class="space-y-2">
-                        <label class="flex items-center"><input type="checkbox" name="type" value="CLT" class="form-checkbox text-blue-600 h-5 w-5 rounded focus:ring-blue-500"><span class="ml-2 text-gray-700">CLT</span></label>
-                        <label class="flex items-center"><input type="checkbox" name="type" value="Estágio" class="form-checkbox text-blue-600 h-5 w-5 rounded focus:ring-blue-500"><span class="ml-2 text-gray-700">Estágio</span></label>
-                        <label class="flex items-center"><input type="checkbox" name="type" value="PJ" class="form-checkbox text-blue-600 h-5 w-5 rounded focus:ring-blue-500"><span class="ml-2 text-gray-700">PJ</span></label>
-                    </div>
-                </div>
-                <button type="button" id="resetFilters" class="w-full text-center bg-gray-200 text-gray-600 py-2 rounded-lg hover:bg-gray-300 transition-colors">Limpar Filtros</button>
-            </form>
-        </aside>
+                        -->
 
-        <section class="w-full md:w-3/4">
-            <div id="vagasContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    </select>
+                    <svg class="absolute left-3 top-3 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9A1.998 1.998 0 0110 19V5a1 1 0 011-1h2a1 1 0 011 1v14l4.243-4.243a1 1 0 011.414 0z"></path></svg>
+                    <svg class="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </div>
-            <div id="noResults" class="hidden text-center text-gray-500 mt-10 text-lg">
-                Nenhuma vaga encontrada com os filtros selecionados.
+                <button id="applyMainFilters" class="bg-gray-200 border border-gray-200 text-gray-600 font-semibold py-2 px-6 rounded-lg hover:scale-105 transition-transform duration-200">Buscar Vagas</button>
             </div>
+
+            <div id="secondaryFilters" class="flex flex-wrap gap-2 text-sm mt-2">
+                </div>
+        </div>
+    </section>
+
+    <main class="container mx-auto p-4 md:p-6 lg:p-4">
+        <section class="lg:grid lg:grid-cols-2 lg:gap-6">
+            
+            <div class="col-span-1 lg:pr-4">
+                <p class="text-sm text-gray-500 mb-2 mt-4 lg:mt-0" id="vagaCountDisplay">Exibindo 0 de 0 vagas</p>
+                <div class="font-semibold text-gray-700 mb-4 flex items-center justify-between">
+                    <span>Ordenar por: <span class="text-blue-600 cursor-pointer hover:underline">relevância</span></span>
+                    </div>
+
+                <div id="vagasContainer" class="space-y-4 max-w-2xl">
+                    </div>
+                <div id="noResults" class="hidden text-center text-gray-500 mt-10 text-lg">
+                    Nenhuma vaga encontrada com os filtros selecionados.
+                </div>
+            </div>
+
+            <div id="vagaDetailColumn" class="hidden lg:col-span-1/2 lg:sticky lg:top-[170px] lg:h-[calc(100vh-190px)]">
+                <div id="vagaDetailDefault" class="bg-gray-50 p-6 border border-gray-300 rounded-xl h-full shadow-lg flex- items-center text-center text-gray-500">
+                    Clique em uma vaga para ver os detalhes
+                </div>
+                
+                <div id="vagaDetailContent" class="hidden bg-white rounded-xl shadow-lg overflow-y-auto">
+                    </div>
+            </div>
+
         </section>
     </main>
-
-    <div id="vagaSidebar" class="vaga-sidebar fixed top-0 right-0 h-full w-full md:w-[40%] bg-white shadow-2xl z-[999]">
-        <div class="h-full flex flex-col p-8">
-            <div class="flex-grow overflow-y-auto">
-                <button id="closeSidebar" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition-colors">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-                <div id="sidebarContent">
-                    </div>
-            </div>
-            <a id="applyButton" href="#" target="_blank" class="mt-8 block text-center bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors">Candidatar-se</a>
+    <div id="mobileSidebar" class="hidden lg:hidden fixed inset-0 flex items-center justify-center z-[999]">
+        <div class="bg-white max-w-2xl w-full mx-4 h-[90%] rounded-2xl shadow-2xl p-8 relative overflow-y-auto">
+             <button id="closeMobileSidebar" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition-colors">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div id="mobileSidebarContent"></div>
+            <a id="applyButtonMobile" href="#" target="_blank" class="mt-8 block text-center bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors">Candidatar-se</a>
         </div>
     </div>
+    <div id="mobileSidebarOverlay" class="hidden lg:hidden fixed inset-0 bg-gray-900 bg-opacity-75 z-[998]"></div>]
     
-    <div id="sidebarOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-75 hidden z-[998]"></div>
-
     <script src="vagas.js"></script>
 </body>
 </html>

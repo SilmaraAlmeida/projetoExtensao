@@ -1,19 +1,14 @@
-        /* Estilo customizado para truncar texto em 3 linhas */
+       /* Estilo customizado para truncar texto em 3 linhas */
         .truncate-3-lines {
             display: -webkit-box;
+            -webkit-line-clamp: 3;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
-        /* Estilo para a barra lateral da vaga (sidebar) */
-        .vaga-sidebar {
-            transition: transform 0.5s ease-in-out;
-            transform: translateX(100%);
-        }
-        .vaga-sidebar.open {
-            transform: translateX(0);
-        }
+        /* Classes de animação removidas pois agora usamos um layout de coluna fixa no desktop */
+        /* Mantendo apenas se você quiser o modal deslizando no mobile */
 
         /* Estilo para o menu lateral (off-canvas menu) */
         .menu-lateral {
