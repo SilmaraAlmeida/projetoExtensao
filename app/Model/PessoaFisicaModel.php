@@ -19,53 +19,28 @@ class PessoaFisicaModel extends ModelMain
             "rules" => 'required|max:11|char'
         ]
     ];
+    /**
+     * Busca um usuário pelo ID
+     *
+     * @param int $id ID do usuário a ser buscado
+     * @return object|null Retorna o registro do usuário ou null se não encontrado
+     */
     public function getUserId($id)
     {
         return $this->db
             ->where($this->primaryKey, $id)
             ->first();
     }
-    /**
-     * Validação de CPF
-     *
-     * @param string $cpf
-     * @return bool
-     */
-    public function validarCPF($cpf)
+
+    public function verificaDuplicidadeCPF(string $cpf): bool
     {
-        // Remove caracteres não numéricos
-        $cpf = preg_replace('/\D/', '', $cpf);
+        $rs = $this->db
+            ->table('pessoa_fisica')
+            ->where('cpf', $cpf)
+            ->first();
 
-        // Verifica se tem 11 dígitos
-        if (strlen($cpf) != 11) {
-            return false;
-        }
+        $cpfExiste = !empty($rs);
 
-        // Verifica se todos os dígitos são iguais
-        if (preg_match('/(\d)\1{10}/', $cpf)) {
-            return false;
-        }
-
-        // Validação do primeiro dígito verificador
-        $soma = 0;
-        for ($i = 0; $i < 9; $i++) {
-            $soma += $cpf[$i] * (10 - $i);
-        }
-        $resto = $soma % 11;
-        $dv1 = ($resto < 2) ? 0 : 11 - $resto;
-
-        if ($cpf[9] != $dv1) {
-            return false;
-        }
-
-        // Validação do segundo dígito verificador
-        $soma = 0;
-        for ($i = 0; $i < 10; $i++) {
-            $soma += $cpf[$i] * (11 - $i);
-        }
-        $resto = $soma % 11;
-        $dv2 = ($resto < 2) ? 0 : 11 - $resto;
-
-        return $cpf[10] == $dv2;
+        return $cpfExiste;
     }
 }

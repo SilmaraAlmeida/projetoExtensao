@@ -2,188 +2,390 @@
 
 namespace App\Controller;
 
+use App\Model\EstabelecimentoModel;
 use Core\Library\ControllerMain;
+use Core\Library\Database;
 use Core\Library\Session;
 use Core\Library\Redirect;
-use App\Model\CadastroModel;
+use App\Model\PessoaFisicaModel;
+use App\Model\UsuarioModel;
+use App\Model\TermoDeUsoAceiteModel;
+use App\Model\TermoDeUsoModel;
 
 class Cadastro extends ControllerMain
 {
-    public $model;
+    private $db;
 
+    private $usuarioModel;
+    private $pessoaFisicaModel;
+    private $estabelecimentoModel;
+    private $termoDeUsoAceiteModel;
+    private $termoDeUsoModel;
+    /**
+     * construct
+     */
     public function __construct()
     {
-        parent::__construct();
-        $this->model = new CadastroModel();
-    }
+        $this->db = new Database(
+            $_ENV['DB_CONNECTION'],
+            $_ENV['DB_HOST'],
+            $_ENV['DB_PORT'],
+            $_ENV['DB_DATABASE'],
+            $_ENV['DB_USER'],
+            $_ENV['DB_PASSWORD']
+        );
 
-    public function index()
-    {
-        $this->loadView('login/cadastro');
+        $this->auxiliarConstruct();
+
+        $this->usuarioModel = new UsuarioModel($this->db);
+        $this->pessoaFisicaModel = new PessoaFisicaModel($this->db);
+        $this->estabelecimentoModel = new EstabelecimentoModel($this->db);
+        $this->termoDeUsoAceiteModel = new TermoDeUsoAceiteModel($this->db);
+        $this->termoDeUsoModel = new TermoDeUsoModel($this->db);
+
+        $this->loadHelper("formHelper");
     }
 
     /**
-     * cadastroUsuario
+     * index - Exibe página de cadastro
      *
      * @return void
      */
-    public function cadastroUsuario()
+    public function index()
+    {
+        return $this->loadView('login/cadastro');
+    }
+    public function index2()
+    {
+        return Redirect::page("cadastro", [
+            "msgError" => "Cadastro realizado com sucesso!",
+            "inputs" => $_POST
+        ]);
+    }
+
+    /**
+     * signUp - Processar cadastro de candidato
+     *
+     * @return void
+     */
+    public function signUpCandidato()
     {
         $post = $this->request->getPost();
-        $lError = false;
         $errors = [];
 
-        // Validação de nome
-        if (empty($post['nome']) || strlen($post['nome']) < 3) {
-            $lError = true;
-            $errors['nome'] = "O nome deve ter pelo menos 3 caracteres.";
+        // Validação: Campo senha obrigatório
+        if (empty($post['senha'])) {
+            unset($post['senha'], $post['confSenha']);
+            
+            return Redirect::page($this->controller, [
+                "msgError" => "O campo <b>Senha</b> deve ser preenchido.",
+                "inputs"   => $post
+            ]);
         }
 
-        // Validação de email
-        if (empty($post['email']) || !filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
-            $lError = true;
-            $errors['email'] = "Email inválido.";
-        } else {
-            // Verificar se email já existe
-            if ($this->model->verificarEmailExistente($post['email'])) {
-                $lError = true;
-                $errors['email'] = "Este email já está cadastrado.";
+        if (empty($post['confSenha']) || $post['senha'] !== $post['confSenha']) {
+            unset($post['senha'], $post['confSenha']);
+
+            return Redirect::page($this->controller, [
+                "msgError" => "As senhas não coincidem.",
+                "inputs"   => $post
+            ]);
+        }
+
+        if (empty($post['nome']) || empty($post['sobrenome'])) {
+            unset($post['senha'], $post['confSenha']);
+            
+            return Redirect::page($this->controller, [
+                "msgError" => "Nome e sobrenome são obrigatórios.",
+                "inputs"   => $post
+            ]);
+        }
+
+        if (empty($post['cpf'])) {
+            unset($post['senha'], $post['confSenha']);
+            
+            return Redirect::page($this->controller, [
+                "msgError" => "O CPF é obrigatório.",
+                "inputs"   => $post
+            ]);
+        }
+
+        if (empty($post['login'])) {
+            unset($post['senha'], $post['confSenha']);
+            
+            return Redirect::page($this->controller, [
+                "msgError" => "O e-mail é obrigatório.",
+                "inputs"   => $post
+            ]);
+        }   
+
+        unset($post['confSenha']);
+        $post['senha'] = password_hash($post['senha'], PASSWORD_DEFAULT);
+
+        $postPessoaFisica = [
+            "nome" => trim(($post['nome'] ?? '') . " " . ($post['sobrenome'] ?? '')),
+            "cpf"  => preg_replace('/\D/', '', $post['cpf'] ?? ''),
+            "visitante_id" => null,
+        ];
+
+        $postUsuario = [
+            "estabelecimento_id" => null,
+            "login" => trim($post['login']),
+            "senha" => $post['senha'],
+            "tipo"  => 'CN',
+        ];
+
+        try {
+            $termoVigente = $this->termoDeUsoModel->getTermoVigente();
+            
+            if (empty($termoVigente) || !isset($termoVigente['termodeuso_id'])) {
+                throw new \Exception("Nenhum termo de uso vigente encontrado.");
             }
-        }
 
-        // Validação de telefone
-        if (empty($post['telefone'])) {
-            $lError = true;
-            $errors['telefone'] = "O telefone é obrigatório.";
-        } else {
-            $telefone = preg_replace('/\D/', '', $post['telefone']);
-            if (strlen($telefone) < 10 || strlen($telefone) > 11) {
-                $lError = true;
-                $errors['telefone'] = "Telefone deve ter 10 ou 11 dígitos.";
-            } else {
-                $post['telefone'] = $telefone;
+            $postTermoDeUsoAceite = [
+                "dataHoraAceite" => date('Y-m-d H:i:s'),
+                "termodeuso_id" => $termoVigente['termodeuso_id'],
+            ];
+
+            $this->db->beginTransaction();
+
+            $pessoaFisicaId = $this->pessoaFisicaModel->insertGetId($postPessoaFisica);
+            if ($pessoaFisicaId === false || $pessoaFisicaId <= 0) {
+                throw new \Exception("Falha ao cadastrar dados pessoais.");
             }
-        }
 
-        // Validação e formatação do CPF (opcional)
-        if (!empty($post['cpf'])) {
-            $cpf = preg_replace('/\D/', '', $post['cpf']);
-            if (strlen($cpf) !== 11) {
-                $lError = true;
-                $errors['cpf'] = "CPF deve ter 11 dígitos.";
-            } elseif (preg_match('/(\d)\1{10}/', $cpf)) {
-                $lError = true;
-                $errors['cpf'] = "CPF inválido.";
-            } else {
-                // Validação completa do CPF
-                $validCpf = true;
-                for ($t = 9; $t < 11; $t++) {
-                    for ($d = 0, $c = 0; $c < $t; $c++) {
-                        $d += $cpf[$c] * (($t + 1) - $c);
-                    }
-                    $d = ((10 * $d) % 11) % 10;
-                    if ($cpf[$c] != $d) {
-                        $validCpf = false;
-                        break;
-                    }
-                }
-                if (!$validCpf) {
-                    $lError = true;
-                    $errors['cpf'] = "CPF inválido.";
+            $postUsuario['pessoa_fisica_id'] = $pessoaFisicaId;
+            $usuarioId = $this->usuarioModel->insertGetId($postUsuario);
+            if ($usuarioId === false || $usuarioId <= 0) {
+                throw new \Exception("Falha ao criar usuário.");
+            }
+
+            $postTermoDeUsoAceite['usuario_id'] = $usuarioId;
+            
+            // USA insert() ao invés de insertGetId()
+            if (!$this->termoDeUsoAceiteModel->insert($postTermoDeUsoAceite)) {
+                throw new \Exception("Falha ao registrar aceite do termo de uso.");
+            }
+
+            $this->db->commit();
+
+            Session::destroy('inputs');
+            Session::destroy('errors');
+
+            return Redirect::page("login", [
+                "msgSucesso" => "Cadastro realizado com sucesso! Faça login para continuar."
+            ]);
+
+        } catch (\PDOException $e) {
+            
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+
+            $mensagemErro = $e->getMessage();
+            $codigoErro = $e->getCode();
+
+            if ($codigoErro == 23000 || $codigoErro == 1062) {
+                if (stripos($mensagemErro, 'cpf') !== false) {
+                    $mensagemErro = "Este CPF já está cadastrado.";
+                } elseif (stripos($mensagemErro, 'login') !== false) {
+                    $mensagemErro = "Este e-mail já está cadastrado.";
                 } else {
-                    // Verificar se CPF já existe
-                    if ($this->model->verificarCpfExistente($cpf)) {
-                        $lError = true;
-                        $errors['cpf'] = "Este CPF já está cadastrado.";
-                    } else {
-                        $post['cpf'] = $cpf;
-                    }
+                    $mensagemErro = "Dados já cadastrados no sistema.";
                 }
+            } elseif (stripos($mensagemErro, 'cannot be null') !== false) {
+                $mensagemErro = "Erro ao processar cadastro. Verifique os dados informados.";
+            } elseif (stripos($mensagemErro, 'Foreign key') !== false) {
+                $mensagemErro = "Erro de referência nos dados. Entre em contato com o suporte.";
+            } else {
+                $mensagemErro = "Erro no banco de dados. Tente novamente.";
             }
-        } else {
-            $post['cpf'] = null;
-        }
 
-        // Validação de senha
-        if (empty($post['senha']) || strlen($post['senha']) < 7) {
-            $lError = true;
-            $errors['senha'] = "A senha deve ter pelo menos 7 caracteres.";
-        } elseif ($post['senha'] !== $post['confSenha']) {
-            $lError = true;
-            $errors['confSenha'] = "A confirmação da senha não confere.";
-        } else {
-            $post['senha'] = password_hash($post['senha'], PASSWORD_DEFAULT);
-            unset($post['confSenha']);
-        }
+            unset($post['senha'], $post['confSenha']);
 
-        // Validação dos termos
-        if (empty($post['termos'])) {
-            $lError = true;
-            $errors['termos'] = "Você deve aceitar os termos de uso.";
-        }
+            return Redirect::page($this->controller, [
+                "msgError" => $mensagemErro,
+                "inputs"   => $post
+            ]);
 
-        // Validação do tipo de telefone (padrão móvel se não informado)
-        $tipoTelefone = !empty($post['tipoTelefone']) && in_array($post['tipoTelefone'], ['m', 'f']) ? $post['tipoTelefone'] : 'm';
-
-        if ($lError) {
-            Session::set('errors', $errors);
-            Session::set('inputs', $post);
-            return Redirect::page("Cadastro/form");
-        }
-
-        // 1. Inserir na tabela pessoa_fisica
-        $dadosPessoaFisica = [
-            'nome' => $post['nome'],
-            'cpf' => $post['cpf']
-        ];
-        
-        $pessoaFisicaId = $this->model->inserirPessoaFisica($dadosPessoaFisica);
-        if (!$pessoaFisicaId) {
-            Session::set('msgError', 'Erro ao criar conta. Tente novamente.');
-            return Redirect::page("Cadastro/form");
-        }
-
-        // 2. Inserir na tabela usuario
-        $dadosUsuario = [
-            'pessoa_fisica_id' => $pessoaFisicaId,
-            'login' => $post['email'],
-            'senha' => $post['senha'],
-            'tipo' => 'CN' // A = Anunciante
-        ];
-        
-        $usuarioId = $this->model->inserirUsuario($dadosUsuario);
-        if (!$usuarioId) {
-            Session::set('msgError', 'Erro ao criar conta. Tente novamente.');
-            return Redirect::page("Cadastro/form");
-        }
-
-        // 3. Inserir na tabela telefone
-        $dadosTelefone = [
-            'usuario_id' => $usuarioId,
-            'numero' => $post['telefone'],
-            'tipo' => $tipoTelefone
-        ];
-        
-        if (!$this->model->inserirTelefone($dadosTelefone)) {
-            Session::set('msgError', 'Erro ao criar conta. Tente novamente.');
-            return Redirect::page("Cadastro/form");
-        }
-
-        // 4. Registrar aceite dos termos de uso (se aceitos)
-        if (!empty($post['termos'])) {
-            $termoAtivo = $this->model->buscarTermoUsoAtivo();
-            if ($termoAtivo) {
-                $dadosAceite = [
-                    'termodeuso_id' => $termoAtivo['termodeuso_id'],
-                    'usuario_id' => $usuarioId,
-                    'dataHoraAceite' => date('Y-m-d H:i:s')
-                ];
-                
-                $this->model->inserirAceiteTermoUso($dadosAceite);
+        } catch (\Exception $e) {
+            
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
             }
+
+            unset($post['senha'], $post['confSenha']);
+
+            return Redirect::page($this->controller, [
+                "msgError" => $e->getMessage(),
+                "inputs"   => $post
+            ]);
+        }
+    }
+
+    /**
+     * signUpEmpresa - Processar cadastro de empresa
+     *
+     * @return void
+     */
+    public function signUpEmpresa()
+    {
+        $post = $this->request->getPost();
+        $errors = [];
+
+        // Validação: Campo senha obrigatório
+        if (empty($post['senha'])) {
+            unset($post['senha'], $post['confSenha']);
+            
+            return Redirect::page($this->controller, [
+                "msgError" => "O campo <b>Senha</b> deve ser preenchido.",
+                "inputs"   => $post
+            ]);
         }
 
-        Session::set('msgSucesso', 'Conta criada com sucesso! Faça login para continuar.');
-        return Redirect::page("Login");
+        if (empty($post['confSenha']) || $post['senha'] !== $post['confSenha']) {
+            unset($post['senha'], $post['confSenha']);
+
+            return Redirect::page($this->controller, [
+                "msgError" => "As senhas não coincidem.",
+                "inputs"   => $post
+            ]);
+        }
+
+        if (empty($post['nome'])) {
+            unset($post['senha'], $post['confSenha']);
+            
+            return Redirect::page($this->controller, [
+                "msgError" => "O nome do estabelecimento é obrigatório.",
+                "inputs"   => $post
+            ]);
+        }
+
+        if (empty($post['latitude']) || empty($post['longitude'])) {
+            unset($post['senha'], $post['confSenha']);
+            
+            return Redirect::page($this->controller, [
+                "msgError" => "A localização (latitude e longitude) é obrigatória.",
+                "inputs"   => $post
+            ]);
+        }
+
+        if (empty($post['email'])) {
+            unset($post['senha'], $post['confSenha']);
+            
+            return Redirect::page($this->controller, [
+                "msgError" => "O e-mail é obrigatório.",
+                "inputs"   => $post
+            ]);
+        }
+
+        unset($post['confSenha']);
+        $post['senha'] = password_hash($post['senha'], PASSWORD_DEFAULT);
+
+        $postEstabelecimento = [
+            "nome"      => trim($post['nome'] ?? ''),
+            "endereco"  => trim($post['endereco'] ?? ''),
+            "latitude"  => trim($post['latitude'] ?? ''),
+            "longitude" => trim($post['longitude'] ?? ''),
+            "email"     => trim($post['email'] ?? ''),
+        ];
+
+        $postUsuario = [
+            "estabelecimento_id" => null,
+            "login" => trim($post['email'] ?? ''),
+            "senha" => $post['senha'],
+            "tipo"  => 'A',
+        ];
+
+        try {
+            $termoVigente = $this->termoDeUsoModel->getTermoVigente();
+            
+            if (empty($termoVigente) || !isset($termoVigente['termodeuso_id'])) {
+                throw new \Exception("Nenhum termo de uso vigente encontrado.");
+            }
+
+            $postTermoDeUsoAceite = [
+                "dataHoraAceite" => date('Y-m-d H:i:s'),
+                "termodeuso_id" => $termoVigente['termodeuso_id'],
+            ];
+
+            $this->db->beginTransaction();
+
+            // Inserir estabelecimento
+            $estabelecimentoId = $this->estabelecimentoModel->insertGetId($postEstabelecimento);
+            if ($estabelecimentoId === false || $estabelecimentoId <= 0) {
+                throw new \Exception("Falha ao cadastrar estabelecimento.");
+            }
+
+            // Inserir usuário vinculado ao estabelecimento
+            $postUsuario['estabelecimento_id'] = $estabelecimentoId;
+            $usuarioId = $this->usuarioModel->insertGetId($postUsuario);
+            if ($usuarioId === false || $usuarioId <= 0) {
+                throw new \Exception("Falha ao criar usuário.");
+            }
+
+            // Registrar aceite do termo de uso
+            $postTermoDeUsoAceite['usuario_id'] = $usuarioId;
+            
+            if (!$this->termoDeUsoAceiteModel->insert($postTermoDeUsoAceite)) {
+                throw new \Exception("Falha ao registrar aceite do termo de uso.");
+            }
+
+            $this->db->commit();
+
+            Session::destroy('inputs');
+            Session::destroy('errors');
+
+            return Redirect::page("login", [
+                "msgSucesso" => "Cadastro realizado com sucesso! Faça login para continuar."
+            ]);
+
+        } catch (\PDOException $e) {
+            
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+
+            $mensagemErro = $e->getMessage();
+            $codigoErro = $e->getCode();
+
+            if ($codigoErro == 23000 || $codigoErro == 1062) {
+                if (stripos($mensagemErro, 'email') !== false) {
+                    $mensagemErro = "Este e-mail já está cadastrado.";
+                } elseif (stripos($mensagemErro, 'nome') !== false) {
+                    $mensagemErro = "Este nome de estabelecimento já está cadastrado.";
+                } elseif (stripos($mensagemErro, 'login') !== false) {
+                    $mensagemErro = "Este e-mail já está cadastrado.";
+                } else {
+                    $mensagemErro = "Dados já cadastrados no sistema.";
+                }
+            } elseif (stripos($mensagemErro, 'cannot be null') !== false) {
+                $mensagemErro = "Erro ao processar cadastro. Verifique os dados informados.";
+            } elseif (stripos($mensagemErro, 'Foreign key') !== false) {
+                $mensagemErro = "Erro de referência nos dados. Entre em contato com o suporte.";
+            } else {
+                $mensagemErro = "Erro no banco de dados. Tente novamente.";
+            }
+
+            unset($post['senha'], $post['confSenha']);
+
+            return Redirect::page($this->controller, [
+                "msgError" => $mensagemErro,
+                "inputs"   => $post
+            ]);
+
+        } catch (\Exception $e) {
+            
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+
+            unset($post['senha'], $post['confSenha']);
+
+            return Redirect::page($this->controller, [
+                "msgError" => $e->getMessage(),
+                "inputs"   => $post
+            ]);
+        }
     }
 }

@@ -24,6 +24,7 @@ class Home extends ControllerMain
         echo "<br />ID: " . $id;
         echo "<br />PARÂMETROS: " . implode(", ", $params);
     }
+    
     public function busca()
     {
         echo "<pre>";

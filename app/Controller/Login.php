@@ -35,40 +35,37 @@ class Login extends ControllerMain
      *
      * @return void
      */
-    public function signIn()
-    {
-        $post   = $this->request->getPost();
-        $aUser  = $this->model->getUserLogin($post['login']);
+public function signIn()
+{
+    $post  = $this->request->getPost();
+    $login = trim($post['login'] ?? '');
+    $senha = trim($post['senha'] ?? '');
 
-        if (count($aUser) > 0) {
-
-            // validar a senha            
-            if (!password_verify(trim($post["senha"]), trim($aUser['senha'])) ) {
-                return Redirect::page("login", [
-                    "msgError" => 'Login ou senha inválido.',
-                    'inputs' => ["login" => $post['login']]
-                ]);
-            }
-            
-            //  Criar flag's de usuário logado no sistema
-            
-            Session::set("userId"   , $aUser['usuario_id']);
-            Session::set("userNome" , $aUser['nome']);
-            Session::set("userLogin", $aUser['login']);
-            Session::set("userNivel", $aUser['tipo']);
-            Session::set("userSenha", $aUser['senha']);
-            
-            // Direcionar o usuário para página home
-            return Redirect::page("home");
-            //
-            
-        } else {
-            return Redirect::page("login", [
-                "msgError" => 'Login ou senha inválido.',
-                'inputs' => ["login" =>$post['login']]
-            ]);
-        }
+    $aUser = $this->model->getUserLogin($login);
+    
+    if (empty($aUser)) {
+        return Redirect::page("login", [
+            "msgError" => 'Login ou senha inválido.',
+            'inputs' => ["login" => $login]
+        ]);
     }
+
+    if (!password_verify($senha, $aUser['senha'])) {
+        return Redirect::page("login", [
+            "msgError" => 'Login ou senha inválido.',
+            'inputs' => ["login" => $login]
+        ]);
+    }
+
+    Session::set("userId"   , $aUser['usuario_id']);
+    Session::set("userNome" , $aUser['nome']);
+    Session::set("userLogin", $aUser['login']);
+    Session::set("userNivel", $aUser['tipo']);
+    Session::set("userSenha", $aUser['senha']);
+
+    return Redirect::page("sistema");
+}
+
 
     /**
      * signOut
@@ -120,8 +117,6 @@ class Login extends ControllerMain
             $chave      = sha1($user['usuario_id'] . $user['senha'] . date('YmdHis', strtotime($created_at)));
             $cLink      = baseUrl() . "login/recuperarSenha/" . $chave;
             $emailTexto = emailRecuperacaoSenha($cLink);
-
-            var_dump($user);
 
             $lRetMail = Email::enviaEmail(
                 $_ENV['MAIL.USER'],                         /* Email do Remetente*/

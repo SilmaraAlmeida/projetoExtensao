@@ -4,13 +4,13 @@ namespace App\Model;
 use Core\Library\ModelMain;
 
 
-class TermoDeUsoModelModel extends ModelMain
+class TermoDeUsoModel extends ModelMain
 {
-    protected $table = 'telefone';
+    protected $table = 'termodeuso';
 
     public $validationRules = [
-        "textoLongo"  => [
-            "label" => 'Estabelecimento',
+        "textoTermo"  => [
+            "label" => 'Texto do Termo de Uso',
             "rules" => 'required|longtext'
         ],
         "statusRegistro"  => [
@@ -20,6 +20,18 @@ class TermoDeUsoModelModel extends ModelMain
         "rascunho"  => [
             "label" => 'Termo de Uso Rascunho',
             "rules" => 'required|int'
+        ],
+        "usuario_id"  => [
+            "label" => 'Usuario',
+            "rules" => 'required|int'
         ]
     ];
+    public function getTermoVigente()
+    {
+        return $this->db
+                    ->where('statusRegistro', 1)
+                    ->where('rascunho', 2)
+                    ->orderBy('termodeuso_id', 'DESC')
+                    ->first();
+    }
 }

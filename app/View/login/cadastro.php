@@ -1,10 +1,7 @@
 <?php use Core\Library\Session; ?>
 
 <?php
-$msgError = Session::getDestroy('msgError');
-$msgSucesso = Session::getDestroy('msgSucesso');
-$errors = Session::get('errors');
-$inputs = Session::get('inputs');
+$inputs = Session::getDestroy('inputs');
 ?>
 
 <div class="min-h-screen bg-blue-900 flex items-center justify-center p-4">
@@ -64,21 +61,7 @@ $inputs = Session::get('inputs');
 
     <h2 class="text-center text-xl font-bold text-gray-800 mb-6">Criar Conta</h2>
 
-    <!-- Mensagem de Erro -->
-    <?php if ($msgError): ?>
-      <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center">
-        <i class="fas fa-exclamation-circle mr-2"></i>
-        <?= $msgError ?>
-      </div>
-    <?php endif; ?>
-
-    <!-- Mensagem de Sucesso -->
-    <?php if ($msgSucesso): ?>
-      <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center">
-        <i class="fas fa-check-circle mr-2"></i>
-        <?= $msgSucesso ?>
-      </div>
-    <?php endif; ?>
+    <?= exibeAlerta() ?>
 
     <!-- Toggle Buttons -->
     <div class="bg-blue-50 rounded-xl p-1 flex gap-1 mb-6">
@@ -104,7 +87,7 @@ $inputs = Session::get('inputs');
       x-transition:enter="transition ease-out duration-200"
       x-transition:enter-start="opacity-0 transform translate-x-4"
       x-transition:enter-end="opacity-100 transform translate-x-0"
-      action="<?= baseUrl() ?>cadastro/signUp" 
+      action="<?= baseUrl() ?>cadastro/signUpCandidato" 
       method="post"
       class="space-y-4"
     >
@@ -161,15 +144,15 @@ $inputs = Session::get('inputs');
         <label class="block text-sm font-medium text-gray-700 mb-2">E-mail:</label>
         <input 
           type="email" 
-          name="email" 
+          name="login" 
           placeholder="seu@email.com" 
-          value="<?= $inputs['email'] ?? '' ?>" 
-          @blur="checkAvailability('email', $event.target.value)"
+          value="<?= $inputs['login'] ?? '' ?>" 
+          @blur="checkAvailability('login', $event.target.value)"
           required
-          class="w-full px-4 py-3 border <?= isset($errors['email']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+          class="w-full px-4 py-3 border <?= isset($errors['login']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
         >
-        <?php if (isset($errors['email'])): ?>
-          <p class="text-red-600 text-xs mt-1"><?= $errors['email'] ?></p>
+        <?php if (isset($errors['login'])): ?>
+          <p class="text-red-600 text-xs mt-1"><?= $errors['login'] ?></p>
         <?php endif; ?>
       </div>
 
@@ -255,110 +238,111 @@ $inputs = Session::get('inputs');
       x-transition:enter="transition ease-out duration-200"
       x-transition:enter-start="opacity-0 transform translate-x-4"
       x-transition:enter-end="opacity-100 transform translate-x-0"
-      action="<?= baseUrl() ?>cadastro/cadastroEmpresa" 
+      action="<?= baseUrl() ?>cadastro/signUpEmpresa" 
       method="post"
       class="space-y-4"
       x-cloak
     >
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Razão Social:</label>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Nome do Estabelecimento: *</label>
         <input 
           type="text" 
-          name="razaoSocial" 
-          placeholder="Nome da empresa" 
-          value="<?= $inputs['razaoSocial'] ?? '' ?>"
+          name="nome" 
+          placeholder="Nome do seu estabelecimento" 
+          value="<?= $inputs['nome'] ?? '' ?>"
           required
-          class="w-full px-4 py-3 border <?= isset($errors['razaoSocial']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+          maxlength="50"
+          class="w-full px-4 py-3 border <?= isset($errors['nome']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
         >
-        <?php if (isset($errors['razaoSocial'])): ?>
-          <p class="text-red-600 text-xs mt-1"><?= $errors['razaoSocial'] ?></p>
+        <?php if (isset($errors['nome'])): ?>
+          <p class="text-red-600 text-xs mt-1"><?= $errors['nome'] ?></p>
         <?php endif; ?>
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">CNPJ:</label>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Endereço:</label>
         <input 
           type="text" 
-          name="cnpj" 
-          placeholder="00.000.000/0000-00" 
-          value="<?= $inputs['cnpj'] ?? '' ?>"
-          @input="formatCNPJ($event)"
-          @blur="checkAvailability('cnpj', $event.target.value)"
-          maxlength="18"
-          required
-          class="w-full px-4 py-3 border <?= isset($errors['cnpj']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+          name="endereco" 
+          placeholder="Rua, número, bairro, cidade" 
+          value="<?= $inputs['endereco'] ?? '' ?>"
+          maxlength="200"
+          class="w-full px-4 py-3 border <?= isset($errors['endereco']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
         >
-        <?php if (isset($errors['cnpj'])): ?>
-          <p class="text-red-600 text-xs mt-1"><?= $errors['cnpj'] ?></p>
-        <?php endif; ?>
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">E-mail Corporativo:</label>
-        <input 
-          type="email" 
-          name="emailEmpresa" 
-          placeholder="contato@empresa.com" 
-          value="<?= $inputs['emailEmpresa'] ?? '' ?>"
-          @blur="checkAvailability('email', $event.target.value)"
-          required
-          class="w-full px-4 py-3 border <?= isset($errors['emailEmpresa']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
-        >
-        <?php if (isset($errors['emailEmpresa'])): ?>
-          <p class="text-red-600 text-xs mt-1"><?= $errors['emailEmpresa'] ?></p>
-        <?php endif; ?>
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Telefone (Opcional):</label>
-        <input 
-          type="text" 
-          name="telefoneEmpresa" 
-          placeholder="(11) 99999-9999"
-          value="<?= $inputs['telefoneEmpresa'] ?? '' ?>"
-          @input="formatPhone($event)"
-          maxlength="15"
-          class="w-full px-4 py-3 border <?= isset($errors['telefoneEmpresa']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
-        >
-        <?php if (isset($errors['telefoneEmpresa'])): ?>
-          <p class="text-red-600 text-xs mt-1"><?= $errors['telefoneEmpresa'] ?></p>
+        <?php if (isset($errors['endereco'])): ?>
+          <p class="text-red-600 text-xs mt-1"><?= $errors['endereco'] ?></p>
         <?php endif; ?>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Senha:</label>
-          <div class="relative" x-data="{ show: false }">
-            <input 
-              :type="show ? 'text' : 'password'"
-              name="senhaEmpresa" 
-              placeholder="Mínimo 8 caracteres" 
-              required
-              class="w-full px-4 py-3 border <?= isset($errors['senhaEmpresa']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm pr-10"
-            >
-            <button 
-              type="button"
-              @click="show = !show"
-              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
-            >
-              <i class="fas fa-eye" x-show="!show"></i>
-              <i class="fas fa-eye-slash" x-show="show" x-cloak></i>
-            </button>
-          </div>
-          <?php if (isset($errors['senhaEmpresa'])): ?>
-            <p class="text-red-600 text-xs mt-1"><?= $errors['senhaEmpresa'] ?></p>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Latitude: *</label>
+          <input 
+            type="text" 
+            name="latitude" 
+            placeholder="-21.123456" 
+            value="<?= $inputs['latitude'] ?? '' ?>"
+            required
+            maxlength="12"
+            pattern="-?\d+\.?\d*"
+            class="w-full px-4 py-3 border <?= isset($errors['latitude']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+          >
+          <?php if (isset($errors['latitude'])): ?>
+            <p class="text-red-600 text-xs mt-1"><?= $errors['latitude'] ?></p>
           <?php endif; ?>
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar Senha:</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Longitude: *</label>
+          <input 
+            type="text" 
+            name="longitude" 
+            placeholder="-42.123456" 
+            value="<?= $inputs['longitude'] ?? '' ?>"
+            required
+            maxlength="12"
+            pattern="-?\d+\.?\d*"
+            class="w-full px-4 py-3 border <?= isset($errors['longitude']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+          >
+          <?php if (isset($errors['longitude'])): ?>
+            <p class="text-red-600 text-xs mt-1"><?= $errors['longitude'] ?></p>
+          <?php endif; ?>
+        </div>
+      </div>
+
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-700">
+        <i class="fas fa-info-circle mr-2"></i>
+        <span>Você pode obter as coordenadas do seu estabelecimento no <a href="https://www.google.com/maps" target="_blank" class="underline font-medium">Google Maps</a></span>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">E-mail: *</label>
+        <input 
+          type="email" 
+          name="email" 
+          placeholder="contato@estabelecimento.com" 
+          value="<?= $inputs['email'] ?? '' ?>"
+          @blur="checkAvailability('email', $event.target.value)"
+          required
+          maxlength="150"
+          class="w-full px-4 py-3 border <?= isset($errors['email']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
+        >
+        <?php if (isset($errors['email'])): ?>
+          <p class="text-red-600 text-xs mt-1"><?= $errors['email'] ?></p>
+        <?php endif; ?>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Senha: *</label>
           <div class="relative" x-data="{ show: false }">
             <input 
               :type="show ? 'text' : 'password'"
-              name="confSenhaEmpresa" 
-              placeholder="Confirme sua senha" 
+              name="senha" 
+              placeholder="Mínimo 8 caracteres" 
               required
-              class="w-full px-4 py-3 border <?= isset($errors['confSenhaEmpresa']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm pr-10"
+              minlength="8"
+              class="w-full px-4 py-3 border <?= isset($errors['senha']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm pr-10"
             >
             <button 
               type="button"
@@ -369,8 +353,33 @@ $inputs = Session::get('inputs');
               <i class="fas fa-eye-slash" x-show="show" x-cloak></i>
             </button>
           </div>
-          <?php if (isset($errors['confSenhaEmpresa'])): ?>
-            <p class="text-red-600 text-xs mt-1"><?= $errors['confSenhaEmpresa'] ?></p>
+          <?php if (isset($errors['senha'])): ?>
+            <p class="text-red-600 text-xs mt-1"><?= $errors['senha'] ?></p>
+          <?php endif; ?>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar Senha: *</label>
+          <div class="relative" x-data="{ show: false }">
+            <input 
+              :type="show ? 'text' : 'password'"
+              name="confSenha" 
+              placeholder="Confirme sua senha" 
+              required
+              minlength="8"
+              class="w-full px-4 py-3 border <?= isset($errors['confSenha']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm pr-10"
+            >
+            <button 
+              type="button"
+              @click="show = !show"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+            >
+              <i class="fas fa-eye" x-show="!show"></i>
+              <i class="fas fa-eye-slash" x-show="show" x-cloak></i>
+            </button>
+          </div>
+          <?php if (isset($errors['confSenha'])): ?>
+            <p class="text-red-600 text-xs mt-1"><?= $errors['confSenha'] ?></p>
           <?php endif; ?>
         </div>
       </div>
@@ -378,27 +387,28 @@ $inputs = Session::get('inputs');
       <div class="flex items-start">
         <input 
           type="checkbox" 
-          name="termosEmpresa" 
+          name="termos" 
           value="1"
           required
-          class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 <?= isset($errors['termosEmpresa']) ? 'border-red-300' : '' ?>"
+          class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 <?= isset($errors['termos']) ? 'border-red-300' : '' ?>"
         >
         <label class="ml-3 text-sm text-gray-600">
           Aceito os <a href="<?= baseUrl() ?>cadastro/termos" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium">Termos de Uso</a> e 
           <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Política de Privacidade</a>
         </label>
       </div>
-      <?php if (isset($errors['termosEmpresa'])): ?>
-        <p class="text-red-600 text-xs mt-1 ml-6"><?= $errors['termosEmpresa'] ?></p>
+      <?php if (isset($errors['termos'])): ?>
+        <p class="text-red-600 text-xs mt-1 ml-6"><?= $errors['termos'] ?></p>
       <?php endif; ?>
 
       <button 
         type="submit" 
         class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 transform hover:scale-[1.02]"
       >
-        Criar Conta como Empresa
+        Criar Conta como Estabelecimento
       </button>
     </form>
+
 
     <!-- Link de Login -->
     <p class="text-center mt-6 text-sm text-gray-600">
@@ -409,9 +419,3 @@ $inputs = Session::get('inputs');
     </p>
   </div>
 </div>
-
-<?php
-// Limpar as sessions após exibir
-Session::destroy('errors');
-Session::destroy('inputs');
-?>

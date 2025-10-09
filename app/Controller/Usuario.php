@@ -121,11 +121,6 @@ class Usuario extends ControllerMain
      *
      * @return void
      */
-    /**
-     * delete
-     *
-     * @return void
-     */
     public function delete()
     {
         $post = $this->request->getPost();
@@ -192,5 +187,10 @@ class Usuario extends ControllerMain
                 "msgError" => "Usuário inválido !"
             ]);
         }
+    }
+
+    public function configuracoes()
+    {
+        
     }
 }

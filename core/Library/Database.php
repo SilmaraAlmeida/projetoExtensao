@@ -25,6 +25,8 @@ class Database
     private $limit = "";  
     private $params = [];
 
+    protected $inTransaction = false;
+
     /**
      * construct
      *
@@ -64,7 +66,10 @@ class Database
      * destruct - Método que destroi a conexão com banco de dados e remove da memória todas as variáveis setadas
      */
     public function __destruct() {
-        $this->disconnect();
+        if (!$this->inTransaction) {
+            $this->disconnect();
+        }
+        
         foreach ($this as $key => $value) {
             unset($this->$key);
         }
@@ -85,7 +90,11 @@ class Database
      * @return object
      */
     public  function connect()
-    { 
+    {
+        if ($this->conexao) {
+            return $this->conexao;
+        }
+
         try {
             if ( $this->getDBDrive() == 'mysql' ) {            // MySQL
 
@@ -143,8 +152,6 @@ class Database
         $query->execute( $params );
         $rs = $query;
         
-        self::__destruct();
-        
         return $rs;
         
     }
@@ -164,8 +171,6 @@ class Database
             $query->execute($params);
             
             $rs      = $conexao->lastInsertId(); // or die(print_r($query->errorInfo(), true));
-            
-            self::__destruct();
             
             return $rs;
 
@@ -190,8 +195,7 @@ class Database
             $query = $this->connect()->prepare($sql);
             $query->execute($params);
             
-            $rs = $query->rowCount();// or die(print_r($query->errorInfo(), true));
-            self::__destruct();            
+            $rs = $query->rowCount();// or die(print_r($query->errorInfo(), true));       
             
             return $rs;
 
@@ -219,8 +223,6 @@ class Database
         } catch (Exception $exc) {
             echo "Erro ao Excluir Registro, favor entrar em contato com Suporte Tenico" . $exc->getTraceAsString();
         }
-
-        self::__destruct();
         
         if ($rs == array()) {
             return false;
@@ -750,5 +752,71 @@ class Database
         }
 
         return $rs;
+    }
+
+    /**
+     * inTransaction - Verifica se há transação ativa usando o estado real do PDO
+     *
+     * @return bool
+     */
+    public function inTransaction()
+    {
+        if (!$this->conexao) {
+            return false;
+        }
+        
+        return $this->conexao->inTransaction();
+    }
+
+/**
+ * beginTransaction - Inicia transação
+ *
+ * @return bool
+ */
+public function beginTransaction()
+{
+    $this->connect();
+    
+    if ($this->conexao->inTransaction()) {
+        return true;
+    }
+    
+    $this->inTransaction = true;
+    return $this->conexao->beginTransaction();
+}
+
+    /**
+     * commit - Finaliza transação com commit
+     *
+     * @return bool
+     */
+    public function commit()
+    {
+        if ($this->conexao && $this->conexao->inTransaction()) {
+            $rs = $this->conexao->commit();
+            $this->inTransaction = false;
+            return $rs;
+        }
+        return false;
+    }
+
+    /**
+     * rollBack - Desfaz transação
+     *
+     * @return bool
+     */
+    public function rollBack()
+    {
+        if ($this->conexao && $this->conexao->inTransaction()) {
+            $rs = $this->conexao->rollBack();
+            $this->inTransaction = false;
+            return $rs;
+        }
+        return false;
+    }
+
+    public function lastInsertId()
+    {
+        return $this->conexao->lastInsertId();
     }
 }

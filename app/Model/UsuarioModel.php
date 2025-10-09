@@ -10,10 +10,6 @@ class UsuarioModel extends ModelMain
     protected $primaryKey = "usuario_id";
 
     public $validationRules = [
-        "pessoa_fisica_id" => [
-            "label" => 'Pessoa Física',
-            "rules" => 'required|int'
-        ],
         "login" => [
             "label" => 'Login/Email',
             "rules" => 'required|email|min:5|max:50'
@@ -32,13 +28,38 @@ class UsuarioModel extends ModelMain
      */
     public function getUserLogin($login)
     {
-        return $this->db
+        // Busca o usuário base pelo login
+        $usuario = $this->db
             ->table('usuario')
-            ->select('usuario.*, pessoa_fisica.nome')
-            ->join('pessoa_fisica', 'usuario.pessoa_fisica_id = pessoa_fisica.pessoa_fisica_id', 'INNER')
             ->where('usuario.login', $login)
             ->first();
+
+        if (!$usuario) {
+            return [];
+        }
+
+        // Se for empresa (A)
+        if ($usuario['tipo'] === 'A') {
+            $dados = $this->db
+                ->table('usuario')
+                ->select('usuario.*, estabelecimento.nome as nome')
+                ->join('estabelecimento', 'usuario.estabelecimento_id = estabelecimento.estabelecimento_id', 'LEFT')
+                ->where('usuario.login', $login)
+                ->first();
+        } 
+        // Se for gestor ou contribuinte normativo
+        else {
+            $dados = $this->db
+                ->table('usuario')
+                ->select('usuario.*, pessoa_fisica.nome as nome')
+                ->join('pessoa_fisica', 'usuario.pessoa_fisica_id = pessoa_fisica.pessoa_fisica_id', 'LEFT')
+                ->where('usuario.login', $login)
+                ->first();
+        }
+
+        return $dados ?? [];
     }
+
 
     /**
      * getUserId
@@ -85,5 +106,17 @@ class UsuarioModel extends ModelMain
             ->join('pessoa_fisica', 'usuario.pessoa_fisica_id = pessoa_fisica.pessoa_fisica_id', 'INNER')
             ->orderBy($orderby, $direction)
             ->findAll();
+    }
+
+    public function verificaDuplicidadeEmail(string $email): bool
+    {
+        $rs = $this->db
+            ->table('usuario')
+            ->where('login', $email)
+            ->first();
+
+        $emailExiste = !empty($rs);
+
+        return $emailExiste;
     }
 }

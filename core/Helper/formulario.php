@@ -19,7 +19,6 @@ if (! function_exists('setValor')) {
             return $default;
         }
     }
-
 }
 
 if (! function_exists('setMsgFilderError')) {
@@ -35,7 +34,7 @@ if (! function_exists('setMsgFilderError')) {
 
         if (isset($_POST['formErrors'][$campo])) {
             $cRet .= '<div class="mt-2 text-danger">';
-                $cRet .= $_POST['formErrors'][$campo];
+            $cRet .= $_POST['formErrors'][$campo];
             $cRet .= '</div>';
         }
 
@@ -47,37 +46,44 @@ if (! function_exists('exibeAlerta')) {
     /**
      * exibeAlerta
      *
+     * Exibe mensagem de alerta similar ao Bootstrap, mas usando TailwindCSS.
+     *
      * @return string
      */
     function exibeAlerta()
     {
-        $msgSucesso = Session::getDestroy('msgSucesso');
-        $msgError   = Session::getDestroy('msgError');
-        $msgAlerta  = Session::getDestroy('msgAlerta');
+        // Pega a mensagem da sessão e destrói
+        $msgSucesso = Core\Library\Session::getDestroy('msgSucesso');
+        $msgError   = Core\Library\Session::getDestroy('msgError');
+        $msgAlerta  = Core\Library\Session::getDestroy('msgAlerta');
+
         $mensagem   = '';
         $classAlert = '';
 
+        // Define cores e estilos Tailwind
         if ($msgSucesso != "") {
             $mensagem   = $msgSucesso;
-            $classAlert = 'success';
+            $classAlert = 'bg-green-100 border border-green-400 text-green-700';
         } elseif ($msgError != "") {
             $mensagem   = $msgError;
-            $classAlert = 'danger';
+            $classAlert = 'bg-red-100 border border-red-400 text-red-700';
         } elseif ($msgAlerta != "") {
             $mensagem   = $msgAlerta;
-            $classAlert = 'warning';
+            $classAlert = 'bg-yellow-100 border border-yellow-400 text-yellow-700';
         }
 
-        if ($mensagem == "") {
-            return "";
-        } else {
-            return  '<div class="m-2 alert alert-' . $classAlert . ' alert-dismissible fade show" role="alert">
-                        ' . $mensagem . '
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>';
-        }
+        // Se não houver mensagem, retorna vazio
+        if ($mensagem == "") return "";
+
+        // Retorna HTML do alerta
+        return '
+        <div class="m-2 p-4 rounded ' . $classAlert . ' flex justify-between items-center" role="alert">
+            <span>' . $mensagem . '</span>
+            <button onclick="this.parentElement.remove()" class="ml-4 text-xl font-bold leading-none">&times;</button>
+        </div>';
     }
 }
+
 
 if (! function_exists('datatables')) {
     /**

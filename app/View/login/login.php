@@ -1,10 +1,6 @@
-<?php use Core\Library\Session; ?>
-
 <?php
-$msgError = Session::getDestroy('msgError');
-$msgSucesso = Session::getDestroy('msgSucesso');
-$msgSuccesso = Session::getDestroy('msgSuccesso');
-$inputs = Session::get('inputs') ?? [];
+use Core\Library\Session;
+$inputs = Session::get('inputs');
 ?>
 
 <div class="min-h-screen bg-blue-900 flex items-center justify-center p-4">
@@ -20,24 +16,9 @@ $inputs = Session::get('inputs') ?? [];
 
     <h2 class="text-center text-xl font-bold text-gray-800 mb-6">Fazer Login</h2>
 
-    <!-- Mensagem de Erro -->
-    <?php if ($msgError): ?>
-      <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center">
-        <i class="fas fa-exclamation-circle mr-2"></i>
-        <?= $msgError ?>
-      </div>
-    <?php endif; ?>
-
-    <!-- Mensagem de Sucesso -->
-    <?php if ($msgSucesso || $msgSuccesso): ?>
-      <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center">
-        <i class="fas fa-check-circle mr-2"></i>
-        <?= $msgSucesso ?: $msgSuccesso ?>
-      </div>
-    <?php endif; ?>
-
+    <?= exibeAlerta(); ?>
     <!-- Formulário de Login -->
-    <form action="<?= baseUrl() ?>login/signin" method="POST" class="space-y-4">
+    <form action="<?= baseUrl() ?>login/signIn" method="POST" class="space-y-4">
       <div>
         <label for="login" class="block text-sm font-medium text-gray-700 mb-2">
           Login:
@@ -67,7 +48,7 @@ $inputs = Session::get('inputs') ?? [];
             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm pr-10"
           >
           <button
-            type="button"
+            type="submit"
             @click="show = !show"
             class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
           >
@@ -132,8 +113,3 @@ $inputs = Session::get('inputs') ?? [];
     </div>
   </div>
 </div>
-
-<?php
-// Limpar inputs após exibir
-Session::destroy('inputs');
-?>
