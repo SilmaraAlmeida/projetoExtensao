@@ -136,7 +136,7 @@ class ControllerMain
 
         // carrega cabeçalho
         if ($exibeCabRodape) {
-            require_once $pathView . "Comuns" . DIRECTORY_SEPARATOR . "cabecalho.php";
+            require_once $pathView . "comuns" . DIRECTORY_SEPARATOR . "cabecalho.php";
         }
 
         // erros na validação do formulário
@@ -162,12 +162,12 @@ class ControllerMain
         if (file_exists($pathView . $nome . ".php")) {
             require_once $pathView . $nome . ".php";
         } else {
-            require_once $pathView . "Comuns" . DIRECTORY_SEPARATOR . "erros.php";
+            require_once $pathView . "comuns" . DIRECTORY_SEPARATOR . "erros.php";
         }
 
         // carrega rodapé
         if ($exibeCabRodape) {
-            require_once $pathView . "Comuns" . DIRECTORY_SEPARATOR . "rodape.php";
+            require_once $pathView . "comuns" . DIRECTORY_SEPARATOR . "rodape.php";
         }
     }
 }

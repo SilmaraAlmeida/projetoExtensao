@@ -1,0 +1,26 @@
+services:
+  app:
+    build: .
+    container_name: atomphp_app
+    ports:
+      - "8080:80"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: atomphp_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DB_DATABASE}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+ 
+volumes:
+  db_data:
