@@ -54,7 +54,7 @@ use Core\Library\Session; ?>
                     <!-- Search Bar - Desktop -->
                     <div class="hidden md:flex flex-1 max-w-lg mx-8">
                         <div class="relative w-full">
-                            <form action="/vaga/busca" method="GET">
+                            <form action="/vaga" method="GET">
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                     <i class="fas fa-search text-gray-400 text-base"></i>
                                 </div>
