@@ -33,5 +33,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/viamuriae:latest
-            ghcr.io/${{ github.repository_owner }}/viamuriae:${{ github.sha }}
+            ghcr.io/silmaraalmeida/viamuriae:latest
+            ghcr.io/silmaraalmeida/viamuriae:${{ github.sha }}
