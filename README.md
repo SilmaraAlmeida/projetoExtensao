@@ -17,15 +17,22 @@ A plataforma permitirá que os usuários se cadastrem, atualizem seus perfis, in
 ## Tecnologias Utilizadas
 
 - **Frontend**:
-  - HTML, CSS, JavaScript
+  - HTML
+  - Tailwind CSS
+  - CSS
+  - AlpineJs
+  - JavaScript
 - **Backend**:
   - PHP
   - MySQL
-- **Outras Tecnologias**: << serão adicionadas conforme o desenvolvimento >>
+- **Outras Tecnologias**:
+  - Docker
+  - Github Actions
+  - PhpUnit
 
 ## Colaboradores
 - [Jhames Paiva](https://github.com/JhamesPaiva)
 - [Bernardo Oliveira](https://github.com/Bernardoa7)
-- [Bruno Couri](https://github.com/N1nho0)
+- [Bruno Couri](https://github.com/brunocouri)
 - [Diego Coelho](https://github.com/Coelhosdi)
 - [Silmara Almeida](https://github.com/SilmaraAlmeida)

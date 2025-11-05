@@ -46,7 +46,7 @@ class UsuarioModel extends ModelMain
                 ->join('estabelecimento', 'usuario.estabelecimento_id = estabelecimento.estabelecimento_id', 'LEFT')
                 ->where('usuario.login', $login)
                 ->first();
-        } 
+        }
         // Se for gestor ou contribuinte normativo
         else {
             $dados = $this->db
@@ -119,4 +119,73 @@ class UsuarioModel extends ModelMain
 
         return $emailExiste;
     }
+    
+    /**
+     * getDadosPerfil
+     *
+     * @param int $usuarioId ID do usuário logado
+     * @return array Dados completos para exibição/edição do perfil
+     */
+    public function getDadosPerfil($usuarioId)
+    {
+        // Busca o tipo de usuário primeiro
+        $usuario = $this->db
+            ->table('usuario')
+            ->select('tipo')
+            ->where('usuario_id', $usuarioId)
+            ->first();
+
+        if (!$usuario) {
+            return [];
+        }
+
+        // Se for Empresa (Anunciante)
+        if ($usuario['tipo'] === 'A') {
+            $dados = $this->db
+                ->table('usuario')
+                ->select('usuario.usuario_id, usuario.login, usuario.tipo, 
+                      estabelecimento.estabelecimento_id, estabelecimento.nome, 
+                      estabelecimento.endereco, estabelecimento.latitude, 
+                      estabelecimento.longitude, estabelecimento.email')
+                ->join('estabelecimento', 'usuario.estabelecimento_id = estabelecimento.estabelecimento_id', 'INNER')
+                ->where('usuario.usuario_id', $usuarioId)
+                ->first();
+
+            // Busca telefones do estabelecimento
+            if ($dados) {
+                $dados['telefones'] = $this->db
+                    ->table('telefone')
+                    ->where('estabelecimento_id', $dados['estabelecimento_id'])
+                    ->findAll();
+            }
+        }
+        // Se for Pessoa Física (CN ou G)
+        else {
+            $dados = $this->db
+                ->table('usuario')
+                ->select('usuario.usuario_id, usuario.login, usuario.tipo,
+                    pessoa_fisica.pessoa_fisica_id, pessoa_fisica.nome, pessoa_fisica.cpf,
+                    curriculum.curriculum_id, curriculum.logradouro, curriculum.numero, 
+                    curriculum.complemento, curriculum.bairro, curriculum.cep, 
+                    curriculum.celular, curriculum.dataNascimento, curriculum.sexo, 
+                    curriculum.foto, curriculum.email, curriculum.apresentacaoPessoal,
+                    cidade.cidade_id, cidade.cidade, cidade.uf')
+                ->join('pessoa_fisica', 'usuario.pessoa_fisica_id = pessoa_fisica.pessoa_fisica_id', 'INNER')
+                ->join('curriculum', 'pessoa_fisica.pessoa_fisica_id = curriculum.pessoa_fisica_id', 'LEFT')
+                ->join('cidade', 'curriculum.cidade_id = cidade.cidade_id', 'LEFT')
+                ->where('usuario.usuario_id', $usuarioId)
+                ->first();
+
+            // Busca telefones do usuário
+            if ($dados) {
+                $dados['telefones'] = $this->db
+                    ->table('telefone')
+                    ->where('usuario_id', $usuarioId)
+                    ->findAll();
+            }
+        }
+
+        return $dados ?? [];
+    }
+
 }

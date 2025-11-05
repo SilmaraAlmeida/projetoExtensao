@@ -15,40 +15,64 @@ class TelefoneModel extends ModelMain
             "rules" => 'required|min:10|max:11'
         ],
         "tipo"  => [
-            "label" => 'Genero',
+            "label" => 'Tipo do telefone',
             "rules" => 'required|min:1|max:1'
         ]
     ];
-    public function getUserById($usuarioId)
-    {
-        return $this->db->where("usuario_id", $usuarioId)->findAll();
-    }
-    
+
     /**
-     * getTelefoneById - busca telefone específico pelo ID
+     * getTelefonesPorUsuario - Busca telefones de um usuário
      *
-     * @param int $telefoneId
+     * @param int $usuarioId
      * @return array
      */
-    public function getTelefoneById($telefoneId)
+    public function getTelefonesPorUsuario($usuarioId)
     {
-        return $this->db->where("telefone_id", $telefoneId)->first();
+        return $this->db
+            ->table($this->table)
+            ->where('usuario_id', $usuarioId)
+            ->findAll();
     }
 
     /**
-     * listaTelefone - com joins para mostrar nomes
+     * getTelefonesPorEstabelecimento - Busca telefones de um estabelecimento
      *
+     * @param int $estabelecimentoId
      * @return array
      */
-    public function listaTelefone()
+    public function getTelefonesPorEstabelecimento($estabelecimentoId)
     {
         return $this->db
-            ->table('telefone')
-            ->select('telefone.*, estabelecimento.nome as estabelecimento_nome, pessoa_fisica.nome as usuario_nome')
-            ->join('estabelecimento', 'telefone.estabelecimento_id = estabelecimento.estabelecimento_id', 'LEFT')
-            ->join('usuario', 'telefone.usuario_id = usuario.usuario_id', 'LEFT')
-            ->join('pessoa_fisica', 'usuario.pessoa_fisica_id = pessoa_fisica.pessoa_fisica_id', 'LEFT')
-            ->orderBy('telefone_id', 'ASC')
+            ->table($this->table)
+            ->where('estabelecimento_id', $estabelecimentoId)
             ->findAll();
+    }
+
+    /**
+     * deleteTelefonesPorUsuario - Remove todos os telefones de um usuário
+     *
+     * @param int $usuarioId
+     * @return int Número de registros deletados
+     */
+    public function deleteTelefonesPorUsuario($usuarioId)
+    {
+        return $this->db
+            ->table($this->table)
+            ->where('usuario_id', $usuarioId)
+            ->delete();
+    }
+
+    /**
+     * deleteTelefonesPorEstabelecimento - Remove todos os telefones de um estabelecimento
+     *
+     * @param int $estabelecimentoId
+     * @return int Número de registros deletados
+     */
+    public function deleteTelefonesPorEstabelecimento($estabelecimentoId)
+    {
+        return $this->db
+            ->table($this->table)
+            ->where('estabelecimento_id', $estabelecimentoId)
+            ->delete();
     }
 }

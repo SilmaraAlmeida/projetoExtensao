@@ -55,13 +55,6 @@ class Cadastro extends ControllerMain
     {
         return $this->loadView('login/cadastro');
     }
-    public function index2()
-    {
-        return Redirect::page("cadastro", [
-            "msgError" => "Cadastro realizado com sucesso!",
-            "inputs" => $_POST
-        ]);
-    }
 
     /**
      * signUp - Processar cadastro de candidato

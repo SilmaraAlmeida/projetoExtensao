@@ -1,6 +1,4 @@
-<?php
-
-use Core\Library\Session; ?>
+<?php use Core\Library\Session; ?>
 
 <div class="min-h-screen bg-gray-50">
     <!-- Header do Dashboard -->
@@ -8,12 +6,8 @@ use Core\Library\Session; ?>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900">
-                        Painel de Controle
-                    </h1>
-                    <p class="text-gray-600 mt-1">
-                        Bem-vindo, <?= Session::get('userNome') ?>!
-                    </p>
+                    <h1 class="text-3xl font-bold text-gray-900">Painel de Controle</h1>
+                    <p class="text-gray-600 mt-1">Bem-vindo, <?= Session::get('userNome') ?>!</p>
                 </div>
                 <div class="flex items-center space-x-2">
                     <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
@@ -24,7 +18,7 @@ use Core\Library\Session; ?>
                                 echo 'Gestor';
                                 break;
                             case 'A':
-                                echo 'Empresa';
+                                echo 'Anunciante';
                                 break;
                             case 'CN':
                                 echo 'Candidato';
@@ -42,285 +36,254 @@ use Core\Library\Session; ?>
 
     <!-- Cards do Dashboard -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
             <?php $userNivel = Session::get('userNivel'); ?>
 
             <?php if ($userNivel === 'G'): ?>
-                <!-- Cards do Gestor -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+                <!-- CARDS DO GESTOR -->
+                
+                <!-- Gerenciar Usuários -->
+                <a href="<?= baseUrl() ?>usuario" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors duration-200">
                             <i class="fas fa-users text-2xl text-blue-600"></i>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Gerenciar Usuários</h3>
-                    <p class="text-gray-600 text-sm mb-4">Cadastrar, editar e gerenciar usuários do sistema</p>
-                    <a href="<?= baseUrl() ?>sistema/usuarios" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
+                    <p class="text-gray-600 text-sm">Cadastrar, editar e gerenciar usuários do sistema</p>
+                </a>
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+                <!-- Gerenciar Empresas -->
+                <a href="<?= baseUrl() ?>sistema/empresas" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors duration-200">
                             <i class="fas fa-building text-2xl text-green-600"></i>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Gerenciar Empresas</h3>
-                    <p class="text-gray-600 text-sm mb-4">Cadastrar e aprovar empresas no sistema</p>
-                    <a href="<?= baseUrl() ?>sistema/empresas" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
+                    <p class="text-gray-600 text-sm">Aprovar e gerenciar estabelecimentos cadastrados</p>
+                </a>
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+                <!-- Gerenciar Vagas -->
+                <a href="<?= baseUrl() ?>sistema/vagas" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors duration-200">
                             <i class="fas fa-briefcase text-2xl text-purple-600"></i>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Gerenciar Vagas</h3>
-                    <p class="text-gray-600 text-sm mb-4">Moderar e aprovar vagas publicadas</p>
-                    <a href="<?= baseUrl() ?>sistema/vagas" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
+                    <p class="text-gray-600 text-sm">Moderar e aprovar vagas publicadas</p>
+                </a>
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+                <!-- Gerenciar Cargos -->
+                <a href="<?= baseUrl() ?>sistema/cargos" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-orange-100 rounded-lg group-hover:bg-orange-200 transition-colors duration-200">
-                            <i class="fas fa-chart-bar text-2xl text-orange-600"></i>
+                        <div class="p-3 bg-indigo-100 rounded-lg group-hover:bg-indigo-200 transition-colors duration-200">
+                            <i class="fas fa-id-badge text-2xl text-indigo-600"></i>
                         </div>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Relatórios</h3>
-                    <p class="text-gray-600 text-sm mb-4">Visualizar estatísticas e relatórios do sistema</p>
-                    <a href="<?= baseUrl() ?>sistema/relatorios" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Gerenciar Cargos</h3>
+                    <p class="text-gray-600 text-sm">Cadastrar e editar cargos disponíveis</p>
+                </a>
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+                <!-- Categorias de Estabelecimento -->
+                <a href="<?= baseUrl() ?>sistema/categorias" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-yellow-100 rounded-lg group-hover:bg-yellow-200 transition-colors duration-200">
+                            <i class="fas fa-tags text-2xl text-yellow-600"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Categorias</h3>
+                    <p class="text-gray-600 text-sm">Gerenciar categorias de estabelecimentos</p>
+                </a>
+
+                <!-- Termos de Uso -->
+                <a href="<?= baseUrl() ?>sistema/termos" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-orange-100 rounded-lg group-hover:bg-orange-200 transition-colors duration-200">
+                            <i class="fas fa-file-contract text-2xl text-orange-600"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Termos de Uso</h3>
+                    <p class="text-gray-600 text-sm">Gerenciar versões dos termos do sistema</p>
+                </a>
+
+                <!-- Configurações do Sistema -->
+                <a href="<?= baseUrl() ?>sistema/configuracoes" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-red-100 rounded-lg group-hover:bg-red-200 transition-colors duration-200">
                             <i class="fas fa-cogs text-2xl text-red-600"></i>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Configurações</h3>
-                    <p class="text-gray-600 text-sm mb-4">Configurar parâmetros do sistema</p>
-                    <a href="<?= baseUrl() ?>sistema/configuracoes" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
+                    <p class="text-gray-600 text-sm">Configurar parâmetros do sistema</p>
+                </a>
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+                <!-- Logs do Sistema -->
+                <a href="<?= baseUrl() ?>sistema/logs" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors duration-200">
                             <i class="fas fa-history text-2xl text-gray-600"></i>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Logs do Sistema</h3>
-                    <p class="text-gray-600 text-sm mb-4">Visualizar logs e auditoria do sistema</p>
-                    <a href="<?= baseUrl() ?>sistema/logs" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
+                    <p class="text-gray-600 text-sm">Visualizar auditoria e logs de ações</p>
+                </a>
 
             <?php elseif ($userNivel === 'A'): ?>
-                <!-- Cards da Empresa -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+                <!-- CARDS DO ANUNCIANTE (EMPRESA) -->
+
+                <!-- Minhas Vagas -->
+                <a href="<?= baseUrl() ?>empresa/vagas" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors duration-200">
                             <i class="fas fa-briefcase text-2xl text-blue-600"></i>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Minhas Vagas</h3>
-                    <p class="text-gray-600 text-sm mb-4">Gerenciar vagas publicadas pela empresa</p>
-                    <a href="<?= baseUrl() ?>empresa/vagas" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
+                    <p class="text-gray-600 text-sm">Gerenciar vagas publicadas pela empresa</p>
+                </a>
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+                <!-- Publicar Nova Vaga -->
+                <a href="<?= baseUrl() ?>empresa/vagas/nova" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors duration-200">
                             <i class="fas fa-plus-circle text-2xl text-green-600"></i>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Publicar Vaga</h3>
-                    <p class="text-gray-600 text-sm mb-4">Criar nova vaga de emprego</p>
-                    <a href="<?= baseUrl() ?>empresa/vagas/nova" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
+                    <p class="text-gray-600 text-sm">Criar nova oportunidade de emprego</p>
+                </a>
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+                <!-- Candidatos -->
+                <a href="<?= baseUrl() ?>empresa/candidatos" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors duration-200">
                             <i class="fas fa-user-tie text-2xl text-purple-600"></i>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Candidatos</h3>
-                    <p class="text-gray-600 text-sm mb-4">Visualizar candidatos das vagas</p>
-                    <a href="<?= baseUrl() ?>empresa/candidatos" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
+                    <p class="text-gray-600 text-sm">Visualizar currículos e candidaturas</p>
+                </a>
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+                <!-- Perfil da Empresa -->
+                <a href="<?= baseUrl() ?>sistema/perfil" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-orange-100 rounded-lg group-hover:bg-orange-200 transition-colors duration-200">
                             <i class="fas fa-building text-2xl text-orange-600"></i>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Perfil da Empresa</h3>
-                    <p class="text-gray-600 text-sm mb-4">Editar informações da empresa</p>
-                    <a href="<?= baseUrl() ?>empresa/perfil" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
+                    <p class="text-gray-600 text-sm">Editar dados do estabelecimento</p>
+                </a>
 
             <?php elseif ($userNivel === 'CN'): ?>
-                <!-- Cards do Candidato -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+                <!-- CARDS DO CANDIDATO -->
+
+                <!-- Buscar Vagas -->
+                <a href="<?= baseUrl() ?>vagas" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors duration-200">
                             <i class="fas fa-search text-2xl text-blue-600"></i>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Buscar Vagas</h3>
-                    <p class="text-gray-600 text-sm mb-4">Encontrar oportunidades de emprego</p>
-                    <a href="<?= baseUrl() ?>vaga" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
+                    <p class="text-gray-600 text-sm">Encontrar oportunidades de emprego</p>
+                </a>
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+                <!-- Minhas Candidaturas -->
+                <a href="<?= baseUrl() ?>candidato/candidaturas" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors duration-200">
                             <i class="fas fa-paper-plane text-2xl text-purple-600"></i>
                         </div>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Candidaturas</h3>
-                    <p class="text-gray-600 text-sm mb-4">Acompanhar candidaturas enviadas</p>
-                    <a href="<?= baseUrl() ?>candidato/candidaturas" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Minhas Candidaturas</h3>
+                    <p class="text-gray-600 text-sm">Acompanhar candidaturas enviadas</p>
+                </a>
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-orange-100 rounded-lg group-hover:bg-orange-200 transition-colors duration-200">
-                            <i class="fas fa-user text-2xl text-orange-600"></i>
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Meu Perfil</h3>
-                    <p class="text-gray-600 text-sm mb-4">Editar informações pessoais</p>
-                    <a href="<?= baseUrl() ?>candidato/perfil" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+                <!-- Meu Currículo -->
+                <a href="<?= baseUrl() ?>candidato/curriculo" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-indigo-100 rounded-lg group-hover:bg-indigo-200 transition-colors duration-200">
                             <i class="fas fa-file-alt text-2xl text-indigo-600"></i>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Meu Currículo</h3>
-                    <p class="text-gray-600 text-sm mb-4">Gerenciar currículo e experiências</p>
-                    <a href="<?= baseUrl() ?>candidato/curriculo" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        Acessar →
-                    </a>
-                </div>
+                    <p class="text-gray-600 text-sm">Gerenciar dados do currículo</p>
+                </a>
+
+                <!-- Experiências Profissionais -->
+                <a href="<?= baseUrl() ?>candidato/experiencias" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors duration-200">
+                            <i class="fas fa-briefcase text-2xl text-green-600"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Experiências</h3>
+                    <p class="text-gray-600 text-sm">Adicionar experiências profissionais</p>
+                </a>
+
+                <!-- Escolaridade -->
+                <a href="<?= baseUrl() ?>candidato/escolaridade" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-yellow-100 rounded-lg group-hover:bg-yellow-200 transition-colors duration-200">
+                            <i class="fas fa-graduation-cap text-2xl text-yellow-600"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Escolaridade</h3>
+                    <p class="text-gray-600 text-sm">Gerenciar formação acadêmica</p>
+                </a>
+
+                <!-- Qualificações e Cursos -->
+                <a href="<?= baseUrl() ?>candidato/qualificacoes" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-pink-100 rounded-lg group-hover:bg-pink-200 transition-colors duration-200">
+                            <i class="fas fa-certificate text-2xl text-pink-600"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Qualificações</h3>
+                    <p class="text-gray-600 text-sm">Adicionar cursos e certificações</p>
+                </a>
+
+                <!-- Meu Perfil -->
+                <a href="<?= baseUrl() ?>sistema/perfil" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-orange-100 rounded-lg group-hover:bg-orange-200 transition-colors duration-200">
+                            <i class="fas fa-user text-2xl text-orange-600"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Meu Perfil</h3>
+                    <p class="text-gray-600 text-sm">Editar informações pessoais</p>
+                </a>
 
             <?php endif; ?>
 
-            <!-- Card Comum para Todos os Usuários -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+            <!-- CARDS COMUNS PARA TODOS OS USUÁRIOS -->
+
+            <!-- Configurações de Conta -->
+            <a href="<?= baseUrl() ?>usuario/configuracoes" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                 <div class="flex items-center justify-between mb-4">
                     <div class="p-3 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors duration-200">
                         <i class="fas fa-user-cog text-2xl text-gray-600"></i>
                     </div>
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Configurações</h3>
-                <p class="text-gray-600 text-sm mb-4">Alterar senha e preferências</p>
-                <a href="<?= baseUrl() ?>usuario/configuracoes" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                    Acessar →
-                </a>
-            </div>
+                <p class="text-gray-600 text-sm">Alterar senha e preferências</p>
+            </a>
 
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer group">
+            <!-- Sair do Sistema -->
+            <a href="<?= baseUrl() ?>login/signOut" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                 <div class="flex items-center justify-between mb-4">
                     <div class="p-3 bg-red-100 rounded-lg group-hover:bg-red-200 transition-colors duration-200">
                         <i class="fas fa-sign-out-alt text-2xl text-red-600"></i>
                     </div>
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Sair</h3>
-                <p class="text-gray-600 text-sm mb-4">Fazer logout do sistema</p>
-                <a href="<?= baseUrl() ?>login/signOut" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                    Acessar →
-                </a>
-            </div>
+                <p class="text-gray-600 text-sm">Fazer logout do sistema</p>
+            </a>
 
         </div>
-
-        <!-- Estatísticas Rápidas (opcional) -->
-        <?php if ($userNivel === 'G' || $userNivel === 'A'): ?>
-            <div class="mt-12">
-                <h2 class="text-xl font-bold text-gray-900 mb-6">Estatísticas Rápidas</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-gray-600">Total de Vagas</p>
-                                <p class="text-3xl font-bold text-gray-900">248</p>
-                            </div>
-                            <div class="p-3 bg-blue-100 rounded-lg">
-                                <i class="fas fa-briefcase text-xl text-blue-600"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-gray-600">Candidatos Ativos</p>
-                                <p class="text-3xl font-bold text-gray-900">1,429</p>
-                            </div>
-                            <div class="p-3 bg-green-100 rounded-lg">
-                                <i class="fas fa-users text-xl text-green-600"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-gray-600">Empresas</p>
-                                <p class="text-3xl font-bold text-gray-900">89</p>
-                            </div>
-                            <div class="p-3 bg-purple-100 rounded-lg">
-                                <i class="fas fa-building text-xl text-purple-600"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-gray-600">Candidaturas</p>
-                                <p class="text-3xl font-bold text-gray-900">3,247</p>
-                            </div>
-                            <div class="p-3 bg-orange-100 rounded-lg">
-                                <i class="fas fa-paper-plane text-xl text-orange-600"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        <?php endif; ?>
     </div>
 </div>

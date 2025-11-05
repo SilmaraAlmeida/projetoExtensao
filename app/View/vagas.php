@@ -1,6 +1,6 @@
 <?php
 
-//var_dump($_POST);
+// var_dump($_POST);
 // Set das variáveis vindas do controller
 $vagas = isset($dados['vagas']) ? $dados['vagas'] : [];
 $total_vagas = isset($dados['total_vagas']) ? $dados['total_vagas'] : 0;
@@ -329,7 +329,7 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
                            <div class="flex-1">
                               <div class="flex items-start justify-between mb-3">
                                  <h3 class="text-xl font-semibold text-gray-900 pr-4">
-                                    <a href="/vaga/detalhes/<?= $vaga['vaga_id'] ?>" class="hover:text-blue-600 transition-colors duration-200">
+                                    <a href="/vaga/detalhes/view/<?= $vaga['vaga_id'] ?>" class="hover:text-blue-600 transition-colors duration-200">
                                        <?= htmlspecialchars($vaga['descricao']) ?>
                                     </a>
                                  </h3>

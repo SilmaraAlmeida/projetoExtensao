@@ -17,7 +17,10 @@ class Vaga extends ControllerMain
 
    public function __construct()
    {
-      parent::__construct();
+      $this->auxiliarConstruct();
+
+      $this->loadHelper(['vagaDetalhesHelper']);
+
       $this->vagaModel = new VagaModel();
       $this->cargoModel = new CargoModel();
       $this->estabelecimentoModel = new EstabelecimentoModel();
@@ -237,32 +240,28 @@ class Vaga extends ControllerMain
 
       return $filtros;
    }
-   /**
-    * Exibir detalhes de uma vaga
-    * URL: /vaga/view/{action}/{id}/{parametros...}
-    */
    public function detalhes($action = null, $id = null, ...$params)
    {
-      // Exibir para debug (opcional)
-      // echo "Ação: $action <br>ID: $id <br>Parâmetros: " . implode(", ", $params);
-
       // Validar ID
       if (!$id || !is_numeric($id)) {
          return Redirect::page("vaga", ['msgError' => "ID da vaga inválido."]);
       }
-      // Buscar a vaga pelo ID usando o model
-      $vaga = $this->model->getVagaById($id);
+
+      // Buscar a vaga pelo ID
+      $vaga = $this->vagaModel->getVagaById($id);
 
       if (!$vaga) {
          return Redirect::page("vaga", ['msgError' => "Vaga não encontrada."]);
       }
 
-      // Buscar dados relacionados: cargo e estabelecimento
+      // Buscar dados relacionados
       $cargo = isset($vaga['cargo_id']) ? $this->cargoModel->getCargoById($vaga['cargo_id']) : null;
-      $estabelecimento = isset($vaga['estabelecimento_id']) ? $this->estabelecimentoModel->getEstabelecimentoId($vaga['estabelecimento_id']) : null;
+      $estabelecimento = isset($vaga['estabelecimento_id'])
+         ? $this->estabelecimentoModel->getEstabelecimentoId($vaga['estabelecimento_id'])
+         : null;
 
-      // Buscar vagas relacionadas (mesmo cargo ou estabelecimento)
-      $todasVagas = $this->model->lista('dtInicio', 'DESC');
+      // Buscar vagas relacionadas
+      $todasVagas = $this->vagaModel->lista('dtInicio', 'DESC');
       $vagasRelacionadas = array_slice(array_filter($todasVagas, function ($v) use ($vaga) {
          return ($v['cargo_id'] == $vaga['cargo_id'] || $v['estabelecimento_id'] == $vaga['estabelecimento_id'])
             && $v['vaga_id'] != $vaga['vaga_id']
@@ -279,7 +278,7 @@ class Vaga extends ControllerMain
          'params' => $params
       ];
 
-      // Carregar a view vagaDetalhes
+      // Carregar a view
       $this->loadView("vagaDetalhes", $dados);
    }
 }
