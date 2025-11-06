@@ -214,39 +214,6 @@
                     <p class="text-gray-600 text-sm">Gerenciar dados do currículo</p>
                 </a>
 
-                <!-- Experiências Profissionais -->
-                <a href="<?= baseUrl() ?>candidato/experiencias" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors duration-200">
-                            <i class="fas fa-briefcase text-2xl text-green-600"></i>
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Experiências</h3>
-                    <p class="text-gray-600 text-sm">Adicionar experiências profissionais</p>
-                </a>
-
-                <!-- Escolaridade -->
-                <a href="<?= baseUrl() ?>candidato/escolaridade" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-yellow-100 rounded-lg group-hover:bg-yellow-200 transition-colors duration-200">
-                            <i class="fas fa-graduation-cap text-2xl text-yellow-600"></i>
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Escolaridade</h3>
-                    <p class="text-gray-600 text-sm">Gerenciar formação acadêmica</p>
-                </a>
-
-                <!-- Qualificações e Cursos -->
-                <a href="<?= baseUrl() ?>candidato/qualificacoes" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-pink-100 rounded-lg group-hover:bg-pink-200 transition-colors duration-200">
-                            <i class="fas fa-certificate text-2xl text-pink-600"></i>
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Qualificações</h3>
-                    <p class="text-gray-600 text-sm">Adicionar cursos e certificações</p>
-                </a>
-
                 <!-- Meu Perfil -->
                 <a href="<?= baseUrl() ?>sistema/perfil" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">

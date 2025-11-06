@@ -227,16 +227,6 @@ class Sistema extends ControllerMain
     }
 
 
-    public function escolaridade()
-    {
-        $this->loadView("sistema/escolaridade");
-    }
-
-    public function experiencia()
-    {
-        $this->loadView("sistema/experiencia");
-    }
-
     public function vagasInscritas()
     {
         $this->loadView("sistema/vagasInscritas");

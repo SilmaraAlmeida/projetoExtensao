@@ -10,10 +10,6 @@ class VagaModel extends ModelMain
     protected $primaryKey = "vaga_id";
 
     public $validationRules = [
-        "cargo_id" => [
-            "label" => 'Cargo',
-            "rules" => 'required|int'
-        ],
         "descricao" => [
             "label" => 'Descrição da Vaga',
             "rules" => 'required|min:5|max:60'
