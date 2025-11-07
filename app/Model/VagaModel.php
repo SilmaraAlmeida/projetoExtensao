@@ -14,7 +14,7 @@ class VagaModel extends ModelMain
             "label" => 'Descrição da Vaga',
             "rules" => 'required|min:5|max:60'
         ],
-        "sobreVaga" => [
+        "sobreaVaga" => [
             "label" => 'Sobre a Vaga',
             "rules" => 'required|min:10'
         ],

@@ -135,7 +135,7 @@
                 <!-- CARDS DO ANUNCIANTE (EMPRESA) -->
 
                 <!-- Minhas Vagas -->
-                <a href="<?= baseUrl() ?>empresa/vagas" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                <a href="<?= baseUrl() ?>VagasEmpresa" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors duration-200">
                             <i class="fas fa-briefcase text-2xl text-blue-600"></i>
@@ -146,7 +146,7 @@
                 </a>
 
                 <!-- Publicar Nova Vaga -->
-                <a href="<?= baseUrl() ?>empresa/vagas/nova" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                <a href="<?= baseUrl() ?>VagasEmpresa/form/insert/0" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors duration-200">
                             <i class="fas fa-plus-circle text-2xl text-green-600"></i>
