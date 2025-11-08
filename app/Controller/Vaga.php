@@ -4,7 +4,11 @@ namespace App\Controller;
 
 use Core\Library\ControllerMain;
 use Core\Library\Redirect;
+use Core\Library\Session;
 
+use App\Model\UsuarioModel;
+use App\Model\CurriculumModel;
+use App\Model\VagaCurriculumModel;
 use App\Model\VagaModel;
 use App\Model\CargoModel;
 use App\Model\EstabelecimentoModel;
@@ -197,7 +201,15 @@ class Vaga extends ControllerMain
       }
 
       if (isset($params['cargo_id']) && !empty($params['cargo_id'])) {
-         $cargo = $this->cargoModel->getById($params['cargo_id']);
+         // ✅ MUDE ISTO:
+         // $cargo = $this->cargoModel->getById($params['cargo_id']);
+
+         // PARA ISTO:
+         $cargo = $this->cargoModel->db
+            ->table('cargo')
+            ->where('cargo_id', $params['cargo_id'])
+            ->first();
+
          $filtros['cargo_id'] = [
             'label' => 'Cargo',
             'valor' => isset($cargo['descricao']) ? $cargo['descricao'] : 'Cargo #' . $params['cargo_id'],
@@ -280,5 +292,97 @@ class Vaga extends ControllerMain
 
       // Carregar a view
       $this->loadView("vagaDetalhes", $dados);
+   }
+
+   public function candidatar($vagaId = null)
+   {
+      $usuarioId = Session::get('userId');
+
+      if (!$usuarioId) {
+         return Redirect::page('Login/', ['msgError' => 'Faça login para se candidatar a vagas.']);
+      }
+
+      // ✅ VERIFICA SE É EMPRESA (tipo 'A' = Anunciante)
+      $userNivel = Session::get('userNivel');
+
+      if ($userNivel === 'A') {
+         return Redirect::page('vaga', ['msgError' => 'Empresas não podem se candidatar a vagas.']);
+      }
+
+      // ✅ PERMITE APENAS CANDIDATOS (tipo 'CN')
+      if ($userNivel !== 'CN') {
+         return Redirect::page('vaga', ['msgError' => 'Apenas candidatos podem se candidatar a vagas.']);
+      }
+
+      // Models
+      $usuarioModel = new UsuarioModel();
+      $curriculumModel = new CurriculumModel();
+      $vagaCurriculumModel = new VagaCurriculumModel();
+      $vagaModel = new VagaModel();
+
+      // Valida vaga_id
+      if (empty($vagaId)) {
+         return Redirect::page('vaga', ['msgError' => 'Vaga inválida.']);
+      }
+
+      // Busca usuário
+      $usuario = $usuarioModel->db
+         ->table('usuario')
+         ->where('usuario_id', $usuarioId)
+         ->first();
+
+      if (empty($usuario) || empty($usuario['pessoa_fisica_id'])) {
+         return Redirect::page('vaga', ['msgError' => 'Usuário não encontrado.']);
+      }
+
+      // Busca currículo do candidato
+      $curriculum = $curriculumModel->db
+         ->table('curriculum')
+         ->where('pessoa_fisica_id', $usuario['pessoa_fisica_id'])
+         ->first();
+
+      if (empty($curriculum)) {
+         return Redirect::page('candidato/curriculo', ['msgError' => 'Você precisa criar seu currículo antes de se candidatar.']);
+      }
+
+      $curriculumId = $curriculum['curriculum_id'];
+
+      // Verifica se a vaga existe e está aberta
+      $vaga = $vagaModel->db
+         ->table('vaga')
+         ->where('vaga_id', $vagaId)
+         ->first();
+
+      if (empty($vaga)) {
+         return Redirect::page('vaga', ['msgError' => 'Vaga não encontrada.']);
+      }
+
+      if ($vaga['statusVaga'] != 11) {
+         return Redirect::page('vaga', ['msgError' => 'Esta vaga não está mais aberta para candidaturas.']);
+      }
+
+      // Verifica se já se candidatou
+      $jaCandidatado = $vagaCurriculumModel->db
+         ->table('vaga_curriculum')
+         ->where('vaga_id', $vagaId)
+         ->where('curriculum_id', $curriculumId)
+         ->first();
+
+      if (!empty($jaCandidatado)) {
+         return Redirect::page('vaga', ['msgError' => 'Você já se candidatou a esta vaga.']);
+      }
+
+      // Insere candidatura
+      $dadosCandidatura = [
+         'vaga_id' => $vagaId,
+         'curriculum_id' => $curriculumId,
+         'dateCandidatura' => date('Y-m-d H:i:s')
+      ];
+
+      $resultado = $vagaCurriculumModel->db
+         ->table('vaga_curriculum')
+         ->insert($dadosCandidatura);
+
+      return Redirect::page('vaga', ['msgSucesso' => 'Candidatura enviada com sucesso! Boa sorte!']);
    }
 }

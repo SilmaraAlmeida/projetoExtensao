@@ -1,13 +1,20 @@
 <?php
+use Core\Library\Redirect;
 
 $vaga = $dados['vaga'] ?? null;
 $cargo = $dados['cargo'] ?? null;
 $estabelecimento = $dados['estabelecimento'] ?? null;
 $vagas_relacionadas = $dados['vagas_relacionadas'] ?? [];
+
+// BLOQUEIA EXIBIÇÃO DE VAGAS FINALIZADAS E SUSPENSAS
 $statusAtual = (int)$vaga['statusVaga'];
+if ($statusAtual === 99 || $statusAtual === 91) {
+    return Redirect::page('vaga', ['msgError' => 'Esta vaga não está disponível para visualização.']);
+}
+
 $modalidadeAtual = (int)$vaga['modalidade'];
 $vinculoAtual = (int)$vaga['vinculo'];
-$vagaAtiva = $statusAtual === 11;
+$vagaAtiva = $statusAtual === 11 || 1;
 
 $statusInfo = obterStatusInfo($statusAtual);
 $vinculoInfo = obterVinculoInfo($vinculoAtual);
@@ -21,6 +28,7 @@ $prazoVencido = $dataFim && strtotime($vaga['dtFim']) < time();
 $tituloCompleto = htmlspecialchars($vaga['descricao']);
 $estabelecimentoNome = $estabelecimento['nome'] ?? 'Estabelecimento não informado';
 $cargoNome = $cargo['descricao'] ?? '';
+
 ?>
 
 <!-- Breadcrumb Otimizado com Schema Markup -->
@@ -204,19 +212,13 @@ $cargoNome = $cargo['descricao'] ?? '';
 
                     <?php if ($vagaAtiva && !$prazoVencido): ?>
                         <div class="space-y-3">
-                            <button type="button"
-                                class="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                                aria-label="Candidatar-se à vaga">
-                                <i class="fas fa-paper-plane mr-2" aria-hidden="true"></i>
+                            <a href="<?= baseUrl() ?>vaga/candidatar/<?= $vaga['vaga_id'] ?>"
+                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-all"
+                                onclick="return confirm('Deseja se candidatar a esta vaga?');">
+                                <i class="fas fa-paper-plane mr-2"></i>
                                 Candidatar-se
-                            </button>
+                            </a>
 
-                            <button type="button"
-                                class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                                aria-label="Salvar vaga para depois">
-                                <i class="fas fa-heart mr-2" aria-hidden="true"></i>
-                                Salvar Vaga
-                            </button>
                         </div>
                     <?php else: ?>
                         <div class="text-center py-6 px-4 bg-gray-50 rounded-lg border">

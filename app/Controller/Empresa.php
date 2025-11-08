@@ -7,9 +7,13 @@ use Core\Library\Redirect;
 use Core\Library\Session;
 
 use App\Model\UsuarioModel;
+use App\Model\PessoaFisicaModel;
 use App\Model\EstabelecimentoModel;
 use App\Model\CargoModel;
 use App\Model\VagaModel;
+use App\Model\CurriculumModel;
+use App\Model\VagaCurriculumModel;
+use App\Model\EscolaridadeModel;
 
 class Empresa extends ControllerMain
 {
@@ -248,84 +252,79 @@ class Empresa extends ControllerMain
 
         return $this->loadView('sistema/empresa/formVagas', $viewData);
     }
-/**
- * salvarVaga - Salva ou atualiza uma vaga (INSERT/UPDATE)
- *
- * @return void
- */
-public function salvarVaga()
-{
-    $post = $this->request->getPost();
-    
-    $vagaModel = new VagaModel();
-    
-    // Pega estabelecimento_id da session (será adicionado ao usuário)
-    $usuarioId = Session::get('userId');
-    
-    // Para pegar o estabelecimento_id, você precisa buscar do usuário
-    $usuarioModel = new UsuarioModel();
-    $usuario = $usuarioModel->db
-        ->table('usuario')
-        ->where('usuario_id', $usuarioId)
-        ->first();
-    
-    $estabelecimentoId = $usuario['estabelecimento_id'] ?? null;
-    
-    if (!$estabelecimentoId) {
-        return Redirect::page('empresa/vagas', ['msgError' => 'Usuário não vinculado a uma empresa.']);
-    }
-
-    // ID da vaga (vazio para insert, preenchido para update)
-    $vagaId = $post['vaga_id'] ?? null;
-
-    // Dados da vaga
-    $dadosVaga = [
-        'cargo_id' => $post['cargo_id'] ?? null,
-        'estabelecimento_id' => $estabelecimentoId,
-        'descricao' => trim($post['descricao'] ?? ''),
-        'sobreaVaga' => trim($post['sobreaVaga'] ?? ''),
-        'modalidade' => $post['modalidade'] ?? null,
-        'vinculo' => $post['vinculo'] ?? null,
-        'dtInicio' => $post['dtInicio'] ?? null,
-        'dtFim' => $post['dtFim'] ?? null,
-        'statusVaga' => $post['statusVaga'] ?? 11
-    ];
-
-    // ========== INSERT ==========
-    if (empty($vagaId) || $vagaId == 0) {
-        $novaVagaId = $vagaModel->insert($dadosVaga);
-
-        if ($novaVagaId) {
-            Session::destroy('inputs');
-            return Redirect::page('empresa/vagas', ['msgSucesso' => 'Vaga criada com sucesso!']);
-        } else {
-            return Redirect::page('empresa/vagas/form/insert/0', [
-                'msgError' => 'Falha ao criar vaga.',
-                'inputs' => $post
-            ]);
-        }
-    }
-
-    // ========== UPDATE ==========
-    else {
-        $dadosVaga['vaga_id'] = $vagaId;
-        
-        $resultado = $vagaModel->update($dadosVaga);
-
-        if ($resultado) {
-            Session::destroy('inputs');
-            return Redirect::page('empresa/vagas', ['msgSucesso' => 'Vaga atualizada com sucesso!']);
-        } else {
-            return Redirect::page("empresa/vagas/form/update/{$vagaId}", [
-                'msgError' => 'Falha ao atualizar vaga.',
-                'inputs' => $post
-            ]);
-        }
-    }
-}
-
-    public function candidatos($action, $id)
+    /**
+     * salvarVaga - Salva ou atualiza uma vaga (INSERT/UPDATE)
+     *
+     * @return void
+     */
+    public function salvarVaga()
     {
-        return $this->loadView("sistema/candidato/candidatoPerfil");
+        $post = $this->request->getPost();
+
+        $vagaModel = new VagaModel();
+
+        // Pega estabelecimento_id da session (será adicionado ao usuário)
+        $usuarioId = Session::get('userId');
+
+        // Para pegar o estabelecimento_id, você precisa buscar do usuário
+        $usuarioModel = new UsuarioModel();
+        $usuario = $usuarioModel->db
+            ->table('usuario')
+            ->where('usuario_id', $usuarioId)
+            ->first();
+
+        $estabelecimentoId = $usuario['estabelecimento_id'] ?? null;
+
+        if (!$estabelecimentoId) {
+            return Redirect::page('empresa/vagas', ['msgError' => 'Usuário não vinculado a uma empresa.']);
+        }
+
+        // ID da vaga (vazio para insert, preenchido para update)
+        $vagaId = $post['vaga_id'] ?? null;
+
+        // Dados da vaga
+        $dadosVaga = [
+            'cargo_id' => $post['cargo_id'] ?? null,
+            'estabelecimento_id' => $estabelecimentoId,
+            'descricao' => trim($post['descricao'] ?? ''),
+            'sobreaVaga' => trim($post['sobreaVaga'] ?? ''),
+            'modalidade' => $post['modalidade'] ?? null,
+            'vinculo' => $post['vinculo'] ?? null,
+            'dtInicio' => $post['dtInicio'] ?? null,
+            'dtFim' => $post['dtFim'] ?? null,
+            'statusVaga' => $post['statusVaga'] ?? 11
+        ];
+
+        // ========== INSERT ==========
+        if (empty($vagaId) || $vagaId == 0) {
+            $novaVagaId = $vagaModel->insert($dadosVaga);
+
+            if ($novaVagaId) {
+                Session::destroy('inputs');
+                return Redirect::page('empresa/vagas', ['msgSucesso' => 'Vaga criada com sucesso!']);
+            } else {
+                return Redirect::page('empresa/vagas/form/insert/0', [
+                    'msgError' => 'Falha ao criar vaga.',
+                    'inputs' => $post
+                ]);
+            }
+        }
+
+        // ========== UPDATE ==========
+        else {
+            $dadosVaga['vaga_id'] = $vagaId;
+
+            $resultado = $vagaModel->update($dadosVaga);
+
+            if ($resultado) {
+                Session::destroy('inputs');
+                return Redirect::page('empresa/vagas', ['msgSucesso' => 'Vaga atualizada com sucesso!']);
+            } else {
+                return Redirect::page("empresa/vagas/form/update/{$vagaId}", [
+                    'msgError' => 'Falha ao atualizar vaga.',
+                    'inputs' => $post
+                ]);
+            }
+        }
     }
 }

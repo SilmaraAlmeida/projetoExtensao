@@ -364,4 +364,127 @@ class VagasEmpresa extends ControllerMain
             return Redirect::page('VagasEmpresa', ['msgError' => 'Falha ao deletar vaga.']);
         }
     }
+
+/**
+ * candidatos - Exibe candidatos de uma vaga
+ *
+ * @param string $action
+ * @param int $id ID da vaga
+ * @return void
+ */
+public function candidatos($action = null, $id = null)
+{
+    $usuarioId = Session::get('userId');
+    
+    if (!$usuarioId) {
+        return Redirect::page('Login/', ['msgError' => 'Sessão inválida.']);
+    }
+
+    // Models
+    $usuarioModel = new UsuarioModel();
+    $vagaModel = new VagaModel();
+    $vagaCurriculumModel = new VagaCurriculumModel();
+    $curriculumModel = new CurriculumModel();
+    $pessoaFisicaModel = new PessoaFisicaModel();
+    $escolaridadeModel = new EscolaridadeModel();
+
+    // Busca usuário e estabelecimento
+    $usuario = $usuarioModel->db
+        ->table('usuario')
+        ->where('usuario_id', $usuarioId)
+        ->first();
+
+    $estabelecimentoId = $usuario['estabelecimento_id'] ?? null;
+
+    if (!$estabelecimentoId) {
+        return Redirect::page('VagasEmpresa', ['msgError' => 'Usuário não vinculado a uma empresa.']);
+    }
+
+    $vagaId = (int)$id;
+
+    if (!$vagaId) {
+        return Redirect::page('VagasEmpresa', ['msgError' => 'Vaga inválida.']);
+    }
+
+    // Busca vaga com cargo
+    $vaga = $vagaModel->db
+        ->table('vaga v')
+        ->select('v.*, c.descricao as cargoDescricao')
+        ->join('cargo c', 'c.cargo_id = v.cargo_id', 'LEFT')
+        ->where('v.vaga_id', $vagaId)
+        ->where('v.estabelecimento_id', $estabelecimentoId)
+        ->first();
+
+    if (empty($vaga)) {
+        return Redirect::page('VagasEmpresa', ['msgError' => 'Vaga não encontrada ou sem permissão.']);
+    }
+
+    // Busca candidaturas
+    $candidaturas = $vagaCurriculumModel->db
+        ->table('vaga_curriculum')
+        ->where('vaga_id', $vagaId)
+        ->orderBy('dateCandidatura', 'DESC')
+        ->findAll();
+
+    // Formata dados dos candidatos
+    $candidatosFormatados = [];
+
+    foreach ($candidaturas as $candidatura) {
+        $curriculumId = $candidatura['curriculum_id'];
+
+        // Busca currículo
+        $curriculum = $curriculumModel->db
+            ->table('curriculum')
+            ->where('curriculum_id', $curriculumId)
+            ->first();
+
+        if (empty($curriculum)) {
+            continue;
+        }
+
+        // Busca pessoa física
+        $pessoa = $pessoaFisicaModel->db
+            ->table('pessoa_fisica')
+            ->where('pessoa_fisica_id', $curriculum['pessoa_fisica_id'])
+            ->first();
+
+        // Busca educações
+        $educacoes = $curriculumModel->db
+            ->table('curriculum_escolaridade ce')
+            ->select('ce.*, e.descricao as escolaridadeDescricao')
+            ->join('escolaridade e', 'e.escolaridade_id = ce.escolaridade_id', 'LEFT')
+            ->where('ce.curriculum_curriculum_id', $curriculumId)
+            ->findAll();
+
+        // Busca qualificações
+        $qualificacoes = $curriculumModel->db
+            ->table('curriculum_qualificacao')
+            ->where('curriculum_id', $curriculumId)
+            ->findAll();
+
+        // Busca experiências
+        $experiencias = $curriculumModel->db
+            ->table('curriculum_experiencia')
+            ->where('curriculum_id', $curriculumId)
+            ->findAll();
+
+        // Monta estrutura
+        $candidatosFormatados[] = [
+            'dateCandidatura' => $candidatura['dateCandidatura'],
+            'pessoa' => $pessoa ?? [],
+            'curriculum' => $curriculum,
+            'educacoes' => $educacoes,
+            'qualificacoes' => $qualificacoes,
+            'experiencias' => $experiencias
+        ];
+    }
+
+    $viewData = [
+        'vaga' => $vaga,
+        'candidatos' => $candidatosFormatados
+    ];
+
+    return $this->loadView('sistema/empresa/candidatos', $viewData);
+}
+
 }

@@ -1,15 +1,22 @@
 <?php
-
 // var_dump($_POST);
 // Set das variáveis vindas do controller
 $vagas = isset($dados['vagas']) ? $dados['vagas'] : [];
-$total_vagas = isset($dados['total_vagas']) ? $dados['total_vagas'] : 0;
+
+// ✅ FILTRA VAGAS - Remove status 99 (Finalizado) e 91 (Suspensa)
+$vagas = array_filter($vagas, function ($vaga) {
+   $status = $vaga['statusVaga'] ?? null;
+   return $status !== 99 && $status !== 91;
+});
+
+$total_vagas = count($vagas); // Recalcula com vagas filtradas
 $cargos = isset($dados['cargos']) ? $dados['cargos'] : [];
 $estabelecimentos = isset($dados['estabelecimentos']) ? $dados['estabelecimentos'] : [];
 $filtros_ativos = isset($dados['filtros_ativos']) ? $dados['filtros_ativos'] : [];
 $paginacao = isset($dados['paginacao']) ? $dados['paginacao'] : [];
 $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
 ?>
+
 
 <!-- Seção de Busca Principal -->
 <section class="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12">
@@ -24,7 +31,10 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
          </h1>
          <p class="text-xl text-blue-100">Explore as melhores oportunidades em Muriaé e região</p>
       </div>
-
+      <!-- Alert Area -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+         <?= exibeAlerta() ?>
+      </div>
       <!-- Formulário de Busca Avançada -->
       <div class="max-w-6xl mx-auto">
          <form action="/vaga" method="GET" class="bg-white rounded-lg shadow-xl p-6">
@@ -53,7 +63,7 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
                      <option value="">Todos os cargos</option>
                      <?php if (isset($cargos) && !empty($cargos)): ?>
                         <?php foreach ($cargos as $cargo): ?>
-                           <option value="<?= $cargo['cargo_id'] ?>" 
+                           <option value="<?= $cargo['cargo_id'] ?>"
                               <?= (isset($_GET['cargo_id']) && $_GET['cargo_id'] == $cargo['cargo_id']) ? 'selected' : '' ?>>
                               <?= htmlspecialchars($cargo['descricao']) ?>
                            </option>
@@ -73,7 +83,7 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
                      <option value="">Todos os estabelecimentos</option>
                      <?php if (isset($estabelecimentos) && !empty($estabelecimentos)): ?>
                         <?php foreach ($estabelecimentos as $estabelecimento): ?>
-                           <option value="<?= $estabelecimento['estabelecimento_id'] ?>" 
+                           <option value="<?= $estabelecimento['estabelecimento_id'] ?>"
                               <?= (isset($_GET['estabelecimento_id']) && $_GET['estabelecimento_id'] == $estabelecimento['estabelecimento_id']) ? 'selected' : '' ?>>
                               <?= htmlspecialchars($estabelecimento['nome']) ?>
                            </option>
@@ -211,7 +221,7 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
 <section class="py-8 bg-gray-50 min-h-screen">
    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-         
+
          <!-- Sidebar de Filtros -->
          <div class="lg:col-span-1 space-y-6">
             <!-- Filtros Rápidos -->
@@ -219,19 +229,19 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
                <h3 class="font-semibold text-gray-900 mb-4 flex items-center">
                   <i class="fas fa-filter mr-2 text-blue-600"></i>Filtros Rápidos
                </h3>
-               
+
                <form action="/vaga" method="GET" class="space-y-4">
                   <!-- Preservar busca atual -->
                   <?php if (!empty($termo_busca)): ?>
                      <input type="hidden" name="busca" value="<?= htmlspecialchars($termo_busca) ?>">
                   <?php endif; ?>
-                  
+
                   <!-- Status da Vaga -->
                   <div>
                      <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
                      <div class="space-y-2">
                         <label class="flex items-center">
-                           <input type="radio" name="statusVaga" value="" 
+                           <input type="radio" name="statusVaga" value=""
                               <?= !isset($_GET['statusVaga']) ? 'checked' : '' ?>
                               class="text-blue-600 focus:ring-blue-500">
                            <span class="ml-2 text-sm text-gray-700">Todas</span>
@@ -247,12 +257,6 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
                               <?= (isset($_GET['statusVaga']) && $_GET['statusVaga'] == '1') ? 'checked' : '' ?>
                               class="text-blue-600 focus:ring-blue-500">
                            <span class="ml-2 text-sm text-gray-700">Pré Vaga</span>
-                        </label>
-                        <label class="flex items-center">
-                           <input type="radio" name="statusVaga" value="91"
-                              <?= (isset($_GET['statusVaga']) && $_GET['statusVaga'] == '91') ? 'checked' : '' ?>
-                              class="text-blue-600 focus:ring-blue-500">
-                           <span class="ml-2 text-sm text-gray-700">Suspensa</span>
                         </label>
                      </div>
                   </div>
@@ -309,7 +313,7 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
                   </h3>
                   <div class="space-y-2">
                      <?php foreach (array_slice($cargos, 0, 6) as $cargo): ?>
-                        <a href="/vaga?cargo_id=<?= $cargo['cargo_id'] ?>" 
+                        <a href="/vaga?cargo_id=<?= $cargo['cargo_id'] ?>"
                            class="block text-blue-600 hover:text-blue-800 text-sm transition-colors duration-200 py-1">
                            <?= htmlspecialchars($cargo['descricao']) ?>
                         </a>
@@ -338,13 +342,9 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full whitespace-nowrap">
                                           Pré Vaga
                                        </span>
-                                    <?php elseif ($vaga['statusVaga'] == 11 ): ?>
+                                    <?php elseif ($vaga['statusVaga'] == 11): ?>
                                        <span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full whitespace-nowrap">
                                           Em Aberto
-                                       </span>
-                                    <?php elseif ($vaga['statusVaga'] == 91 ): ?>
-                                       <span class="px-3 py-1 bg-red-100 text-red-800 text-xs rounded-full whitespace-nowrap">
-                                          Suspensa
                                        </span>
                                     <?php endif; ?>
                                  <?php endif; ?>
@@ -367,11 +367,11 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
                                     <i class="fas fa-building mr-2"></i>
                                     <?= $estabelecimentoVaga ? htmlspecialchars($estabelecimentoVaga['nome']) : 'Estabelecimento não encontrado' ?>
                                  </span>
-                                 
+
                                  <span class="flex items-center">
                                     <i class="fas fa-map-marker-alt mr-2"></i>Muriaé, MG
                                  </span>
-                                 
+
                                  <?php if (isset($vaga['dtInicio'])): ?>
                                     <span class="flex items-center">
                                        <i class="fas fa-clock mr-2"></i>Início: <?= date('d/m/Y', strtotime($vaga['dtInicio'])) ?>
@@ -403,11 +403,11 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
                                  <?= htmlspecialchars($cargoVaga['descricao']) ?>
                               </span>
                            <?php endif; ?>
-                           
+
                            <span class="px-4 py-2 bg-green-100 text-green-800 text-sm rounded-full">
                               <?= (isset($vaga['vinculo']) && $vaga['vinculo'] == 1) ? 'CLT' : 'Pessoa Jurídica' ?>
                            </span>
-                           
+
                            <span class="px-4 py-2 bg-purple-100 text-purple-800 text-sm rounded-full">
                               <?= (isset($vaga['modalidade']) && $vaga['modalidade'] == 1) ? 'Presencial' : 'Remoto' ?>
                            </span>
@@ -432,7 +432,7 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
                <div class="text-center py-12">
                   <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>
                   <h3 class="text-xl font-semibold text-gray-600 mb-2">Nenhuma vaga encontrada</h3>
-                  <p class="text-gray-500">Tente ajustar os filtros de busca ou 
+                  <p class="text-gray-500">Tente ajustar os filtros de busca ou
                      <a href="/vaga" class="text-blue-600 hover:text-blue-700">visualizar todas as vagas</a>.
                   </p>
                </div>
@@ -443,7 +443,7 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
                <div class="mt-12 flex justify-center">
                   <nav class="flex items-center space-x-2">
                      <?php if ($paginacao['pagina_atual'] > 1): ?>
-                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $paginacao['pagina_atual'] - 1])) ?>" 
+                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $paginacao['pagina_atual'] - 1])) ?>"
                            class="px-3 py-2 text-gray-500 hover:text-blue-600 border border-gray-300 rounded-lg hover:border-blue-300 transition-colors duration-200">
                            <i class="fas fa-chevron-left"></i>
                         </a>
@@ -453,13 +453,13 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
                         <?php if ($i == $paginacao['pagina_atual']): ?>
                            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium"><?= $i ?></button>
                         <?php else: ?>
-                           <a href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>" 
+                           <a href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"
                               class="px-4 py-2 text-gray-600 hover:text-blue-600 border border-gray-300 rounded-lg hover:border-blue-300 transition-colors duration-200"><?= $i ?></a>
                         <?php endif; ?>
                      <?php endfor; ?>
 
                      <?php if ($paginacao['pagina_atual'] < $paginacao['total_paginas']): ?>
-                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $paginacao['pagina_atual'] + 1])) ?>" 
+                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $paginacao['pagina_atual'] + 1])) ?>"
                            class="px-3 py-2 text-gray-500 hover:text-blue-600 border border-gray-300 rounded-lg hover:border-blue-300 transition-colors duration-200">
                            <i class="fas fa-chevron-right"></i>
                         </a>

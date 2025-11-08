@@ -249,7 +249,7 @@ $vinculoLabels = [1 => 'CLT', 2 => 'PJ'];
                                     <i class="fas fa-trash mr-1"></i>
                                     Deletar
                                 </a>
-                                <a href="<?= baseUrl() ?>empresa/vagas/candidatos/<?= $vaga['vaga_id'] ?>"
+                                <a href="<?= baseUrl() ?>VagasEmpresa/candidatos/view/<?= $vaga['vaga_id'] ?>"
                                     class="inline-flex items-center px-4 py-2 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-black transition-all">
                                     <i class="fas fa-users mr-1"></i>
                                     Candidatos
