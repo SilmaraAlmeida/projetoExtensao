@@ -304,23 +304,6 @@ $termo_busca = isset($dados['termo_busca']) ? $dados['termo_busca'] : '';
                   </button>
                </form>
             </div>
-
-            <!-- Cargos Populares -->
-            <?php if (isset($cargos) && !empty($cargos)): ?>
-               <div class="bg-white rounded-lg shadow-sm p-6">
-                  <h3 class="font-semibold text-gray-900 mb-4 flex items-center">
-                     <i class="fas fa-briefcase mr-2 text-blue-600"></i>Cargos Populares
-                  </h3>
-                  <div class="space-y-2">
-                     <?php foreach (array_slice($cargos, 0, 6) as $cargo): ?>
-                        <a href="/vaga?cargo_id=<?= $cargo['cargo_id'] ?>"
-                           class="block text-blue-600 hover:text-blue-800 text-sm transition-colors duration-200 py-1">
-                           <?= htmlspecialchars($cargo['descricao']) ?>
-                        </a>
-                     <?php endforeach; ?>
-                  </div>
-               </div>
-            <?php endif; ?>
          </div>
 
          <!-- Lista de Vagas -->

@@ -229,17 +229,6 @@
 
             <!-- CARDS COMUNS PARA TODOS OS USUÁRIOS -->
 
-            <!-- Configurações de Conta -->
-            <a href="<?= baseUrl() ?>usuario/configuracoes" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="p-3 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors duration-200">
-                        <i class="fas fa-user-cog text-2xl text-gray-600"></i>
-                    </div>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Configurações</h3>
-                <p class="text-gray-600 text-sm">Alterar senha e preferências</p>
-            </a>
-
             <!-- Sair do Sistema -->
             <a href="<?= baseUrl() ?>login/signOut" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                 <div class="flex items-center justify-between mb-4">
