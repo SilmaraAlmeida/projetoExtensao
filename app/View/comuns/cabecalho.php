@@ -36,7 +36,7 @@ use Core\Library\Session; ?>
                 <!-- Logo -->
                 <div class="flex-shrink-0">
                     <a href="/" class="flex items-center">
-                        <img src="<?= baseUrl() ?>/assets/img/logo-horiz-claro.png" alt="Via Muriaé Logo" class="h-28 lg:h-32 w-auto">
+                        <img src="<?= baseUrl() ?>/assets/img/logo-horizontal.png" alt="Via Muriaé Logo" class="h-12 lg:h-16 w-auto">
                     </a>
                 </div>
 
