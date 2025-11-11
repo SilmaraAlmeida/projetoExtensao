@@ -89,7 +89,7 @@ $vinculoLabels = [1 => 'CLT', 2 => 'PJ'];
                 <?php foreach ($candidaturas as $candidatura): ?>
                     <?php
                         $vaga = $candidatura['vaga'] ?? [];
-                        $cargo = $vaga['cargo'] ?? [];
+                        $cargo = $candidatura['cargo'] ?? [];
                         $estabelecimento = $vaga['estabelecimento'] ?? [];
                         $statusVaga = $vaga['statusVaga'] ?? 1;
                         $statusInfo = $statusVagaLabels[$statusVaga] ?? ['Desconhecido', 'gray'];
@@ -206,12 +206,6 @@ $vinculoLabels = [1 => 'CLT', 2 => 'PJ'];
                                     <i class="fas fa-eye mr-1"></i>
                                     Ver Vaga
                                 </a>
-                                <?php if ($statusVaga == 11): ?>
-                                    <button class="inline-flex items-center px-4 py-2 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-black transition-all">
-                                        <i class="fas fa-envelope mr-1"></i>
-                                        Contatar
-                                    </button>
-                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

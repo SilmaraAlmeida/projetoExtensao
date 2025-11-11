@@ -43,4 +43,15 @@ class CurriculumModel extends ModelMain
             "rules" => "required|max:50"
         ]
     ];
+    /**
+     * Busca currículo pelo ID do usuário
+     */
+    public function getCurriculumByUsuarioId($usuarioId)
+    {
+        return $this->db
+            ->table($this->table)
+            ->join('pessoafisica', 'curriculum.pessoafisicaid = pessoafisica.pessoafisica_id')
+            ->where('pessoafisica.usuario_id', $usuarioId)
+            ->first();
+    }
 }

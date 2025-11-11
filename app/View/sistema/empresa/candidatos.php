@@ -4,7 +4,7 @@ $candidatos = $dados['candidatos'] ?? [];
 ?>
 
 <div class="min-h-screen bg-gray-50">
-    
+
     <!-- Header -->
     <div class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -48,7 +48,7 @@ $candidatos = $dados['candidatos'] ?? [];
                         <p class="text-gray-600 text-sm font-semibold">Status da Vaga</p>
                         <p class="text-lg font-bold text-gray-900 mt-1">
                             <?php
-                            $status = match($vaga['statusVaga'] ?? 1) {
+                            $status = match ($vaga['statusVaga'] ?? 1) {
                                 1 => '⚪ Pré-vaga',
                                 11 => '🟢 Em Aberto',
                                 91 => '🟡 Suspensa',
@@ -91,16 +91,16 @@ $candidatos = $dados['candidatos'] ?? [];
             <div class="space-y-6">
                 <?php foreach ($candidatos as $candidato): ?>
                     <?php
-                        $pessoa = $candidato['pessoa'] ?? [];
-                        $curriculum = $candidato['curriculum'] ?? [];
-                        $educacoes = $candidato['educacoes'] ?? [];
-                        $qualificacoes = $candidato['qualificacoes'] ?? [];
-                        $experiencias = $candidato['experiencias'] ?? [];
-                        $dateCandidatura = new DateTime($candidato['dateCandidatura']);
+                    $pessoa = $candidato['pessoa'] ?? [];
+                    $curriculum = $candidato['curriculum'] ?? [];
+                    $educacoes = $candidato['educacoes'] ?? [];
+                    $qualificacoes = $candidato['qualificacoes'] ?? [];
+                    $experiencias = $candidato['experiencias'] ?? [];
+                    $dateCandidatura = new DateTime($candidato['dateCandidatura']);
                     ?>
-                    
+
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all">
-                        
+
                         <!-- Card Header -->
                         <div class="bg-gradient-to-r from-blue-50 to-white border-b border-gray-200 px-6 py-4">
                             <div class="flex items-start justify-between">
@@ -111,7 +111,7 @@ $candidatos = $dados['candidatos'] ?? [];
                                             class="w-16 h-16 rounded-full object-cover border-2 border-blue-200"
                                             alt="<?= htmlspecialchars($pessoa['nome']) ?>">
                                     </div>
-                                    
+
                                     <!-- Info -->
                                     <div>
                                         <h3 class="text-xl font-bold text-gray-900"><?= htmlspecialchars($pessoa['nome']) ?></h3>
@@ -125,7 +125,7 @@ $candidatos = $dados['candidatos'] ?? [];
                                         </p>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Data Candidatura -->
                                 <div class="text-right">
                                     <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold">
@@ -237,6 +237,12 @@ $candidatos = $dados['candidatos'] ?? [];
                                     class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-all">
                                     <i class="fas fa-envelope mr-2"></i>
                                     Contatar
+                                </a>
+                                <a href="https://wa.me/55<?= preg_replace('/\D/', '', $curriculum['celular'] ?? '') ?>"
+                                    target="_blank"
+                                    class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-all">
+                                    <i class="fab fa-whatsapp mr-2"></i>
+                                    WhatsApp
                                 </a>
                             </div>
                         </div>

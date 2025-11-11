@@ -1,4 +1,5 @@
 <?php
+
 use Core\Library\Redirect;
 
 $vaga = $dados['vaga'] ?? null;
@@ -204,13 +205,26 @@ $cargoNome = $cargo['descricao'] ?? '';
             <aside class="lg:col-span-1 space-y-6">
 
                 <!-- Card de Ação Aprimorado -->
+                <!-- Card de Ação Aprimorado -->
                 <div class="bg-white rounded-lg shadow-sm p-6 sticky top-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                         <i class="fas fa-user-plus mr-2 text-blue-600 flex-shrink-0" aria-hidden="true"></i>
                         Interessado na vaga?
                     </h3>
 
-                    <?php if ($vagaAtiva && !$prazoVencido): ?>
+                    <?php
+                    $jaCandidatou = $dados['jaCandidatou'] ?? false;
+                    ?>
+
+                    <?php if ($jaCandidatou): ?>
+                        <div class="text-center py-6 px-4 bg-green-50 rounded-lg border border-green-200">
+                            <i class="fas fa-check-circle text-green-500 text-3xl mb-3" aria-hidden="true"></i>
+                            <p class="text-green-700 font-medium">
+                                Você já se candidatou a esta vaga!
+                            </p>
+                        </div>
+
+                    <?php elseif ($vagaAtiva && !$prazoVencido): ?>
                         <div class="space-y-3">
                             <a href="<?= baseUrl() ?>vaga/candidatar/<?= $vaga['vaga_id'] ?>"
                                 class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-all"
@@ -218,8 +232,8 @@ $cargoNome = $cargo['descricao'] ?? '';
                                 <i class="fas fa-paper-plane mr-2"></i>
                                 Candidatar-se
                             </a>
-
                         </div>
+
                     <?php else: ?>
                         <div class="text-center py-6 px-4 bg-gray-50 rounded-lg border">
                             <i class="fas fa-info-circle text-gray-400 text-3xl mb-3" aria-hidden="true"></i>
@@ -237,6 +251,7 @@ $cargoNome = $cargo['descricao'] ?? '';
                         </div>
                     <?php endif; ?>
                 </div>
+
 
                 <!-- Informações do Estabelecimento -->
                 <?php if ($estabelecimento): ?>

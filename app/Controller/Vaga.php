@@ -252,6 +252,7 @@ class Vaga extends ControllerMain
 
       return $filtros;
    }
+
    public function detalhes($action = null, $id = null, ...$params)
    {
       // Validar ID
@@ -277,8 +278,45 @@ class Vaga extends ControllerMain
       $vagasRelacionadas = array_slice(array_filter($todasVagas, function ($v) use ($vaga) {
          return ($v['cargo_id'] == $vaga['cargo_id'] || $v['estabelecimento_id'] == $vaga['estabelecimento_id'])
             && $v['vaga_id'] != $vaga['vaga_id']
-            && $v['statusVaga'] == 11; // Apenas vagas em aberto
+            && $v['statusVaga'] == 11;
       }), 0, 5);
+
+      // VERIFICAR SE JÁ ESTÁ CANDIDATADO
+      $jaCandidatou = false;
+      $usuarioId = Session::get('userId');
+      $userNivel = Session::get('userNivel');
+
+      if ($usuarioId && $userNivel === 'CN') {
+         // Models
+         $usuarioModel = new UsuarioModel();
+         $curriculumModel = new CurriculumModel();
+         $vagaCurriculumModel = new VagaCurriculumModel();
+
+         // Busca usuário
+         $usuario = $usuarioModel->db
+            ->table('usuario')
+            ->where('usuario_id', $usuarioId)
+            ->first();
+
+         if (!empty($usuario) && !empty($usuario['pessoa_fisica_id'])) {
+            // Busca currículo
+            $curriculum = $curriculumModel->db
+               ->table('curriculum')
+               ->where('pessoa_fisica_id', $usuario['pessoa_fisica_id'])
+               ->first();
+
+            if (!empty($curriculum)) {
+               // Verifica se já candidatou
+               $candidatura = $vagaCurriculumModel->db
+                  ->table('vaga_curriculum')
+                  ->where('vaga_id', $id)
+                  ->where('curriculum_id', $curriculum['curriculum_id'])
+                  ->first();
+
+               $jaCandidatou = !empty($candidatura);
+            }
+         }
+      }
 
       // Preparar dados para a view
       $dados = [
@@ -286,6 +324,7 @@ class Vaga extends ControllerMain
          'cargo' => $cargo,
          'estabelecimento' => $estabelecimento,
          'vagas_relacionadas' => $vagasRelacionadas,
+         'jaCandidatou' => $jaCandidatou,
          'action' => $action,
          'params' => $params
       ];

@@ -155,18 +155,7 @@
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Publicar Vaga</h3>
                     <p class="text-gray-600 text-sm">Criar nova oportunidade de emprego</p>
                 </a>
-
-                <!-- Candidatos -->
-                <a href="<?= baseUrl() ?>empresa/candidatos" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors duration-200">
-                            <i class="fas fa-user-tie text-2xl text-purple-600"></i>
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Candidatos</h3>
-                    <p class="text-gray-600 text-sm">Visualizar currículos e candidaturas</p>
-                </a>
-
+                
                 <!-- Perfil da Empresa -->
                 <a href="<?= baseUrl() ?>sistema/perfil" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">

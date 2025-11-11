@@ -112,6 +112,7 @@ class Empresa extends ControllerMain
 
         return $this->loadView('sistema/empresa/minhasVagas', $viewData);
     }
+
     /**
      * formVagas - Exibe formulário para criar/editar/deletar vaga
      *

@@ -8,10 +8,30 @@ use Core\Library\Session; ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sistema de Gestão Via Muriaé - Plataforma para gerenciamento de vagas e oportunidades">
-    <meta name="author" content="Via Muriaé">
 
-    <title>Via Muriaé - Sistema de Gestão</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Via Muriaé - A plataforma que conecta talentos e empresas de Muriaé. Encontre vagas de emprego ou divulgue oportunidades de forma simples, rápida e centralizada.">
+    <meta name="keywords" content="vagas Muriaé, empregos Muriaé, recrutamento Muriaé, oportunidades de trabalho, talentos locais, plataforma de empregos, buscar emprego Muriaé, contratar profissionais Muriaé">
+    <meta name="author" content="Via Muriaé">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="pt-BR">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?= baseUrl() ?>">
+    <meta property="og:title" content="Via Muriaé - Conectando talentos às oportunidades">
+    <meta property="og:description" content="A plataforma que une empresas e profissionais de Muriaé. Cadastre-se gratuitamente e transforme sua carreira ou encontre os melhores talentos para sua empresa.">
+    <meta property="og:image" content="<?= baseUrl() ?>assets/img/AtomPHP-icone.jpg">
+    <meta property="og:locale" content="pt_BR">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="<?= baseUrl() ?>">
+    <meta name="twitter:title" content="Via Muriaé - Conectando talentos às oportunidades">
+    <meta name="twitter:description" content="A plataforma que une empresas e profissionais de Muriaé.">
+    <meta name="twitter:image" content="<?= baseUrl() ?>assets/img/AtomPHP-icone.jpg">
+
+    <title>Via Muriaé - Conectando talentos às oportunidades em Muriaé</title>
 
     <!-- Favicon -->
     <link href="<?= baseUrl() ?>assets/img/AtomPHP-icone.png" rel="icon" type="image/png">
@@ -21,10 +41,15 @@ use Core\Library\Session; ?>
 
     <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
     <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="<?= baseUrl() ?>">
 </head>
+
 
 <body class="bg-gray-50 font-sans antialiased">
 
@@ -163,10 +188,10 @@ use Core\Library\Session; ?>
                     </div>
 
                     <!-- Mobile Navigation -->
-                    <a href="#" class="text-white hover:text-blue-200 hover:bg-blue-700 block px-4 py-3 rounded-md text-lg font-medium transition-colors duration-200">
+                    <a href="/" class="text-white hover:text-blue-200 hover:bg-blue-700 block px-4 py-3 rounded-md text-lg font-medium transition-colors duration-200">
                         Home
                     </a>
-                    <a href="#" class="text-white hover:text-blue-200 hover:bg-blue-700 block px-4 py-3 rounded-md text-lg font-medium transition-colors duration-200">
+                    <a href="/vaga" class="text-white hover:text-blue-200 hover:bg-blue-700 block px-4 py-3 rounded-md text-lg font-medium transition-colors duration-200">
                         Vagas
                     </a>
 

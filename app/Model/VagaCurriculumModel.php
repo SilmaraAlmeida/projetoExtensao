@@ -15,4 +15,18 @@ class VagaCurriculumModel extends ModelMain
             "rules" => 'required|date'
         ],
     ];
+
+    /**
+     * Verifica se já existe candidatura
+     */
+    public function jaCandidatou($vagaId, $curriculumId)
+    {
+        $resultado = $this->db
+            ->table($this->table)
+            ->where('vagaid', $vagaId)
+            ->where('curriculumid', $curriculumId)
+            ->first();
+
+        return !empty($resultado);
+    }
 }

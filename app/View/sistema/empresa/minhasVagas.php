@@ -14,7 +14,7 @@ $vinculoLabels = [1 => 'CLT', 2 => 'PJ'];
 ?>
 
 <div class="min-h-screen bg-gray-50">
-    
+
     <!-- Header -->
     <div class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -22,6 +22,11 @@ $vinculoLabels = [1 => 'CLT', 2 => 'PJ'];
                 <div>
                     <h1 class="text-3xl font-bold text-gray-900">Gerenciar Vagas</h1>
                     <p class="text-gray-600 mt-1">Crie e gerencie as vagas disponíveis na sua empresa</p>
+                    <a href="<?= baseUrl() ?>Sistema"
+                        class="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors mb-4, mt-4">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Voltar para Area da Empresa
+                    </a>
                 </div>
                 <a href="<?= baseUrl() ?>VagasEmpresa/form/insert/0"
                     class="inline-flex items-center px-6 py-3 bg-gray-900 text-white rounded-lg text-base font-semibold hover:bg-black transition-all shadow-md hover:shadow-lg">
@@ -39,47 +44,6 @@ $vinculoLabels = [1 => 'CLT', 2 => 'PJ'];
 
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        <!-- Filtros -->
-        <!-- <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
-            <form method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
-                    <select name="status"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 focus:outline-none focus:border-gray-500 focus:ring-2 focus:ring-gray-200 transition-all">
-                        <option value="">Todos</option>
-                        <option value="1">Pré-vaga</option>
-                        <option value="11">Em aberto</option>
-                        <option value="91">Suspensa</option>
-                        <option value="99">Finalizada</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Modalidade</label>
-                    <select name="modalidade"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 focus:outline-none focus:border-gray-500 focus:ring-2 focus:ring-gray-200 transition-all">
-                        <option value="">Todas</option>
-                        <option value="1">Presencial</option>
-                        <option value="2">Remoto</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Vínculo</label>
-                    <select name="vinculo"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 focus:outline-none focus:border-gray-500 focus:ring-2 focus:ring-gray-200 transition-all">
-                        <option value="">Todos</option>
-                        <option value="1">CLT</option>
-                        <option value="2">PJ</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Buscar</label>
-                    <input type="text" name="busca" placeholder="Nome da vaga..."
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:border-gray-500 focus:ring-2 focus:ring-gray-200 transition-all">
-                </div>
-            </form>
-        </div> -->
-
         <!-- Stats -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
@@ -143,15 +107,15 @@ $vinculoLabels = [1 => 'CLT', 2 => 'PJ'];
             <div class="space-y-6">
                 <?php foreach ($vagas as $vaga): ?>
                     <?php
-                        $statusInfo = $statusLabels[$vaga['statusVaga']] ?? ['Desconhecido', 'gray'];
-                        $cargo = $vaga['cargo'] ?? [];
-                        $dataInicio = new DateTime($vaga['dtInicio']);
-                        $dataFim = new DateTime($vaga['dtFim']);
-                        $hoje = new DateTime();
-                        $diasAberto = $hoje->diff($dataFim)->days;
+                    $statusInfo = $statusLabels[$vaga['statusVaga']] ?? ['Desconhecido', 'gray'];
+                    $cargo = $vaga['cargo'] ?? [];
+                    $dataInicio = new DateTime($vaga['dtInicio']);
+                    $dataFim = new DateTime($vaga['dtFim']);
+                    $hoje = new DateTime();
+                    $diasAberto = $hoje->diff($dataFim)->days;
                     ?>
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all">
-                        
+
                         <!-- Card Header -->
                         <div class="bg-gradient-to-r from-gray-50 to-white border-b border-gray-200 px-6 py-4 flex items-start justify-between">
                             <div class="flex-1">
@@ -272,6 +236,7 @@ $vinculoLabels = [1 => 'CLT', 2 => 'PJ'];
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
+
     .line-clamp-3 {
         display: -webkit-box;
         -webkit-line-clamp: 3;
