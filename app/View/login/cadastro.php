@@ -216,8 +216,8 @@ $inputs = Session::getDestroy('inputs');
           class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 <?= isset($errors['termos']) ? 'border-red-300' : '' ?>"
         >
         <label class="ml-3 text-sm text-gray-600">
-          Aceito os <a href="<?= baseUrl() ?>cadastro/termos" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium">Termos de Uso</a> e 
-          <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Política de Privacidade</a>
+          Aceito os <a href="<?= baseUrl() ?>home/termodeuso" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium">Termos de Uso</a> e 
+          <a href="<?= baseUrl() ?>home/termodeuso" class="text-blue-600 hover:text-blue-800 font-medium">Política de Privacidade</a>
         </label>
       </div>
       <?php if (isset($errors['termos'])): ?>

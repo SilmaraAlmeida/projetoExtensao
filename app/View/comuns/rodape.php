@@ -4,15 +4,15 @@
     <footer class="bg-blue-900 text-white py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-                
+
                 <!-- Empresa Info -->
                 <div>
-                    <h3 class="text-lg font-bold mb-3">Via Muriaé – Conectando Empresas e Talentos Locais</h3>
+                    <h3 class="text-lg font-bold mb-3">Via Muriaé – Conectando talentos às oportunidades em Muriaé</h3>
                     <p class="text-blue-100 text-sm mb-3 leading-relaxed">
-                        Nossa missão é transformar o mercado de trabalho em Muriaé com tecnologia, eficiência e inclusão.
+                        Somos o hub que conecta talentos e empresas de Muriaé.
                     </p>
                     <div class="text-blue-100 text-sm space-y-1">
-                        <p>Rua Exemplo, 123 – Centro, Muriaé/MG</p>
+                        <p>Rua Almeida João, 123 – Centro, Muriaé/MG</p>
                         <p>(32) 3721-0000</p>
                         <p>contato@viamuriae.com.br</p>
                     </div>
@@ -28,55 +28,18 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="text-blue-100 hover:text-white transition-colors duration-200">
-                                Empresas
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-blue-100 hover:text-white transition-colors duration-200">
-                                Candidatos
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-blue-100 hover:text-white transition-colors duration-200">
+                            <a href="<?= baseUrl() ?>vaga" class="text-blue-100 hover:text-white transition-colors duration-200">
                                 Vagas
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="#" class="text-blue-100 hover:text-white transition-colors duration-200">
                                 Sobre nós
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="<?= baseUrl() ?>Login/" class="text-blue-100 hover:text-white transition-colors duration-200">
                                 Entrar
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Áreas de Atuação -->
-                <div>
-                    <h4 class="text-base font-semibold mb-3">Áreas de Atuação</h4>
-                    <ul class="space-y-1 text-sm">
-                        <li>
-                            <a href="#" class="text-blue-100 hover:text-white transition-colors duration-200">
-                                Administração
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-blue-100 hover:text-white transition-colors duration-200">
-                                Tecnologia da Informação
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-blue-100 hover:text-white transition-colors duration-200">
-                                Saúde
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-blue-100 hover:text-white transition-colors duration-200">
-                                Vendas e Atendimento
                             </a>
                         </li>
                     </ul>
@@ -91,18 +54,18 @@
                 <p class="text-blue-100 text-sm mb-4 md:mb-0">
                     © 2025 ViaMuriae. Todos os direitos reservados
                 </p>
-                
+
                 <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-6">
                     <!-- Links legais -->
                     <div class="flex space-x-4 text-sm">
-                        <a href="#" class="text-blue-100 hover:text-white transition-colors duration-200">
+                        <a href="<?= baseUrl() ?>home/termodeuso" class="text-blue-100 hover:text-white transition-colors duration-200">
                             Termos de uso
                         </a>
-                        <a href="#" class="text-blue-100 hover:text-white transition-colors duration-200">
+                        <a href="<?= baseUrl() ?>home/termodeuso" class="text-blue-100 hover:text-white transition-colors duration-200">
                             Política de privacidade
                         </a>
                     </div>
-                    
+
                     <!-- Redes Sociais -->
                     <div class="flex space-x-3">
                         <a href="#" class="text-blue-100 hover:text-white transition-colors duration-200">
@@ -123,5 +86,6 @@
         </div>
     </footer>
 
-</body>
-</html>
+    </body>
+
+    </html>

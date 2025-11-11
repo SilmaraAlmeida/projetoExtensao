@@ -5,12 +5,35 @@ namespace App\Controller;
 
 use Core\Library\ControllerMain;
 
+use Core\Library\Redirect;
+use App\Model\TermoDeUsoModel;
+
 class Home extends ControllerMain
 {
     public function index()
     {
         $this->loadView("home");
     }
+
+    public function termodeuso()
+    {
+        $termoModel = new TermoDeUsoModel();
+
+        // Busca o termo vigente
+        $termo = $termoModel->getTermoVigente();
+
+        if (!$termo) {
+            // Se não houver termo cadastrado, redireciona ou exibe mensagem
+            return Redirect::page('home', ['msgError' => 'Termos de uso não disponíveis no momento.']);
+        }
+
+        $dados = [
+            'termo' => $termo
+        ];
+
+        $this->loadView("termodeuso", $dados);
+    }
+
 
     public function sobre($action = null)
     {
@@ -24,7 +47,7 @@ class Home extends ControllerMain
         echo "<br />ID: " . $id;
         echo "<br />PARÂMETROS: " . implode(", ", $params);
     }
-    
+
     public function busca()
     {
         echo "<pre>";
