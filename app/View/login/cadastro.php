@@ -1,7 +1,5 @@
-<?php use Core\Library\Session; ?>
-
-<?php
-$inputs = Session::getDestroy('inputs');
+<?php 
+$inputs = $dados['data'] ?? [];
 ?>
 
 <div class="min-h-screen bg-blue-900 flex items-center justify-center p-4">
@@ -276,13 +274,12 @@ $inputs = Session::getDestroy('inputs');
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Latitude: *</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Latitude: </label>
           <input 
             type="text" 
             name="latitude" 
             placeholder="-21.123456" 
             value="<?= $inputs['latitude'] ?? '' ?>"
-            required
             maxlength="12"
             pattern="-?\d+\.?\d*"
             class="w-full px-4 py-3 border <?= isset($errors['latitude']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"
@@ -293,13 +290,12 @@ $inputs = Session::getDestroy('inputs');
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Longitude: *</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Longitude: </label>
           <input 
             type="text" 
             name="longitude" 
             placeholder="-42.123456" 
             value="<?= $inputs['longitude'] ?? '' ?>"
-            required
             maxlength="12"
             pattern="-?\d+\.?\d*"
             class="w-full px-4 py-3 border <?= isset($errors['longitude']) ? 'border-red-300 bg-red-50' : 'border-gray-300' ?> rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm"

@@ -254,15 +254,6 @@ class Cadastro extends ControllerMain
             ]);
         }
 
-        if (empty($post['latitude']) || empty($post['longitude'])) {
-            unset($post['senha'], $post['confSenha']);
-            
-            return Redirect::page($this->controller, [
-                "msgError" => "A localização (latitude e longitude) é obrigatória.",
-                "inputs"   => $post
-            ]);
-        }
-
         if (empty($post['email'])) {
             unset($post['senha'], $post['confSenha']);
             
@@ -278,8 +269,8 @@ class Cadastro extends ControllerMain
         $postEstabelecimento = [
             "nome"      => trim($post['nome'] ?? ''),
             "endereco"  => trim($post['endereco'] ?? ''),
-            "latitude"  => trim($post['latitude'] ?? ''),
-            "longitude" => trim($post['longitude'] ?? ''),
+            "latitude"  => trim($post['latitude'] ?? null),
+            "longitude" => trim($post['longitude'] ?? null),
             "email"     => trim($post['email'] ?? ''),
         ];
 

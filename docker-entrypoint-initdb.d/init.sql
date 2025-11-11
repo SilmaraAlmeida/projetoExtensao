@@ -183,8 +183,8 @@ CREATE TABLE IF NOT EXISTS `estabelecimento` (
   `estabelecimento_id` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
   `endereco` varchar(200) DEFAULT NULL,
-  `latitude` char(12) NOT NULL,
-  `longitude` char(12) NOT NULL,
+  `latitude` char(12),
+  `longitude` char(12),
   `email` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`estabelecimento_id`),
   FULLTEXT KEY `ft_busca` (`nome`)

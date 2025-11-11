@@ -20,11 +20,11 @@ class EstabelecimentoModel extends ModelMain
         ],
         "latitude" => [
             "label" => 'Latitude',
-            "rules" => 'required|min:3|max:12'
+            "rules" => 'max:12'
         ],
         "longitude" => [
             "label" => 'Longitude',
-            "rules" => 'required|min:3|max:12'
+            "rules" => 'max:12'
         ],
         "email" => [
             "label" => 'Email',
