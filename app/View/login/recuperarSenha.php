@@ -6,9 +6,10 @@
     </div>
     <div class="card-body">
 
-        <form action="<?= baseUrl() ?>login/atualizaRecuperaSenha" method="POST" id="recuperaSenhaform" class="form-horizontal" role="form" >
+        <form action="<?= baseUrl() ?>login/atualizaRecuperaSenha" method="POST" id="recuperaSenhaform" class="form-horizontal" role="form">
 
-            <input type="hidden" name="id" id="id" value="<?= $dados['id'] ?>">
+            <!-- MUDANÇA AQUI: 'id' para 'usuario_id' -->
+            <input type="hidden" name="usuario_id" id="usuario_id" value="<?= $dados['usuario_id'] ?>">
             <input type="hidden" name="usuariorecuperasenha_id" id="usuariorecuperasenha_id" value="<?= $dados['usuariorecuperasenha_id'] ?>">
             <input type="hidden" name="nome" id="nome" value="<?= $dados['nome'] ?>">
 
@@ -25,7 +26,7 @@
                             name="NovaSenha" 
                             required
                             placeholder="Nova senha" 
-                            onkeyup="checa_segur_senha( 'NovaSenha', 'msgSenhaNova', 'btEnviar' );"
+                            onkeyup="checa_segur_senha('NovaSenha', 'msgSenhaNova', 'btEnviar');"
                             autofocus>
                     <div id="msgSenhaNova" class="mt-2 mb-3"></div>
                 </div>
@@ -39,7 +40,7 @@
                             id="NovaSenha2"     
                             placeholder="Confirma nova senha" 
                             required
-                            onkeyup="checa_segur_senha( 'NovaSenha2', 'msgSenhaNova2', 'btEnviar' );">
+                            onkeyup="checa_segur_senha('NovaSenha2', 'msgSenhaNova2', 'btEnviar');">
                     <div id="msgSenhaNova2" class="mt-2 mb-3"></div>
                 </div>
             </div>

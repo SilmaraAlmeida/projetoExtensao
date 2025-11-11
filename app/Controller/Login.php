@@ -35,36 +35,36 @@ class Login extends ControllerMain
      *
      * @return void
      */
-public function signIn()
-{
-    $post  = $this->request->getPost();
-    $login = trim($post['login'] ?? '');
-    $senha = trim($post['senha'] ?? '');
+    public function signIn()
+    {
+        $post  = $this->request->getPost();
+        $login = trim($post['login'] ?? '');
+        $senha = trim($post['senha'] ?? '');
 
-    $aUser = $this->model->getUserLogin($login);
-    
-    if (empty($aUser)) {
-        return Redirect::page("login", [
-            "msgError" => 'Login ou senha inválido.',
-            'inputs' => ["login" => $login]
-        ]);
+        $aUser = $this->model->getUserLogin($login);
+
+        if (empty($aUser)) {
+            return Redirect::page("login", [
+                "msgError" => 'Login ou senha inválido.',
+                'inputs' => ["login" => $login]
+            ]);
+        }
+
+        if (!password_verify($senha, $aUser['senha'])) {
+            return Redirect::page("login", [
+                "msgError" => 'Login ou senha inválido.',
+                'inputs' => ["login" => $login]
+            ]);
+        }
+
+        Session::set("userId", $aUser['usuario_id']);
+        Session::set("userNome", $aUser['nome']);
+        Session::set("userLogin", $aUser['login']);
+        Session::set("userNivel", $aUser['tipo']);
+        Session::set("userSenha", $aUser['senha']);
+
+        return Redirect::page("sistema");
     }
-
-    if (!password_verify($senha, $aUser['senha'])) {
-        return Redirect::page("login", [
-            "msgError" => 'Login ou senha inválido.',
-            'inputs' => ["login" => $login]
-        ]);
-    }
-
-    Session::set("userId"   , $aUser['usuario_id']);
-    Session::set("userNome" , $aUser['nome']);
-    Session::set("userLogin", $aUser['login']);
-    Session::set("userNivel", $aUser['tipo']);
-    Session::set("userSenha", $aUser['senha']);
-
-    return Redirect::page("sistema");
-}
 
 
     /**
@@ -79,7 +79,7 @@ public function signIn()
         Session::destroy('userLogin');
         Session::destroy('userNivel');
         Session::destroy('userSenha');
-        
+
         return Redirect::Page("home");
     }
 
@@ -110,7 +110,6 @@ public function signIn()
             return Redirect::page("Login/esqueciASenha", [
                 "msgError" => "Não foi possivel localizar o e-mail na base de dados !;"
             ]);
-
         } else {
 
             $created_at = date('Y-m-d H:i:s');
@@ -136,7 +135,7 @@ public function signIn()
 
                 // Inserindo nova solicitação
                 $resIns = $usuarioRecuperaSenhaModel->db->table('usuariorecuperasenha')->insert([
-                    "usuario_id" => $user["usuario_id"], 
+                    "usuario_id" => $user["usuario_id"],
                     "chave" => $chave,
                     "created_at" => $created_at
                 ]);
@@ -144,17 +143,15 @@ public function signIn()
                 if ($resIns) {
                     return Redirect::page("login", [
                         "msgSucesso" => "Link para recuperação da senha enviado com sucesso! Verifique seu e-mail."
-                    ]);   
+                    ]);
                 } else {
-                    return Redirect::page("login/esqueciASenha");   
+                    return Redirect::page("login/esqueciASenha");
                 }
-
             } else {
-                return Redirect::page("login/esqueciASenha", ["inputs" => $post ]);
+                return Redirect::page("login/esqueciASenha", ["inputs" => $post]);
             }
         }
     }
-
     /**
      * recuperarSenha
      *
@@ -168,10 +165,10 @@ public function signIn()
 
         if ($userChave) {
 
-            if (date("Y-m-d H:i:s") <= date("Y-m-d H:i:s" , strtotime("+1 hours" , strtotime($userChave['created_at'])))) {
+            if (date("Y-m-d H:i:s") <= date("Y-m-d H:i:s", strtotime("+1 hours", strtotime($userChave['created_at'])))) {
 
                 $usuarioModel = $this->loadModel('Usuario');
-                $user           = $usuarioModel->getUserId($userChave['usuario_id']);
+                $user         = $usuarioModel->getUserId($userChave['usuario_id']);
 
                 if ($user) {
 
@@ -180,8 +177,8 @@ public function signIn()
                     if ($chaveRecSenha == $userChave['chave']) {
 
                         $dbDados = [
-                            "id"    => $user['usuario_id'],
-                            'nome'  => $user['nome'],
+                            "usuario_id" => $user['usuario_id'],
+                            'nome'       => $user['nome'],
                             'usuariorecuperasenha_id' => $userChave['id']
                         ];
 
@@ -189,18 +186,14 @@ public function signIn()
 
                         // chave válida
                         return $this->loadView("login/recuperarSenha", $dbDados);
-
-                        //
-
                     } else {
                         // Desativa chave
                         $upd = $usuarioRecuperaSenhaModel->desativaChave($userChave['id']);
 
                         return Redirect::page("Login/esqueciASenha", [
-                            "msgError" => "Link de recuperação da senha inválida."
-                        ]); 
+                            "msgError" => "Link de recuperação da senha inválido."
+                        ]);
                     }
-
                 } else {
 
                     // Desativa chave
@@ -208,24 +201,21 @@ public function signIn()
 
                     return Redirect::page("Login/esqueciASenha", [
                         "msgError" => "Usuário para o link de recuperação da senha não localizado."
-                    ]); 
-
+                    ]);
                 }
-                
             } else {
 
                 // Desativa chave
                 $upd = $usuarioRecuperaSenhaModel->desativaChave($userChave['id']);
 
                 return Redirect::page("Login/esqueciASenha", [
-                    "msgError" => "Link de recuperação da senha expirada."
-                ]); 
+                    "msgError" => "Link de recuperação da senha expirado."
+                ]);
             }
-
         } else {
             return Redirect::page("Login/esqueciASenha", [
-                "msgError" => "Link de recuperação da senha não localizada."
-            ]);             
+                "msgError" => "Link de recuperação da senha não localizado."
+            ]);
         }
     }
 
@@ -239,69 +229,67 @@ public function signIn()
         $UsuarioModel = $this->loadModel("Usuario");
 
         $post       = $this->request->getPost();
-        $userAtual  = $UsuarioModel->getUserId($post["id"]);
+        $userAtual  = $UsuarioModel->getUserId($post["usuario_id"]);
 
         if ($userAtual) {
 
             if (trim($post["NovaSenha"]) == trim($post["NovaSenha2"])) {
 
+                // CORREÇÃO: usar 'usuario_id' ao invés de 'id'
                 if ($UsuarioModel->db
-                                ->table("usuario")
-                                ->where(['id' => $post['id']])
-                                ->update([
-                                    'senha'      => password_hash(trim($post["NovaSenha"]), PASSWORD_DEFAULT)
-                                ])
-                    ) {
+                    ->table("usuario")
+                    ->where(['usuario_id' => $post['usuario_id']])
+                    ->update([
+                        'senha' => password_hash(trim($post["NovaSenha"]), PASSWORD_DEFAULT)
+                    ])
+                ) {
 
                     // Desativa chave
                     $usuarioRecuperaSenhaModel = $this->loadModel('UsuarioRecuperaSenha');
-
                     $upd = $usuarioRecuperaSenhaModel->desativaChave($post['usuariorecuperasenha_id']);
 
                     Session::destroy("msgError");
                     return Redirect::page("Login", [
-                        "msgSuccesso"    => "Senha atualizada com sucesso !"
-                    ]);  
-
+                        "msgSucesso" => "Senha atualizada com sucesso!"
+                    ]);
                 } else {
+                    Session::set("msgError", "Erro ao atualizar senha na base de dados!");
                     return $this->loadView("login/recuperarSenha", $post);
                 }
-
             } else {
-                Session::set("msgError", "Nova senha e conferência da senha estão divergentes !");
+                Session::set("msgError", "Nova senha e conferência da senha estão divergentes!");
                 return $this->loadView("login/recuperarSenha", $post);
             }
-
         } else {
-            Session::set("msgError", "Usuário inválido !");
+            Session::set("msgError", "Usuário inválido!");
             return $this->loadView("login/recuperarSenha", $post);
         }
     }
 
-//     /**
-//      * criaSuperUser
-//      *
-//      * @return void
-//      */
-//     public function criaSuperUser()
-//     {
-//         $dados = [
-//             "tipo"             => "G",
-//             "nome"              => "Admin",
-//             "login"             => "suadmin@admin.com.br",
-//             "senha"             => password_hash("fasm@2025", PASSWORD_DEFAULT),
-//         ];
+    //     /**
+    //      * criaSuperUser
+    //      *
+    //      * @return void
+    //      */
+    //     public function criaSuperUser()
+    //     {
+    //         $dados = [
+    //             "tipo"             => "G",
+    //             "nome"              => "Admin",
+    //             "login"             => "suadmin@admin.com.br",
+    //             "senha"             => password_hash("fasm@2025", PASSWORD_DEFAULT),
+    //         ];
 
-//         $aSuperUser = $this->model->getUserLogin($dados['email']);
+    //         $aSuperUser = $this->model->getUserLogin($dados['email']);
 
-//         if (count($aSuperUser) > 0) {
-//             return Redirect::Page("login", ["msgError" => "Login já existe."]);
-//         } else {
-//             if ($this->model->insert($dados)) {
-//                 return Redirect::Page("login", ["msgSucesso" => "Login criado com sucesso."]);
-//             } else {
-//                 return Redirect::Page("login");
-//             }
-//         }
-//     }
+    //         if (count($aSuperUser) > 0) {
+    //             return Redirect::Page("login", ["msgError" => "Login já existe."]);
+    //         } else {
+    //             if ($this->model->insert($dados)) {
+    //                 return Redirect::Page("login", ["msgSucesso" => "Login criado com sucesso."]);
+    //             } else {
+    //                 return Redirect::Page("login");
+    //             }
+    //         }
+    //     }
 }
