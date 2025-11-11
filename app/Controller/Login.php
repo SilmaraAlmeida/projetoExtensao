@@ -119,8 +119,8 @@ public function signIn()
             $emailTexto = emailRecuperacaoSenha($cLink);
 
             $lRetMail = Email::enviaEmail(
-                $_ENV['MAIL.USER'],                         /* Email do Remetente*/
-                $_ENV['MAIL.NOME'],                         /* Nome do Remetente */
+                $_ENV['MAIL_USER'],                         /* Email do Remetente*/
+                $_ENV['MAIL_NOME'],                         /* Nome do Remetente */
                 $emailTexto['assunto'],                     /* Assunto do e-mail */
                 $emailTexto['corpo'],                       /* Corpo do E-mail */
                 $user['login']                              /* Destinatário do E-mail */

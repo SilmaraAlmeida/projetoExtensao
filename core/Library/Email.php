@@ -29,13 +29,13 @@ class Email
             $mail->isSMTP();
             $mail->SMTPDebug    = 0;                                // Enable verbose debug output
             $mail->CharSet      = "UTF-8";
-            $mail->SMTPAuth     = (bool)$_ENV['MAIL.SMTPAuth'];           // Ativa o SMTP autenticado
-            $mail->SMTPSecure   = $_ENV['MAIL.SMTPSECURE'];         // Enable implicit TLS encryption
+            $mail->SMTPAuth     = (bool)$_ENV['MAIL_SMTPAuth'];           // Ativa o SMTP autenticado
+            $mail->SMTPSecure   = $_ENV['MAIL_SMTPSECURE'];         // Enable implicit TLS encryption
             //$mail->SMTPSecure   = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Host         = $_ENV['MAIL.HOST'];
-            $mail->Port         = (int)$_ENV['MAIL.PORT'];
-            $mail->Username     = $_ENV['MAIL.USER'];               // Usuário de e-mail para autenticação
-            $mail->Password     = $_ENV['MAIL.PASSWORD'];           // Senha do e-mail de autenticação
+            $mail->Host         = $_ENV['MAIL_HOST'];
+            $mail->Port         = (int)$_ENV['MAIL_PORT'];
+            $mail->Username     = $_ENV['MAIL_USER'];               // Usuário de e-mail para autenticação
+            $mail->Password     = $_ENV['MAIL_PASSWORD'];           // Senha do e-mail de autenticação
             $mail->From         = $emailRemetente;                  // E-mail remetente
             $mail->FromName     = $nomeRemetente;                   // Nome do Remetente
             
