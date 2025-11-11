@@ -1,4 +1,9 @@
-<?php use Core\Library\Session; ?>
+<?php
+
+use Core\Library\Session;
+
+$gestorOptionDisabled = true;
+?>
 
 <div class="min-h-screen bg-gray-50">
     <!-- Header do Dashboard -->
@@ -42,7 +47,7 @@
 
             <?php if ($userNivel === 'G'): ?>
                 <!-- CARDS DO GESTOR -->
-                
+
                 <!-- Gerenciar Usuários -->
                 <a href="<?= baseUrl() ?>usuario" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
@@ -54,10 +59,15 @@
                     <p class="text-gray-600 text-sm">Cadastrar, editar e gerenciar usuários do sistema</p>
                 </a>
 
+
                 <!-- Gerenciar Empresas -->
-                <a href="<?= baseUrl() ?>sistema/empresas" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                <a href="<?= $gestorOptionDisabled ? 'javascript:void(0)' : baseUrl() . 'empresas' ?>"
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 
+                    <?= $gestorOptionDisabled ? 'pointer-events-none opacity-50 cursor-not-allowed' : 'hover:shadow-md transition-shadow duration-200' ?> 
+                    group">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors duration-200">
+                        <div class="p-3 bg-green-100 rounded-lg 
+                    <?= !$gestorOptionDisabled ? 'group-hover:bg-green-200 transition-colors duration-200' : '' ?>">
                             <i class="fas fa-building text-2xl text-green-600"></i>
                         </div>
                     </div>
@@ -65,10 +75,14 @@
                     <p class="text-gray-600 text-sm">Aprovar e gerenciar estabelecimentos cadastrados</p>
                 </a>
 
+
                 <!-- Gerenciar Vagas -->
-                <a href="<?= baseUrl() ?>sistema/vagas" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                <a href="<?= $gestorOptionDisabled ? 'javascript:void(0)' : baseUrl() . 'vagas' ?>"
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 
+                    <?= $gestorOptionDisabled ? 'pointer-events-none opacity-50 cursor-not-allowed' : 'hover:shadow-md transition-shadow duration-200' ?> group">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors duration-200">
+                        <div class="p-3 bg-purple-100 rounded-lg 
+                    <?= !$gestorOptionDisabled ? 'group-hover:bg-purple-200 transition-colors duration-200' : '' ?>">
                             <i class="fas fa-briefcase text-2xl text-purple-600"></i>
                         </div>
                     </div>
@@ -76,10 +90,14 @@
                     <p class="text-gray-600 text-sm">Moderar e aprovar vagas publicadas</p>
                 </a>
 
+
                 <!-- Gerenciar Cargos -->
-                <a href="<?= baseUrl() ?>sistema/cargos" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                <a href="<?= $gestorOptionDisabled ? 'javascript:void(0)' : baseUrl() . 'sistema/cargos' ?>"
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 
+                    <?= $gestorOptionDisabled ? 'pointer-events-none opacity-50 cursor-not-allowed' : 'hover:shadow-md transition-shadow duration-200' ?> group">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-indigo-100 rounded-lg group-hover:bg-indigo-200 transition-colors duration-200">
+                        <div class="p-3 bg-indigo-100 rounded-lg 
+                    <?= !$gestorOptionDisabled ? 'group-hover:bg-indigo-200 transition-colors duration-200' : '' ?>">
                             <i class="fas fa-id-badge text-2xl text-indigo-600"></i>
                         </div>
                     </div>
@@ -87,10 +105,14 @@
                     <p class="text-gray-600 text-sm">Cadastrar e editar cargos disponíveis</p>
                 </a>
 
+
                 <!-- Categorias de Estabelecimento -->
-                <a href="<?= baseUrl() ?>sistema/categorias" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                <a href="<?= $gestorOptionDisabled ? 'javascript:void(0)' : baseUrl() . 'sistema/categorias' ?>"
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 
+                    <?= $gestorOptionDisabled ? 'pointer-events-none opacity-50 cursor-not-allowed' : 'hover:shadow-md transition-shadow duration-200' ?> group">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-yellow-100 rounded-lg group-hover:bg-yellow-200 transition-colors duration-200">
+                        <div class="p-3 bg-yellow-100 rounded-lg 
+                    <?= !$gestorOptionDisabled ? 'group-hover:bg-yellow-200 transition-colors duration-200' : '' ?>">
                             <i class="fas fa-tags text-2xl text-yellow-600"></i>
                         </div>
                     </div>
@@ -98,10 +120,14 @@
                     <p class="text-gray-600 text-sm">Gerenciar categorias de estabelecimentos</p>
                 </a>
 
+
                 <!-- Termos de Uso -->
-                <a href="<?= baseUrl() ?>sistema/termos" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                <a href="<?= $gestorOptionDisabled ? 'javascript:void(0)' : baseUrl() . 'sistema/termos' ?>"
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 
+                    <?= $gestorOptionDisabled ? 'pointer-events-none opacity-50 cursor-not-allowed' : 'hover:shadow-md transition-shadow duration-200' ?> group">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-orange-100 rounded-lg group-hover:bg-orange-200 transition-colors duration-200">
+                        <div class="p-3 bg-orange-100 rounded-lg 
+                    <?= !$gestorOptionDisabled ? 'group-hover:bg-orange-200 transition-colors duration-200' : '' ?>">
                             <i class="fas fa-file-contract text-2xl text-orange-600"></i>
                         </div>
                     </div>
@@ -109,10 +135,14 @@
                     <p class="text-gray-600 text-sm">Gerenciar versões dos termos do sistema</p>
                 </a>
 
+
                 <!-- Configurações do Sistema -->
-                <a href="<?= baseUrl() ?>sistema/configuracoes" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                <a href="<?= $gestorOptionDisabled ? 'javascript:void(0)' : baseUrl() . 'sistema/configuracoes' ?>"
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 
+                    <?= $gestorOptionDisabled ? 'pointer-events-none opacity-50 cursor-not-allowed' : 'hover:shadow-md transition-shadow duration-200' ?> group">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-red-100 rounded-lg group-hover:bg-red-200 transition-colors duration-200">
+                        <div class="p-3 bg-red-100 rounded-lg 
+                    <?= !$gestorOptionDisabled ? 'group-hover:bg-red-200 transition-colors duration-200' : '' ?>">
                             <i class="fas fa-cogs text-2xl text-red-600"></i>
                         </div>
                     </div>
@@ -120,16 +150,21 @@
                     <p class="text-gray-600 text-sm">Configurar parâmetros do sistema</p>
                 </a>
 
+
                 <!-- Logs do Sistema -->
-                <a href="<?= baseUrl() ?>sistema/logs" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                <a href="<?= $gestorOptionDisabled ? 'javascript:void(0)' : baseUrl() . 'sistema/logs' ?>"
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 
+                    <?= $gestorOptionDisabled ? 'pointer-events-none opacity-50 cursor-not-allowed' : 'hover:shadow-md transition-shadow duration-200' ?> group">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors duration-200">
+                        <div class="p-3 bg-gray-100 rounded-lg 
+                    <?= !$gestorOptionDisabled ? 'group-hover:bg-gray-200 transition-colors duration-200' : '' ?>">
                             <i class="fas fa-history text-2xl text-gray-600"></i>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Logs do Sistema</h3>
                     <p class="text-gray-600 text-sm">Visualizar auditoria e logs de ações</p>
                 </a>
+
 
             <?php elseif ($userNivel === 'A'): ?>
                 <!-- CARDS DO ANUNCIANTE (EMPRESA) -->
@@ -155,7 +190,7 @@
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Publicar Vaga</h3>
                     <p class="text-gray-600 text-sm">Criar nova oportunidade de emprego</p>
                 </a>
-                
+
                 <!-- Perfil da Empresa -->
                 <a href="<?= baseUrl() ?>sistema/perfil" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
@@ -171,7 +206,7 @@
                 <!-- CARDS DO CANDIDATO -->
 
                 <!-- Buscar Vagas -->
-                <a href="<?= baseUrl() ?>vagas" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                <a href="<?= baseUrl() ?>vaga" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors duration-200">
                             <i class="fas fa-search text-2xl text-blue-600"></i>
