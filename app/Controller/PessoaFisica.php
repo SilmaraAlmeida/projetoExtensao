@@ -89,7 +89,7 @@ class PessoaFisica extends ControllerMain
                 ->first();
 
             if (!$dados) {
-                return Redirect::page('pessoafisica', [
+                return Redirect::page('PessoaFisica', [
                     'msgError' => 'Pessoa física não encontrada'
                 ]);
             }

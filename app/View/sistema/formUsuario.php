@@ -133,7 +133,7 @@
                             </select>
 
                             <!-- Botão para criar nova pessoa -->
-                            <a href="<?= baseUrl() ?>pessoafisica/form/insert/0"
+                            <a href="<?= baseUrl() ?>PessoaFisica/form/insert/0"
                                 target="_blank"
                                 class="inline-flex items-center px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors whitespace-nowrap"
                                 title="Criar nova pessoa física">

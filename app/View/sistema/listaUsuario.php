@@ -170,7 +170,7 @@
                                             Ver Estabelecimento
                                         </a>
                                     <?php else: ?>
-                                        <a href="<?= baseUrl() ?>pessoafisica/form/view/<?= $usuario['pessoa_fisica_id'] ?>"
+                                        <a href="<?= baseUrl() ?>PessoaFisica/form/view/<?= $usuario['pessoa_fisica_id'] ?>"
                                             class="text-blue-600 hover:underline flex items-center">
                                             <i class="fas fa-external-link-alt text-xs mr-1"></i>
                                             Ver Pessoa Física
