@@ -61,7 +61,7 @@ $gestorOptionDisabled = true;
                 </a>
 
                 <!-- Gerenciar Estabelecimentos -->
-                <a href="<?= baseUrl() ?>estabelecimento"
+                <a href="<?= baseUrl() ?>Estabelecimento"
                     class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors duration-200">
@@ -73,7 +73,7 @@ $gestorOptionDisabled = true;
                 </a>
 
                 <!-- Gerenciar Pessoa Física -->
-                <a href="<?= baseUrl() ?>pessoafisica"
+                <a href="<?= baseUrl() ?>PessoaFisica"
                     class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors duration-200">
