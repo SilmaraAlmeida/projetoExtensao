@@ -227,8 +227,7 @@ $cargoNome = $cargo['descricao'] ?? '';
                     <?php elseif ($vagaAtiva && !$prazoVencido): ?>
                         <div class="space-y-3">
                             <a href="<?= baseUrl() ?>vaga/candidatar/<?= $vaga['vaga_id'] ?>"
-                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-all"
-                                onclick="return confirm('Deseja se candidatar a esta vaga?');">
+                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-all">
                                 <i class="fas fa-paper-plane mr-2"></i>
                                 Candidatar-se
                             </a>
