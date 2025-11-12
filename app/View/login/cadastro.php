@@ -390,7 +390,7 @@ $inputs = $dados['data'] ?? [];
         >
         <label class="ml-3 text-sm text-gray-600">
           Aceito os <a href="<?= baseUrl() ?>cadastro/termos" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium">Termos de Uso</a> e 
-          <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Política de Privacidade</a>
+          <a href="<?= baseUrl() ?>cadastro/termos" class="text-blue-600 hover:text-blue-800 font-medium">Política de Privacidade</a>
         </label>
       </div>
       <?php if (isset($errors['termos'])): ?>

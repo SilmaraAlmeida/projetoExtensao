@@ -23,7 +23,7 @@
                     <h4 class="text-base font-semibold mb-3">Menu Principal</h4>
                     <ul class="space-y-1 text-sm">
                         <li>
-                            <a href="#" class="text-blue-100 hover:text-white transition-colors duration-200">
+                            <a href="<?= baseUrl() ?>" class="text-blue-100 hover:text-white transition-colors duration-200">
                                 Início
                             </a>
                         </li>
