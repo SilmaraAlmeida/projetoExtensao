@@ -49,7 +49,8 @@ $gestorOptionDisabled = true;
                 <!-- CARDS DO GESTOR -->
 
                 <!-- Gerenciar Usuários -->
-                <a href="<?= baseUrl() ?>usuario" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                <a href="<?= baseUrl() ?>usuario"
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors duration-200">
                             <i class="fas fa-users text-2xl text-blue-600"></i>
@@ -59,22 +60,29 @@ $gestorOptionDisabled = true;
                     <p class="text-gray-600 text-sm">Cadastrar, editar e gerenciar usuários do sistema</p>
                 </a>
 
-
-                <!-- Gerenciar Empresas -->
-                <a href="<?= $gestorOptionDisabled ? 'javascript:void(0)' : baseUrl() . 'empresas' ?>"
-                    class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 
-                    <?= $gestorOptionDisabled ? 'pointer-events-none opacity-50 cursor-not-allowed' : 'hover:shadow-md transition-shadow duration-200' ?> 
-                    group">
+                <!-- Gerenciar Estabelecimentos -->
+                <a href="<?= baseUrl() ?>estabelecimento"
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-green-100 rounded-lg 
-                    <?= !$gestorOptionDisabled ? 'group-hover:bg-green-200 transition-colors duration-200' : '' ?>">
+                        <div class="p-3 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors duration-200">
                             <i class="fas fa-building text-2xl text-green-600"></i>
                         </div>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Gerenciar Empresas</h3>
-                    <p class="text-gray-600 text-sm">Aprovar e gerenciar estabelecimentos cadastrados</p>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Gestão de Estabelecimentos</h3>
+                    <p class="text-gray-600 text-sm">Cadastrar e gerenciar estabelecimentos cadastrados</p>
                 </a>
 
+                <!-- Gerenciar Pessoa Física -->
+                <a href="<?= baseUrl() ?>pessoafisica"
+                    class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors duration-200">
+                            <i class="fas fa-user text-2xl text-purple-600"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Gestão de Pessoas Físicas</h3>
+                    <p class="text-gray-600 text-sm">Cadastrar e gerenciar pessoas físicas do sistema</p>
+                </a>
 
                 <!-- Gerenciar Vagas -->
                 <a href="<?= $gestorOptionDisabled ? 'javascript:void(0)' : baseUrl() . 'vagas' ?>"
@@ -149,22 +157,6 @@ $gestorOptionDisabled = true;
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">Configurações</h3>
                     <p class="text-gray-600 text-sm">Configurar parâmetros do sistema</p>
                 </a>
-
-
-                <!-- Logs do Sistema -->
-                <a href="<?= $gestorOptionDisabled ? 'javascript:void(0)' : baseUrl() . 'sistema/logs' ?>"
-                    class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 
-                    <?= $gestorOptionDisabled ? 'pointer-events-none opacity-50 cursor-not-allowed' : 'hover:shadow-md transition-shadow duration-200' ?> group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-gray-100 rounded-lg 
-                    <?= !$gestorOptionDisabled ? 'group-hover:bg-gray-200 transition-colors duration-200' : '' ?>">
-                            <i class="fas fa-history text-2xl text-gray-600"></i>
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Logs do Sistema</h3>
-                    <p class="text-gray-600 text-sm">Visualizar auditoria e logs de ações</p>
-                </a>
-
 
             <?php elseif ($userNivel === 'A'): ?>
                 <!-- CARDS DO ANUNCIANTE (EMPRESA) -->

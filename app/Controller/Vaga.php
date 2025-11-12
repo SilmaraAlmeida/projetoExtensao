@@ -201,10 +201,7 @@ class Vaga extends ControllerMain
       }
 
       if (isset($params['cargo_id']) && !empty($params['cargo_id'])) {
-         // ✅ MUDE ISTO:
-         // $cargo = $this->cargoModel->getById($params['cargo_id']);
 
-         // PARA ISTO:
          $cargo = $this->cargoModel->db
             ->table('cargo')
             ->where('cargo_id', $params['cargo_id'])

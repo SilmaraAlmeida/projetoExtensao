@@ -52,7 +52,7 @@ $isDelete = $metodo === 'delete';
                 <!-- Botões -->
                 <form method="POST" action="<?= $this->request->formAction() ?>">
                     <input type="hidden" name="vaga_id" value="<?= setValor('vaga_id', $vaga['vaga_id'] ?? '') ?>">
-                    <div class="flex gap-3 justify-end">
+                    <div class="flex gap-3 justif   y-end">
                         <a href="<?= baseUrl() ?>empresa/vagas"
                             class="px-4 py-2 border border-red-300 text-red-700 rounded-lg text-sm font-medium hover:bg-red-50 transition-all">
                             Cancelar

@@ -18,14 +18,6 @@ class EstabelecimentoModel extends ModelMain
             "label" => 'Endereço',
             "rules" => 'max:200'
         ],
-        "latitude" => [
-            "label" => 'Latitude',
-            "rules" => 'max:12'
-        ],
-        "longitude" => [
-            "label" => 'Longitude',
-            "rules" => 'max:12'
-        ],
         "email" => [
             "label" => 'Email',
             "rules" => 'email|max:150'
@@ -122,7 +114,6 @@ class EstabelecimentoModel extends ModelMain
             ->where('longitude <=', $lonMax)
             ->findAll();
     }
-
     /**
      * verificaDuplicidadeNome
      *
@@ -132,16 +123,29 @@ class EstabelecimentoModel extends ModelMain
      */
     public function verificaDuplicidadeNome(string $nome, ?int $estabelecimentoId = null): bool
     {
-        $query = $this->db
+        // Busca estabelecimentos com o mesmo nome
+        $estabelecimentos = $this->db
             ->table('estabelecimento')
-            ->where('nome', $nome);
+            ->where('nome', $nome)
+            ->findAll();
 
-        if ($estabelecimentoId !== null) {
-            $query->where('estabelecimento_id !=', $estabelecimentoId);
+        // Se não encontrou nenhum, não há duplicidade
+        if (empty($estabelecimentos)) {
+            return false;
         }
 
-        $rs = $query->first();
+        // Se encontrou e não há ID para excluir, há duplicidade
+        if ($estabelecimentoId === null) {
+            return true;
+        }
 
-        return !empty($rs);
+        // Verifica se algum dos encontrados é diferente do ID atual
+        foreach ($estabelecimentos as $estab) {
+            if ($estab['estabelecimento_id'] != $estabelecimentoId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
